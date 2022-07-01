@@ -78,6 +78,9 @@ jobs:
           !~/.m2/repository/uk
         key: ${{matrix.modules.name}}-gaffer-dependencies
 
+    - name: Check Gaffer files not cached 
+      run: rm -rfv ~/.m2/repository/uk
+
     - name: Install
       run: mvn -B clean install -P quick -pl ${{matrix.modules.values}} -am
 
