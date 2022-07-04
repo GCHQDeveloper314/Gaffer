@@ -75,7 +75,7 @@ jobs:
       with:
         path: |
           ~/.m2/repository
-          !~/.m2/repository/uk
+          !~/.m2/repository/uk/*
         key: ${{matrix.modules.name}}-gaffer-dependencies
 
     - name: Check Gaffer files not cached 
