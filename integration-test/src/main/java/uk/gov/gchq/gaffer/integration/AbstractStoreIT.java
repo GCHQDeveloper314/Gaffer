@@ -77,7 +77,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assumptions.assumeThat;
 
 /**
- * Logic/config for setting up and running store integration tests.
+ * Logic/config for setting up and running store integration tests. Test
  * The storeSchema and storeProperties variables are injected
  * {@link IntegrationTestSuiteExtension} on initialisation.
  */
