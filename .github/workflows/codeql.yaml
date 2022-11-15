@@ -32,7 +32,7 @@ jobs:
           languages: java
 
       - name: Install
-        run: mvn -B -ntp clean compile -Pquick
+        run: mvn -B -ntp clean install -Pquick
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
