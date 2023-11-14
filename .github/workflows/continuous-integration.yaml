@@ -35,7 +35,7 @@ jobs:
       VAR: ${{ needs.part-1.outputs.branch_name }}
     steps:
       - name: Access direct
-        run: echo "Access direct ${{ needs.create-release-tag.outputs.branch_name }}"
+        run: echo "Access direct ${{ needs.part-1.outputs.branch_name }}"
 
       - name: Access env
         run: echo "Access env $VAR"
