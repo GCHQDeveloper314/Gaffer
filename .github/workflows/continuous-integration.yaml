@@ -20,7 +20,7 @@ jobs:
     steps:
       - name: Set
         id: branch
-        run: echo "branch_name2=this-is-a-test" >> $GITHUB_OUTPUT
+        run: echo "branch_name=this-is-a-test" >> $GITHUB_OUTPUT
 
       - name: Fail if not set
         if: ${{ !steps.branch.outputs.branch_name }}
