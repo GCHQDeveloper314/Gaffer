@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.traffic.generator;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.junit.jupiter.api.Test;
@@ -162,13 +162,13 @@ public class RoadTrafficCsvElementGenerator2Test {
         // System.out.println(new String(JSONSerialiser.serialise(generator2, true)));
 
         final List<String> lines = IOUtils.readLines(createInputStream(), StandardCharsets.UTF_8);
-        final List<Element> elements2 = Lists.newArrayList(generator2.apply(lines));
+        final List<Element> elements2 = IterableUtils.toList(generator2.apply(lines));
 
         // Then - the results should be the same as those generated using the original element generator
         final RoadTrafficStringElementGenerator generator1 = new RoadTrafficStringElementGenerator();
         final List<Element> elements1;
         try (final InputStream inputStream = createInputStream()) {
-            elements1 = Lists.newArrayList(generator1.apply(() -> new LineIterator(new InputStreamReader(inputStream))));
+            elements1 = (List<Element>) IterableUtils.toList(generator1.apply(() -> new LineIterator(new InputStreamReader(inputStream))));
         }
 
         JSONSerialiser.getMapper();
