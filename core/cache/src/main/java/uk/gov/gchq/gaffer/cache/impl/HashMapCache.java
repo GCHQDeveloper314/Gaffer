@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.cache.impl;
 
-import com.google.common.collect.Lists;
-
 import uk.gov.gchq.gaffer.cache.ICache;
 import uk.gov.gchq.gaffer.exception.SerialisationException;
 import uk.gov.gchq.gaffer.serialisation.implementation.JavaSerialiser;
@@ -82,7 +80,7 @@ public class HashMapCache<K, V> implements ICache<K, V> {
             return (Collection<V>) cache.values();
         }
 
-        ArrayList<V> rtn = Lists.newArrayList();
+        ArrayList<V> rtn = new ArrayList<V>();
         cache.values().forEach(o -> {
             try {
                 rtn.add((V) JAVA_SERIALISER.deserialise((byte[]) o));
