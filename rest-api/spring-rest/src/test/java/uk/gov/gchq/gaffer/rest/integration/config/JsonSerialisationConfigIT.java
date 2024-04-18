@@ -17,7 +17,6 @@
 package uk.gov.gchq.gaffer.rest.integration.config;
 
 import com.clearspring.analytics.stream.cardinality.HyperLogLogPlus;
-import com.google.common.collect.Sets;
 
 import org.apache.datasketches.hll.HllSketch;
 import org.assertj.core.data.Percentage;
@@ -41,6 +40,7 @@ import uk.gov.gchq.gaffer.sketches.serialisation.json.SketchesJsonModules;
 import uk.gov.gchq.gaffer.store.StoreProperties;
 import uk.gov.gchq.gaffer.user.User;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -126,7 +126,7 @@ public class JsonSerialisationConfigIT extends AbstractRestApiIT {
         @Override
         public Graph.Builder createGraphBuilder() {
             StoreProperties props = new MapStoreProperties();
-            props.setJsonSerialiserModules(Sets.newHashSet(SketchesJsonModules.class));
+            props.setJsonSerialiserModules(Collections.singleton(SketchesJsonModules.class));
 
             return new Graph.Builder()
                 .addSchema(StreamUtil.openStream(getClass(), "/cardinalitySchema/schema.json"))

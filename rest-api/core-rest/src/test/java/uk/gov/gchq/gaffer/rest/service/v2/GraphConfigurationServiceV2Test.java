@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.rest.service.v2;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -319,14 +318,13 @@ public class GraphConfigurationServiceV2Test {
         final Set<String> traits = JSONSerialiser.deserialise(bytes, Set.class);
 
         // Then
-        assertEquals(Sets.newHashSet(
+        assertThat(traits).containsExactly(
                         INGEST_AGGREGATION.name(),
                         PRE_AGGREGATION_FILTERING.name(),
                         POST_AGGREGATION_FILTERING.name(),
                         POST_TRANSFORMATION_FILTERING.name(),
                         TRANSFORMATION.name(),
                         STORE_VALIDATION.name()
-                ),
-                traits);
+                    );
     }
 }

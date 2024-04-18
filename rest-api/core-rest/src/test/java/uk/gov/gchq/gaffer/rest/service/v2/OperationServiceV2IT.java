@@ -17,7 +17,7 @@
 package uk.gov.gchq.gaffer.rest.service.v2;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.junit.jupiter.api.Test;
@@ -189,15 +189,14 @@ public class OperationServiceV2IT extends OperationServiceIT {
         // Then
         final byte[] json = response.readEntity(byte[].class);
         final OperationDetailPojo opDetails = JSONSerialiser.deserialise(json, OperationDetailPojo.class);
-        final List<OperationFieldPojo> fields = Arrays.asList(
+        assertThat(opDetails.getFields()).containsExactly(
                 new OperationFieldPojo("input", "java.lang.Object[]", false, null, null),
                 new OperationFieldPojo("view", "uk.gov.gchq.gaffer.data.elementdefinition.view.View", false, null, null),
-                new OperationFieldPojo("includeIncomingOutGoing", "java.lang.String", false, "Should the edges point towards, or away from your seeds", Sets.newHashSet("INCOMING", "EITHER", "OUTGOING")),
+                new OperationFieldPojo("includeIncomingOutGoing", "java.lang.String", false, "Should the edges point towards, or away from your seeds", SetUtils.hashSet("INCOMING", "EITHER", "OUTGOING")),
                 new OperationFieldPojo("options", "java.util.Map<java.lang.String,java.lang.String>", false, null, null),
-                new OperationFieldPojo("directedType", "java.lang.String", false, "Is the Edge directed?", Sets.newHashSet("DIRECTED", "UNDIRECTED", "EITHER")),
+                new OperationFieldPojo("directedType", "java.lang.String", false, "Is the Edge directed?", SetUtils.hashSet("DIRECTED", "UNDIRECTED", "EITHER")),
                 new OperationFieldPojo("views", "java.util.List<uk.gov.gchq.gaffer.data.elementdefinition.view.View>", false, null, null)
         );
-        assertEquals(fields, opDetails.getFields());
     }
 
     @Test

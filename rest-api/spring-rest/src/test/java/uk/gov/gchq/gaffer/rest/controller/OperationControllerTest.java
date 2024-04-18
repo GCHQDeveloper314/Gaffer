@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.rest.controller;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.exception.CloneFailedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -97,7 +97,7 @@ public class OperationControllerTest {
     @Test
     public void shouldReturnAllSupportedOperations() {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(AddElements.class, GetElements.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(AddElements.class, GetElements.class));
 
         // When
         final Set<Class<? extends Operation>> allOperations = operationController.getOperations();
@@ -123,7 +123,7 @@ public class OperationControllerTest {
     @Test
     public void shouldReturnAllSupportedOperationsAsOperationDetails() {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(AddElements.class, GetElements.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(AddElements.class, GetElements.class));
 
         // When
         final Set<OperationDetail> allOperationDetails = operationController.getAllOperationDetails();
@@ -225,7 +225,7 @@ public class OperationControllerTest {
     @Test
     public void shouldReturnOperationDetailSummaryOfClass() {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(GetElements.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(GetElements.class));
 
         // When
         final OperationDetail operationDetail = operationController.getOperationDetails(GetElements.class.getName());
@@ -239,7 +239,7 @@ public class OperationControllerTest {
     @Test
     public void shouldReturnOutputClassForOperationWithOutput() throws Exception {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(GetElements.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(GetElements.class));
         when(examplesFactory.generateExample(GetElements.class)).thenReturn(new GetElements());
 
         // When
@@ -254,7 +254,7 @@ public class OperationControllerTest {
     @Test
     public void shouldNotIncludeAnyOutputClassForOperationWithoutOutput() throws Exception {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(DiscardOutput.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(DiscardOutput.class));
         when(examplesFactory.generateExample(GetElements.class)).thenReturn(new DiscardOutput());
 
         // When
@@ -269,7 +269,7 @@ public class OperationControllerTest {
     @Test
     public void shouldReturnOptionsAndSummariesForEnumFields() throws Exception {
         // Given
-        when(store.getSupportedOperations()).thenReturn(Sets.newHashSet(GetElements.class));
+        when(store.getSupportedOperations()).thenReturn(SetUtils.hashSet(GetElements.class));
         when(examplesFactory.generateExample(GetElements.class)).thenReturn(new GetElements());
 
         // When
@@ -277,15 +277,14 @@ public class OperationControllerTest {
         final List<OperationField> operationFields = operationDetails.getFields();
 
         // Then
-        final List<OperationField> fields = Arrays.asList(
+        assertThat(operationFields).containsExactly(
                 new OperationField("input", null, "java.lang.Object[]", null, false),
                 new OperationField("view", null, "uk.gov.gchq.gaffer.data.elementdefinition.view.View", null, false),
-                new OperationField("includeIncomingOutGoing", "Should the edges point towards, or away from your seeds", "java.lang.String", Sets.newHashSet("INCOMING", "EITHER", "OUTGOING"), false),
+                new OperationField("includeIncomingOutGoing", "Should the edges point towards, or away from your seeds", "java.lang.String", SetUtils.hashSet("INCOMING", "EITHER", "OUTGOING"), false),
                 new OperationField("options", null, "java.util.Map<java.lang.String,java.lang.String>", null, false),
-                new OperationField("directedType", "Is the Edge directed?", "java.lang.String", Sets.newHashSet("DIRECTED", "UNDIRECTED", "EITHER"), false),
-                new OperationField("views", null, "java.util.List<uk.gov.gchq.gaffer.data.elementdefinition.view.View>", null, false));
-
-        assertThat(operationFields).isEqualTo(fields);
+                new OperationField("directedType", "Is the Edge directed?", "java.lang.String", SetUtils.hashSet("DIRECTED", "UNDIRECTED", "EITHER"), false),
+                new OperationField("views", null, "java.util.List<uk.gov.gchq.gaffer.data.elementdefinition.view.View>", null, false)
+        );
     }
 
     @SuppressWarnings({"unchecked"})

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.rest.integration.controller;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -50,7 +50,7 @@ import uk.gov.gchq.gaffer.store.StoreProperties;
 import uk.gov.gchq.gaffer.store.schema.Schema;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -129,7 +129,7 @@ public class JobControllerIT extends AbstractRestApiIT {
     @Test
     public void shouldRunJob() {
         // Given
-        ArrayList<Element> elements = Lists.newArrayList(
+        List<Element> elements = Arrays.asList(
                 new Entity.Builder()
                         .group("BasicEntity")
                         .vertex("vertex1")
@@ -171,7 +171,7 @@ public class JobControllerIT extends AbstractRestApiIT {
         assertEquals(JobStatus.FINISHED, jobStatusResponse.getBody().getStatus());
 
         ResponseEntity<List> resultResponse = get("/graph/jobs/" + jobId + "/results", List.class);
-        List<? extends Element> results = Lists.newArrayList(deserialiseElementIterable(resultResponse.getBody()));
+        List<? extends Element> results = IterableUtils.toList(deserialiseElementIterable(resultResponse.getBody()));
         Assertions.<Element>assertThat(results)
                 .hasSize(3)
                 .as("Results did not contain expected elements")

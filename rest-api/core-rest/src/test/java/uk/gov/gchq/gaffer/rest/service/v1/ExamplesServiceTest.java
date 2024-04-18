@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.rest.service.v1;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -141,7 +141,7 @@ public class ExamplesServiceTest {
         assertNotNull(view);
 
         final ViewValidator viewValidator = new ViewValidator();
-        assertTrue(viewValidator.validate(view, schema, Sets.newHashSet(StoreTrait.values())).isValid());
+        assertTrue(viewValidator.validate(view, schema, SetUtils.hashSet(StoreTrait.values())).isValid());
     }
 
     private void shouldSerialiseAndDeserialiseOperation(final Operation operation) throws IOException {

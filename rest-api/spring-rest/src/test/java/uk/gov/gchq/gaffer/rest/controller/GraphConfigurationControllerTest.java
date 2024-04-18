@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.rest.controller;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -357,7 +357,7 @@ public class GraphConfigurationControllerTest {
 
         Schema schema = new Schema();
         StoreProperties props = new StoreProperties();
-        Set<StoreTrait> storeTraits = Sets.newHashSet(
+        Set<StoreTrait> storeTraits = SetUtils.hashSet(
                 INGEST_AGGREGATION,
                 PRE_AGGREGATION_FILTERING,
                 POST_AGGREGATION_FILTERING
@@ -382,13 +382,10 @@ public class GraphConfigurationControllerTest {
         final Set<String> traits = JSONSerialiser.deserialise(bytes, Set.class);
 
         // Then
-        assertEquals(Sets.newHashSet(
+        assertThat(traits).containsExactly(
                 INGEST_AGGREGATION.name(),
                 PRE_AGGREGATION_FILTERING.name(),
                 POST_AGGREGATION_FILTERING.name()
-                ),
-                traits);
+                );
     }
-
-
 }

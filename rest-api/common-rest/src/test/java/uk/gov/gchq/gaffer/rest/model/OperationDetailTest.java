@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.rest.model;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.named.operation.NamedOperation;
@@ -27,13 +26,11 @@ import uk.gov.gchq.gaffer.operation.impl.get.GetAdjacentIds;
 import uk.gov.gchq.gaffer.operation.impl.get.GetElements;
 import uk.gov.gchq.koryphe.util.EqualityTest;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class OperationDetailTest extends EqualityTest<OperationDetail> {
     @Test
@@ -45,7 +42,7 @@ public class OperationDetailTest extends EqualityTest<OperationDetail> {
         final String summary = operationDetail.getSummary();
 
         // Then
-        assertEquals("Gets elements related to provided seeds", summary);
+        assertThat(summary).isEqualTo("Gets elements related to provided seeds");
     }
 
     @Test
@@ -57,8 +54,7 @@ public class OperationDetailTest extends EqualityTest<OperationDetail> {
         final String outputClassName = operationDetail.getOutputClassName();
 
         // Then
-        assertEquals("java.lang.Iterable<uk.gov.gchq.gaffer.data.element.Element>",
-                outputClassName);
+        assertThat(outputClassName).isEqualTo("java.lang.Iterable<uk.gov.gchq.gaffer.data.element.Element>");
     }
 
     @Test
@@ -71,8 +67,7 @@ public class OperationDetailTest extends EqualityTest<OperationDetail> {
                 .collect(Collectors.toList());
 
         // Then
-        final ArrayList<String> expected = Lists.newArrayList("input", "options", "operationName", "parameters");
-        assertEquals(expected, fieldNames);
+        assertThat(fieldNames).containsExactly("input", "options", "operationName", "parameters");
     }
 
     @Test
@@ -83,9 +78,9 @@ public class OperationDetailTest extends EqualityTest<OperationDetail> {
         // When
         operationDetail.getFields().forEach(field -> {
             if (field.getName().equals("operationName")) {
-                assertTrue(field.isRequired());
+                assertThat(field.isRequired()).isTrue();
             } else {
-                assertFalse(field.isRequired());
+                assertThat(field.isRequired()).isFalse();
             }
         });
     }
@@ -94,28 +89,28 @@ public class OperationDetailTest extends EqualityTest<OperationDetail> {
     protected OperationDetail getInstance() {
         return new OperationDetail(
                 GetElements.class,
-                Sets.newHashSet(GetElements.class, GetAdjacentIds.class),
+                SetUtils.hashSet(GetElements.class, GetAdjacentIds.class),
                 new GetElements());
     }
 
     @Override
     protected Iterable<OperationDetail> getDifferentInstancesOrNull() {
-        return Lists.newArrayList(
+        return Arrays.asList(
                 new OperationDetail(
                         GetAdjacentIds.class,
-                        Sets.newHashSet(GetElements.class, GetAdjacentIds.class),
+                        SetUtils.hashSet(GetElements.class, GetAdjacentIds.class),
                         new GetElements()),
                 new OperationDetail(
                         GetAdjacentIds.class,
-                        Sets.newHashSet(GetElements.class, GetAdjacentIds.class),
+                        SetUtils.hashSet(GetElements.class, GetAdjacentIds.class),
                         new GetElements()),
                 new OperationDetail(
                         GetAdjacentIds.class,
-                        Sets.newHashSet(DiscardOutput.class, GetElements.class, GetAdjacentIds.class),
+                        SetUtils.hashSet(DiscardOutput.class, GetElements.class, GetAdjacentIds.class),
                         new GetElements()),
                 new OperationDetail(
                         GetAdjacentIds.class,
-                        Sets.newHashSet(GetElements.class, GetAdjacentIds.class),
+                        SetUtils.hashSet(GetElements.class, GetAdjacentIds.class),
                         new GetElements.Builder()
                                 .input(new EntitySeed("test"))
                                 .build()),

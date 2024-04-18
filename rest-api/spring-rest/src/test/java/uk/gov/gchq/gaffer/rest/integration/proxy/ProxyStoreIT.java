@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.rest.integration.proxy;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,11 +38,7 @@ import uk.gov.gchq.gaffer.rest.integration.controller.AbstractRestApiIT;
 import uk.gov.gchq.gaffer.store.schema.Schema;
 import uk.gov.gchq.gaffer.user.User;
 
-import java.util.ArrayList;
-
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class ProxyStoreIT extends AbstractRestApiIT {
@@ -67,7 +62,7 @@ public class ProxyStoreIT extends AbstractRestApiIT {
        Graph proxy = createProxy();
 
         // Then
-        assertNotNull(proxy.getSchema());
+        assertThat(proxy.getSchema()).isNotNull();
     }
 
     private Graph createProxy() {
@@ -99,10 +94,9 @@ public class ProxyStoreIT extends AbstractRestApiIT {
         Graph proxy = createProxy();
 
         // Then
-        ArrayList<Element> elements = Lists.newArrayList(proxy.execute(new GetAllElements(), new User()));
+        Iterable<? extends Element> elements = proxy.execute(new GetAllElements(), new User());
         assertThat(elements).hasSize(1);
-
-        assertEquals("vertex1", elements.get(0).getIdentifier(IdentifierType.VERTEX));
+        assertThat(elements.iterator().next().getIdentifier(IdentifierType.VERTEX)).isEqualTo("vertex1");
     }
 
     @Test
@@ -121,6 +115,6 @@ public class ProxyStoreIT extends AbstractRestApiIT {
 
         // Then
         long total = proxy.execute(new OperationChain.Builder().first(new GetAllElements()).then(new Count<>()).build(), new User());
-        assertEquals(1L, total);
+        assertThat(total).isEqualTo(1L);
     }
 }

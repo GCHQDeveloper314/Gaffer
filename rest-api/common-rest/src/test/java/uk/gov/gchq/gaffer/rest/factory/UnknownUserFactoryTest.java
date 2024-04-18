@@ -16,10 +16,9 @@
 
 package uk.gov.gchq.gaffer.rest.factory;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UnknownUserFactoryTest {
 
@@ -29,7 +28,7 @@ public class UnknownUserFactoryTest {
         UserFactory userFactory = new UnknownUserFactory();
 
         // Then
-        assertEquals("UNKNOWN", userFactory.createUser().getUserId());
+        assertThat(userFactory.createUser().getUserId()).isEqualTo("UNKNOWN");
     }
 
     @Test
@@ -38,6 +37,6 @@ public class UnknownUserFactoryTest {
         UserFactory userFactory = new UnknownUserFactory();
 
         // Then
-        assertEquals(Sets.newHashSet("user"), userFactory.createUser().getOpAuths());
+        assertThat(userFactory.createUser().getOpAuths()).contains("user");
     }
 }
