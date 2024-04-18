@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.spark.operation.graphframe;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -26,6 +25,7 @@ import uk.gov.gchq.gaffer.operation.Operation;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 import uk.gov.gchq.koryphe.ValidationResult;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -139,6 +139,6 @@ public class GetGraphFrameOfElementsTest extends OperationTest<GetGraphFrameOfEl
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("view");
+        return Collections.singleton("view");
     }
 }

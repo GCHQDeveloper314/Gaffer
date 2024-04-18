@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.sparkaccumulo.generator;
 
-import com.google.common.collect.Lists;
 import org.apache.spark.sql.Row;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -43,6 +42,7 @@ import uk.gov.gchq.gaffer.spark.operation.graphframe.GetGraphFrameOfElements;
 import uk.gov.gchq.gaffer.user.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -85,7 +85,7 @@ public class RowToElementGeneratorTest {
     }
 
     private List<Element> getElements() {
-        final List<String> names = Lists.newArrayList("Alice", "Bob", "Charlie", "David");
+        final List<String> names = Arrays.asList("Alice", "Bob", "Charlie", "David");
         final List<Element> elements = new ArrayList<>();
 
         final List<Entity> entities = names.stream().map(n -> {
@@ -103,7 +103,7 @@ public class RowToElementGeneratorTest {
         final Edge edge5 = new Edge.Builder().source("d").dest("c").directed(true).group(TestGroups.EDGE)
                 .property("type", "follow").build();
 
-        final List<Edge> edges = Lists.newArrayList(edge1, edge2, edge3, edge4, edge5);
+        final List<Edge> edges = Arrays.asList(edge1, edge2, edge3, edge4, edge5);
 
         elements.addAll(entities);
         elements.addAll(edges);

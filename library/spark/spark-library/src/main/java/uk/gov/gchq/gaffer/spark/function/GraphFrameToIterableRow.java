@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.spark.function;
 
-import com.google.common.collect.Iterators;
+import org.apache.commons.collections4.IteratorUtils;
 import org.apache.spark.sql.Row;
 import org.graphframes.GraphFrame;
 
@@ -34,6 +34,6 @@ public class GraphFrameToIterableRow implements Function<GraphFrame, Iterable<? 
         final Iterator<Row> vertices = graphFrame.vertices().toLocalIterator();
         final Iterator<Row> edges = graphFrame.edges().toLocalIterator();
 
-        return () -> Iterators.concat(vertices, edges);
+        return () -> IteratorUtils.chainedIterator(vertices, edges);
     }
 }

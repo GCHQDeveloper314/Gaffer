@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.hdfs.operation;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.hadoop.mapreduce.Partitioner;
 import org.junit.jupiter.api.Test;
 
@@ -46,7 +46,7 @@ public class AddElementsFromHdfsTest extends OperationTest<AddElementsFromHdfs> 
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet(
+        return SetUtils.hashSet(
                 "jobInitialiser",
                 "outputPath",
                 "inputMapperPairs",

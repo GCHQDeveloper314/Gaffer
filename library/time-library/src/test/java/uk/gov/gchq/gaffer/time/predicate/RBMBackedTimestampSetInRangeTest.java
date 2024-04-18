@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.time.predicate;
 
-import com.google.common.collect.Lists;
+import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

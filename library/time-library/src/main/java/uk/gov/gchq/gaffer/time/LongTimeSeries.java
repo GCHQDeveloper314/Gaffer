@@ -19,7 +19,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import com.google.common.collect.Sets;
+
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -53,7 +54,7 @@ import static uk.gov.gchq.gaffer.time.CommonTimeUtil.TimeBucket.YEAR;
  */
 @JsonPropertyOrder(alphabetic = true)
 public class LongTimeSeries implements TimeSeries<Long> {
-    private static final Set<TimeBucket> VALID_TIME_BUCKETS = Sets.newHashSet(
+    private static final Set<TimeBucket> VALID_TIME_BUCKETS = SetUtils.hashSet(
             MILLISECOND,
             SECOND,
             MINUTE,

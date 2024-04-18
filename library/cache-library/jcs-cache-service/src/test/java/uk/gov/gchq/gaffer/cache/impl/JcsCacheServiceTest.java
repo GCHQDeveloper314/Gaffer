@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.cache.impl;
 
-import com.google.common.util.concurrent.Uninterruptibles;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -200,7 +199,7 @@ public class JcsCacheServiceTest {
     }
 
     @Test
-    public void shouldAgeOffValues() throws CacheOperationException {
+    public void shouldAgeOffValues() throws CacheOperationException, InterruptedException {
         // given
         String filePath = new File("src/test/resources/cache.ccf").getAbsolutePath();
         serviceProps.setProperty(CacheProperties.CACHE_CONFIG_FILE, filePath);
@@ -208,14 +207,14 @@ public class JcsCacheServiceTest {
 
         // when
         service.putInCache(AGE_OFF_REGION, "test", 1);
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+        Thread.sleep(3000);
 
         // then
         assertNull(service.getFromCache(AGE_OFF_REGION, "test"));
     }
 
     @Test
-    public void shouldAllowAgedOffValuesToBeReplaced() throws CacheOperationException {
+    public void shouldAllowAgedOffValuesToBeReplaced() throws CacheOperationException, InterruptedException {
         // given
         String filePath = new File("src/test/resources/cache.ccf").getAbsolutePath();
         serviceProps.setProperty(CacheProperties.CACHE_CONFIG_FILE, filePath);
@@ -223,7 +222,7 @@ public class JcsCacheServiceTest {
 
         // when
         service.putInCache(AGE_OFF_REGION, "test", 1);
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS); // aged off
+        Thread.sleep(3000); // aged off
         assertNull(service.getFromCache(AGE_OFF_REGION, "test"));
 
         service.putInCache(AGE_OFF_REGION, "test", 1);

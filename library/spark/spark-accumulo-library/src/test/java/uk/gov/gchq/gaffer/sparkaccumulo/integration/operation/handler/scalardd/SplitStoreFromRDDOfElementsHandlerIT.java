@@ -15,8 +15,8 @@
  */
 package uk.gov.gchq.gaffer.sparkaccumulo.integration.operation.handler.scalardd;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.hadoop.io.Text;
 import org.apache.spark.rdd.RDD;
 import org.junit.jupiter.api.BeforeEach;
@@ -125,7 +125,7 @@ public class SplitStoreFromRDDOfElementsHandlerIT {
                 .build(), user);
 
         // Then
-        final List<Text> splitsOnTable = Lists.newArrayList(store.getConnection().tableOperations().listSplits(store.getTableName(), 10));
+        final List<Text> splitsOnTable = IterableUtils.toList(store.getConnection().tableOperations().listSplits(store.getTableName(), 10));
         final int expectedSplitCount = tabletServerCount - 1;
 
         assertThat(splitsOnTable).hasSize(expectedSplitCount);

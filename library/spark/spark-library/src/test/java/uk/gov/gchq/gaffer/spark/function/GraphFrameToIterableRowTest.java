@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.spark.function;
 
-import com.google.common.collect.Lists;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.graphframes.GraphFrame;
@@ -25,7 +24,6 @@ import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.spark.SparkSessionProvider;
 
-import java.util.List;
 import java.util.function.Function;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,9 +41,8 @@ public class GraphFrameToIterableRowTest {
 
         // When
         final Iterable<? extends Row> result = function.apply(graphFrame);
-        final List<Row> resultList = Lists.newArrayList(result);
 
         // Then
-        assertThat(resultList).hasSize(15);
+        assertThat(result).hasSize(15);
     }
 }

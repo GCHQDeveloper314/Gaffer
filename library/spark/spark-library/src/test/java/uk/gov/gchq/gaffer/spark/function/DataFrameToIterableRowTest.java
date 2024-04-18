@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.spark.function;
 
-import com.google.common.collect.Lists;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
@@ -43,9 +42,8 @@ public class DataFrameToIterableRowTest {
 
         // When
         final Iterable<? extends Row> result = function.apply(dataframe);
-        final List<Row> resultList = Lists.newArrayList(result);
 
         // Then
-        assertThat(resultList).hasSize(7);
+        assertThat(result).hasSize(7);
     }
 }

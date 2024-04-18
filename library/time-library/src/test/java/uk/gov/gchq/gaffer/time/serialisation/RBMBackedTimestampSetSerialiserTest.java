@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.time.serialisation;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
@@ -40,6 +39,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.Random;
 import java.util.stream.IntStream;
 
@@ -110,14 +110,14 @@ public class RBMBackedTimestampSetSerialiserTest extends ToBytesSerialisationTes
         final Serialiser<CustomMap, byte[]> customMapSerialiser = new CustomMapSerialiser();
         final RBMBackedTimestampSet timestampSet1 = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.MINUTE)
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(10)))
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(20)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(10)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(20)))
                 .build();
 
         final RBMBackedTimestampSet timestampSet2 = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.MINUTE)
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(111)))
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(222)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(111)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(222)))
                 .build();
 
         final CustomMap<String, RBMBackedTimestampSet> expected = new CustomMap<String, RBMBackedTimestampSet>(new StringSerialiser(), new RBMBackedTimestampSetSerialiser());
@@ -168,12 +168,12 @@ public class RBMBackedTimestampSetSerialiserTest extends ToBytesSerialisationTes
 
         final RBMBackedTimestampSet timestampSet1 = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.MINUTE)
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(11)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(11)))
                 .build();
 
         final RBMBackedTimestampSet timestampSet2 = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.HOUR)
-                .timestamps(Lists.newArrayList(Instant.ofEpochSecond(222222)))
+                .timestamps(Collections.singletonList(Instant.ofEpochSecond(222222)))
                 .build();
 
         final CustomMap<Float, RBMBackedTimestampSet> expectedMap = new CustomMap<>(new OrderedFloatSerialiser(), new RBMBackedTimestampSetSerialiser());

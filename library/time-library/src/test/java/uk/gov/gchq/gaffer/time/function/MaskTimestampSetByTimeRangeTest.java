@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.time.function;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -83,7 +83,7 @@ public class MaskTimestampSetByTimeRangeTest extends FunctionTest<MaskTimestampS
 
         final RBMBackedTimestampSet expected = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.MINUTE)
-                .timestamps(Sets.newHashSet(instant, instant.plus(Duration.ofDays(100))))
+                .timestamps(SetUtils.hashSet(instant, instant.plus(Duration.ofDays(100))))
                 .build();
 
         assertEquals(expected, output);
@@ -119,7 +119,7 @@ public class MaskTimestampSetByTimeRangeTest extends FunctionTest<MaskTimestampS
         // Then
         RBMBackedTimestampSet expectedTimestampSet = new RBMBackedTimestampSet.Builder()
                 .timeBucket(TimeBucket.MINUTE)
-                .timestamps(Sets.newHashSet(instant.plus(Duration.ofDays(100L)), instant.plus(Duration.ofDays(200L))))
+                .timestamps(SetUtils.hashSet(instant.plus(Duration.ofDays(100L)), instant.plus(Duration.ofDays(200L))))
                 .build();
 
         assertEquals(expectedTimestampSet, actualTimestampSet);

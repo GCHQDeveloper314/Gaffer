@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.sparkaccumulo.integration.rfilereaderrdd;
 
-import com.google.common.collect.Sets;
 import org.apache.accumulo.core.client.AccumuloException;
 import org.apache.accumulo.core.client.AccumuloSecurityException;
 import org.apache.accumulo.core.client.BatchWriter;
@@ -47,6 +46,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -202,7 +202,7 @@ public class RFileReaderRddIT {
         Thread.sleep(1000L);
 
         LegacySupport.InputConfigurator.fetchColumns(AccumuloInputFormat.class, configuration,
-                Sets.newHashSet(new Pair<>(new Text("CF"), new Text("CQ"))));
+                Collections.singleton(new Pair<>(new Text("CF"), new Text("CQ"))));
 
         return cluster;
     }

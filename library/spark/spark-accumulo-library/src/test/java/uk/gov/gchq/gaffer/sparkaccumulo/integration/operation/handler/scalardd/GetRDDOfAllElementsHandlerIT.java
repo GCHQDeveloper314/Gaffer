@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.sparkaccumulo.integration.operation.handler.scalardd;
 
-import com.google.common.collect.Sets;
 import org.apache.accumulo.core.client.AccumuloException;
 import org.apache.accumulo.core.client.AccumuloSecurityException;
 import org.apache.accumulo.core.client.TableNotFoundException;
@@ -24,6 +23,7 @@ import org.apache.accumulo.core.client.admin.CompactionConfig;
 import org.apache.accumulo.core.data.Key;
 import org.apache.accumulo.core.data.Value;
 import org.apache.accumulo.core.file.rfile.RFile;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.spark.rdd.RDD;
 import org.junit.jupiter.api.Test;
@@ -81,8 +81,8 @@ public final class GetRDDOfAllElementsHandlerIT {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(GetRDDOfAllElementsHandlerIT.class);
     private static final User USER = new User();
-    private static final User USER_WITH_PUBLIC = new User("user1", Sets.newHashSet("public"));
-    private static final User USER_WITH_PUBLIC_AND_PRIVATE = new User("user2", Sets.newHashSet("public", "private"));
+    private static final User USER_WITH_PUBLIC = new User("user1", SetUtils.hashSet("public"));
+    private static final User USER_WITH_PUBLIC_AND_PRIVATE = new User("user2", SetUtils.hashSet("public", "private"));
     private static final String GRAPH_ID = "graphId";
 
     private static final AccumuloProperties PROPERTIES_A = AccumuloProperties.loadStoreProperties(GetRDDOfAllElementsHandlerIT.class.getResourceAsStream("/store.properties"));

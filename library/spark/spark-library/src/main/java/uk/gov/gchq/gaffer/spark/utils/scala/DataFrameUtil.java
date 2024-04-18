@@ -16,12 +16,13 @@
 
 package uk.gov.gchq.gaffer.spark.utils.scala;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.spark.sql.Column;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.apache.spark.sql.functions.col;
@@ -64,10 +65,10 @@ public final class DataFrameUtil {
      * @return the combined Dataset
      */
     public static Dataset<Row> union(final Dataset<Row> ds1, final Dataset<Row> ds2) {
-        Set<String> ds1Cols = Sets.newHashSet(ds1.columns());
-        Set<String> ds2Cols = Sets.newHashSet(ds2.columns());
+        Set<String> ds1Cols = SetUtils.hashSet(ds1.columns());
+        Set<String> ds2Cols = SetUtils.hashSet(ds2.columns());
 
-        final Set<String> total = Sets.newHashSet(ds1Cols);
+        final Set<String> total = new HashSet<>(ds1Cols);
         total.addAll(ds2Cols);
 
         return ds1.select(expr(ds1Cols, total)).union(ds2.select(expr(ds2Cols, total)));

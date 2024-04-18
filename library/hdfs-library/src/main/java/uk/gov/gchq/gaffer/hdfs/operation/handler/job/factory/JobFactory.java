@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.hdfs.operation.handler.job.factory;
 
-import com.google.common.collect.Lists;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
@@ -26,6 +25,7 @@ import uk.gov.gchq.gaffer.store.StoreProperties;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,7 +52,7 @@ public interface JobFactory<O extends MapReduce> {
             if (mapperGeneratorsToInputPathsList.containsKey(entry.getValue())) {
                 mapperGeneratorsToInputPathsList.get(entry.getValue()).add(entry.getKey());
             } else {
-                mapperGeneratorsToInputPathsList.put(entry.getValue(), Lists.newArrayList(entry.getKey()));
+                mapperGeneratorsToInputPathsList.put(entry.getValue(), Arrays.asList(entry.getKey()));
             }
         }
 

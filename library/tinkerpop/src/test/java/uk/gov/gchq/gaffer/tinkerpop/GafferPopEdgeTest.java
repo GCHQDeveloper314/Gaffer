@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.tinkerpop;
 
-import com.google.common.collect.Lists;
-
 import org.apache.tinkerpop.gremlin.structure.Direction;
 import org.apache.tinkerpop.gremlin.structure.Property;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -27,7 +25,6 @@ import org.junit.jupiter.api.Test;
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
 import uk.gov.gchq.gaffer.commonutil.TestPropertyNames;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -111,8 +108,7 @@ public class GafferPopEdgeTest {
         final Iterator<Property<Object>> props = edge.properties(TestPropertyNames.STRING, TestPropertyNames.INT);
 
         // Then
-        final ArrayList<Property> propList = Lists.newArrayList(props);
-        assertThat(propList).contains(
+        assertThat(props).toIterable().contains(
                 new GafferPopProperty<>(edge, TestPropertyNames.STRING, propValue1),
                 new GafferPopProperty<>(edge, TestPropertyNames.INT, propValue2)
         );
@@ -131,8 +127,7 @@ public class GafferPopEdgeTest {
         final Iterator<Property<Object>> props = edge.properties(TestPropertyNames.STRING);
 
         // Then
-        final ArrayList<Property> propList = Lists.newArrayList(props);
-        assertThat(propList).contains(
+        assertThat(props).toIterable().contains(
                 new GafferPopProperty<>(edge, TestPropertyNames.STRING, propValue1)
         );
     }
