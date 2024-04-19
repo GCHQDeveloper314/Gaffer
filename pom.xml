@@ -50,8 +50,8 @@
         <java.version>1.8</java.version>
 
         <!-- Dependency version properties -->
-        <junit.version>5.10.2</junit.version>
-        <junit-suite.version>1.10.2</junit-suite.version>
+        <junit.version>5.9.3</junit.version>
+        <junit-suite.version>1.9.3</junit-suite.version>
         <assertj.version>3.25.3</assertj.version>
         <mockito.version>4.11.0</mockito.version>
         <slf4j.api.version>1.7.36</slf4j.api.version>
