@@ -3,9 +3,9 @@
 // Can also be used with VSCode, see https://code.visualstudio.com/docs/devcontainers/containers
 // For format details, see https://aka.ms/devcontainer.json
 {
-	"name": "Gaffer dev (Java 8)",
+	"name": "Gaffer dev (Java 11)",
 	// Java 8 development image. More info: https://mcr.microsoft.com/en-us/product/devcontainers/java/about
-	"image": "mcr.microsoft.com/devcontainers/java:8",
+	"image": "mcr.microsoft.com/devcontainers/java:11",
 	// See options: https://github.com/devcontainers/templates/tree/main/src/java
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
