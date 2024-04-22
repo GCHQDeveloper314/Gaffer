@@ -301,7 +301,7 @@ public class LegacySupport {
                     Object bcFileWriter = bcFileWriterConstructor.newInstance(
                             FileSystem.get(fsConf).create(new Path(file)),
                             NullRateLimiter.INSTANCE,
-                            Compression.COMPRESSION_NONE,
+                            "none",
                             fsConf,
                             noCryptoServiceClazz.getConstructor().newInstance()
                     );
@@ -314,7 +314,7 @@ public class LegacySupport {
                     Object cachableBlockFileWriter = cachableBlockFileWriterConstructor.newInstance(
                             FileSystem.get(fsConf),
                             new Path(file),
-                            Compression.COMPRESSION_NONE,
+                            "none",
                             null,
                             fsConf,
                             accumuloConfiguration
