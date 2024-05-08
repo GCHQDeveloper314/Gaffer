@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.commonutil;
 
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.StringUtils;
 import org.reflections.Reflections;
 import org.reflections.scanners.ResourcesScanner;
@@ -141,7 +140,7 @@ public final class StreamUtil {
 
         String folderPathChecked = getFormattedPath(folderPath);
 
-        final HashSet<InputStream> inputStreams = Sets.newHashSet();
+        final HashSet<InputStream> inputStreams = new HashSet<>();
 
         new Reflections(new ConfigurationBuilder()
                 .setScanners(new ResourcesScanner())

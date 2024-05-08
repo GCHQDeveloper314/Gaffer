@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.commonutil.iterable;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -104,7 +104,7 @@ public class LimitedInMemorySortedIterableTest {
         assertThat(evensResult).isTrue();
         assertThat(itr).hasSize(10);
 
-        List<Integer> list = Lists.newArrayList(itr);
+        List<Integer> list = IterableUtils.toList(itr);
         assertThat(list.get(0)).isZero();
         assertThat(list.get(list.size() - 1)).isEqualTo(18);
         final List<Integer> odds = IntStream.iterate(1, i -> i + 2)
@@ -113,7 +113,7 @@ public class LimitedInMemorySortedIterableTest {
                 .collect(Collectors.toList());
 
         final boolean oddsResult = itr.addAll(odds);
-        list = Lists.newArrayList(itr);
+        list = IterableUtils.toList(itr);
         assertThat(odds).hasSize(10);
         assertThat(oddsResult).isTrue();
         assertThat(list).hasSize(20);
@@ -133,7 +133,7 @@ public class LimitedInMemorySortedIterableTest {
                 .collect(Collectors.toList());
 
         final boolean evensResult = itr.addAll(evens);
-        List<Integer> list = Lists.newArrayList(itr);
+        List<Integer> list = IterableUtils.toList(itr);
 
         assertThat(evens).hasSize(100);
         assertThat(evensResult).isTrue();
@@ -147,7 +147,7 @@ public class LimitedInMemorySortedIterableTest {
                 .collect(Collectors.toList());
 
         final boolean oddsResult = itr.addAll(odds);
-        list = Lists.newArrayList(itr);
+        list = IterableUtils.toList(itr);
         assertThat(odds).hasSize(100);
         assertThat(oddsResult).isTrue();
         assertThat(list).hasSize(10);
@@ -170,11 +170,11 @@ public class LimitedInMemorySortedIterableTest {
 
         // When
         stream.forEach(i -> list.add(Math.abs(i)));
-        final List<Integer> sortedElements = Lists.newArrayList(list);
+        final List<Integer> sortedElements = IterableUtils.toList(list);
         sortedElements.sort(Comparator.naturalOrder());
 
         // Then
-        final List<Integer> expected = Lists.newArrayList(list);
+        final List<Integer> expected = IterableUtils.toList(list);
         assertThat(sortedElements).isEqualTo(expected);
     }
 }

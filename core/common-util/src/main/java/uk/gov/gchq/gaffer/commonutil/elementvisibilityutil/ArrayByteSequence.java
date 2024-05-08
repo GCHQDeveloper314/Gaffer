@@ -130,7 +130,7 @@ public class ArrayByteSequence implements Serializable, Comparable<ArrayByteSequ
 
     public int compareTo(final ArrayByteSequence obs) {
         return this.isBackedByArray() && obs.isBackedByArray()
-                ? UnsignedBytes.lexicographicalComparator().compare(this.toArray(), obs.toArray())
+                ? UnsignedBytes.lexicographicalComparator().compare(this.toArray(), obs.toArray()) // No good replacement outside of Java 9+
                 : compareBytes(this, obs);
     }
 

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.commonutil;
 
-import com.google.common.collect.Iterators;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -150,7 +149,7 @@ public class OneOrMore<T> implements Iterable<T> {
                 return Collections.emptyIterator();
             }
 
-            return Iterators.singletonIterator(singleItem);
+            return Collections.singleton(singleItem).iterator();
         }
         return collection.iterator();
     }

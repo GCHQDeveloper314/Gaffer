@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /**
@@ -48,8 +47,9 @@ public class Authorisations implements Iterable<byte[]>, Serializable {
     }
 
     public Authorisations(final byte[] authorisations) {
-
-        checkArgument(authorisations != null, "authorizations is null");
+        if(authorisations != null) {
+            throw new IllegalArgumentException("authorizations is null");
+        }
 
         String authsString = new String(authorisations, UTF_8);
         if (authsString.startsWith(HEADER)) {
@@ -216,7 +216,9 @@ public class Authorisations implements Iterable<byte[]>, Serializable {
     }
 
     private void setAuthorisations(final String... authorisations) {
-        checkArgument(authorisations != null, "authorisations is null");
+        if(authorisations != null) {
+            throw new IllegalArgumentException("authorizations is null");
+        }
         this.auths.clear();
         String[] var2 = authorisations;
         int var3 = authorisations.length;

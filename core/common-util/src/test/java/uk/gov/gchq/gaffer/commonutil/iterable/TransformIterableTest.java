@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.commonutil.iterable;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -153,7 +153,7 @@ public class TransformIterableTest {
             iterable = new TransformIterableImpl(items, new AlwaysValid<>(), false, autoClose);
 
             // When
-            Lists.newArrayList(iterable);
+            IterableUtils.toList(iterable);
 
             // Then
             verify((Closeable) itemsIterator, times(1)).close();
@@ -179,7 +179,7 @@ public class TransformIterableTest {
             iterable = new TransformIterableImpl(items, new AlwaysValid<>(), false, autoClose);
 
             // When
-            Lists.newArrayList(iterable);
+            IterableUtils.toList(iterable);
 
             // Then
             verify((Closeable) itemsIterator, never()).close();

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.commonutil.iterable;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IteratorUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -130,7 +130,7 @@ public class CachingIterableTest {
         itr3.next();
 
         final Iterator<Integer> itr4 = cachingIterable.iterator();
-        assertThat(Lists.newArrayList(itr4)).containsExactlyElementsOf(SMALL_LIST);
+        assertThat(IteratorUtils.toList(itr4)).containsExactlyElementsOf(SMALL_LIST);
 
         // should be cached now as it has been fully read.
         verify((Closeable) iterable, times(3)).close();

@@ -16,12 +16,12 @@
 
 package uk.gov.gchq.gaffer.commonutil;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeSet;
@@ -138,7 +138,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnTrueWhenCollectionContainsAProvidedValue() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 2, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 2, 30));
         final Object[] values = new Object[] {1, 2, 3};
 
         // When
@@ -151,7 +151,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenCollectionDoesNotContainsAProvidedValue() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
         final Object[] values = new Object[] {1, 2, 3};
 
         // When
@@ -164,7 +164,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenContainsAnyCalledWithNullValue() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
 
         // When
         final boolean result = CollectionUtil.containsAny(collection, null);
@@ -185,7 +185,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenAnyMissingCalledWhenTheCollectionContainsAllValues() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
         final Object[] values = new Object[] {10, 20, 30};
 
         // When
@@ -198,7 +198,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenAnyMissingCalledWhenNullValues() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
 
         // When
         final boolean result = CollectionUtil.anyMissing(collection, null);
@@ -210,7 +210,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnTrueWhenAnyMissingCalledWhenTheCollectionDoesNotContainAProvidedValue() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
         final Object[] values = new Object[] {1, 2, 3};
 
         // When
@@ -223,7 +223,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenAnyMissingCalledWithNullValue() {
         // Given
-        final Collection<Integer> collection = Sets.newHashSet(10, 20, 30);
+        final Collection<Integer> collection = new HashSet<>(Arrays.asList(10, 20, 30));
 
         // When
         final boolean result = CollectionUtil.anyMissing(collection, null);
@@ -256,7 +256,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnTrueWhenDistinctCalledWithCollectionOfUniqueValues() {
         // Given
-        final Collection<Integer> collection = Lists.newArrayList(1, 2, 3, 4, 5);
+        final Collection<Integer> collection = Arrays.asList(1, 2, 3, 4, 5);
 
         // When
         final boolean result = CollectionUtil.distinct(collection);
@@ -268,7 +268,7 @@ public class CollectionUtilTest {
     @Test
     public void shouldReturnFalseWhenDistinctCalledWithCollectionOfNonUniqueValues() {
         // Given
-        final Collection<Integer> collection = Lists.newArrayList(1, 2, 3, 1, 2);
+        final Collection<Integer> collection = Arrays.asList(1, 2, 3, 1, 2);
 
         // When
         final boolean result = CollectionUtil.distinct(collection);

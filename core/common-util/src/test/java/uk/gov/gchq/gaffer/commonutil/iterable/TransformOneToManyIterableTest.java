@@ -16,7 +16,8 @@
 
 package uk.gov.gchq.gaffer.commonutil.iterable;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.IteratorUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -68,7 +69,7 @@ public class TransformOneToManyIterableTest {
             itr = iterable.iterator();
 
             // When
-            final List<String> output = Lists.newArrayList(itr);
+            final List<String> output = IteratorUtils.toList(itr);
 
             // Then
             final List<String> expected = Arrays.asList("ITEM 1", "ITEM 3A", "ITEM 3B", "ITEM 4");
@@ -165,7 +166,7 @@ public class TransformOneToManyIterableTest {
             iterable = new TransformOneToManyIterableImpl(items, autoClose);
 
             // When
-            Lists.newArrayList(iterable);
+            IterableUtils.toList(iterable);
 
             // Then
             verify((Closeable) itemsIterator, times(1)).close();
@@ -191,7 +192,7 @@ public class TransformOneToManyIterableTest {
             iterable = new TransformOneToManyIterableImpl(items, autoClose);
 
             // When
-            Lists.newArrayList(iterable);
+            IterableUtils.toList(iterable);
 
             // Then
             verify((Closeable) itemsIterator, never()).close();

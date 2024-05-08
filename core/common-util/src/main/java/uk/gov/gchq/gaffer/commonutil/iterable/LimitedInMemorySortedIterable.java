@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.commonutil.iterable;
 
-import com.google.common.collect.Iterables;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -141,7 +141,7 @@ public class LimitedInMemorySortedIterable<E> implements Iterable<E> {
         }
 
         @SuppressWarnings("unchecked")
-        final Iterable<? extends E>[] values = Iterables.toArray(backingMap.values(), Iterable.class);
+        final Iterable<? extends E>[] values = (Iterable<? extends E>[]) IterableUtils.toList(backingMap.values()).toArray();
         if (ArrayUtils.isEmpty(values)) {
             return Collections.emptyIterator();
         } else {
