@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.data.element.comparison;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -24,6 +23,8 @@ import uk.gov.gchq.gaffer.commonutil.TestGroups;
 import uk.gov.gchq.gaffer.commonutil.TestPropertyNames;
 import uk.gov.gchq.gaffer.data.element.Entity;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -51,7 +52,7 @@ public class ElementEqualityTest {
 
     @Test
     public void shouldStaySameWithUpdatedSet() {
-        final Set<String> groupBys = Sets.newHashSet("one", "two");
+        final Set<String> groupBys = new HashSet<>(Arrays.asList("one", "two"));
         final ElementJoinComparator elementJoinComparator = new ElementJoinComparator(groupBys);
 
         groupBys.remove("two");

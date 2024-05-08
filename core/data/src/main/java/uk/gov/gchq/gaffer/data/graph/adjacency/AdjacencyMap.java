@@ -17,15 +17,18 @@
 package uk.gov.gchq.gaffer.data.graph.adjacency;
 
 import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.Sets;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toSet;
+
+// TODO Remove remaining use of Guava from this class
 
 /**
  * An {@code AdjacencyMap} is used to store the contents of a graph in memory in
@@ -82,7 +85,7 @@ public class AdjacencyMap {
     public Set<Edge> putEdge(final Object source, final Object destination, final Edge edge) {
         final Set<Edge> existing = edgeGraph.get(source, destination);
         if (null == existing) {
-            final Set<Edge> set = Sets.newHashSet(edge);
+            final Set<Edge> set = new HashSet<>(Arrays.asList(edge));
             return edgeGraph.put(source, destination, set);
         } else {
             existing.add(edge);
@@ -141,7 +144,7 @@ public class AdjacencyMap {
      * @param destination the destination vertex
      */
     public void removeAllWithDestination(final Object destination) {
-        final Set<Object> set = Sets.newHashSet(getSources(destination));
+        final Set<Object> set = new HashSet<>(getSources(destination));
         for (final Object v : set) {
             edgeGraph.remove(v, destination);
         }

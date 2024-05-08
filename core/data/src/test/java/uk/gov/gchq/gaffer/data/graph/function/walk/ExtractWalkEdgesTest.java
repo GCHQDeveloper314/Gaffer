@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.data.graph.function.walk;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -23,6 +22,7 @@ import uk.gov.gchq.gaffer.data.element.Edge;
 import uk.gov.gchq.gaffer.data.element.Entity;
 import uk.gov.gchq.gaffer.data.graph.Walk;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.function.Function;
 
@@ -52,6 +52,6 @@ public class ExtractWalkEdgesTest {
         final Iterable<Set<Edge>> results = function.apply(walk);
 
         // Then
-        assertThat(results).containsOnly(Sets.newHashSet(EDGE_AB), Sets.newHashSet(EDGE_BC), Sets.newHashSet(EDGE_CA));
+        assertThat(results).containsOnly(Collections.singleton(EDGE_AB), Collections.singleton(EDGE_BC), Collections.singleton(EDGE_CA));
     }
 }

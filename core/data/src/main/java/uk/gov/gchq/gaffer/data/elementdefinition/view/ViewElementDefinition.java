@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.Sets;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -39,9 +38,11 @@ import uk.gov.gchq.koryphe.serialisation.json.SimpleClassNameIdResolver;
 import uk.gov.gchq.koryphe.tuple.function.TupleAdaptedFunction;
 import uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicate;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -342,7 +343,7 @@ public class ViewElementDefinition implements ElementDefinition {
             if (null == properties) {
                 elDef.properties = null;
             } else {
-                elDef.properties = Sets.newHashSet(properties);
+                elDef.properties = new HashSet<>(Arrays.asList(properties));
             }
             return self();
         }
@@ -366,7 +367,7 @@ public class ViewElementDefinition implements ElementDefinition {
             if (null == excludeProperties) {
                 elDef.excludeProperties = null;
             } else {
-                elDef.excludeProperties = Sets.newHashSet(excludeProperties);
+                elDef.excludeProperties = new HashSet<>(Arrays.asList(excludeProperties));
             }
             return self();
         }

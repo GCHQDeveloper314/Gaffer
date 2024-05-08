@@ -16,13 +16,14 @@
 
 package uk.gov.gchq.gaffer.data.graph.adjacency;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
 import uk.gov.gchq.gaffer.data.element.Edge;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -98,7 +99,7 @@ public class AdjacencyMapTest {
         final AdjacencyMap adjacencyMap = new AdjacencyMap();
 
         adjacencyMap.putEdge(1, 2, makeEdge(1, 2));
-        adjacencyMap.putEdges(1, 2, Sets.newHashSet(makeEdge(TestGroups.EDGE_2, 1, 2), makeEdge(TestGroups.EDGE_3, 1, 2)));
+        adjacencyMap.putEdges(1, 2, new HashSet<>(Arrays.asList(makeEdge(TestGroups.EDGE_2, 1, 2), makeEdge(TestGroups.EDGE_3, 1, 2))));
 
         // When
         final Set<Edge> results = adjacencyMap.getEdges(1, 2);

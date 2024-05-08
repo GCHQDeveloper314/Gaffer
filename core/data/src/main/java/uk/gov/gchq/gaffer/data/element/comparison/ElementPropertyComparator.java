@@ -18,12 +18,12 @@ package uk.gov.gchq.gaffer.data.element.comparison;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.collect.Sets;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import uk.gov.gchq.gaffer.commonutil.pair.Pair;
 import uk.gov.gchq.gaffer.data.element.Element;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
@@ -176,7 +176,7 @@ public class ElementPropertyComparator implements ElementComparator {
         }
 
         public Builder groups(final String... group) {
-            comparator.setGroups(Sets.newHashSet(group));
+            comparator.setGroups(new HashSet<>(Arrays.asList(group)));
             return this;
         }
 

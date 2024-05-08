@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.data.element.function;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonAssert;
@@ -68,7 +67,7 @@ public class TypeValueToTupleTest extends FunctionTest<TypeValueToTuple> {
     public void shouldGetAndSetUsingCompositeFunction() {
         // Given
         final TypeValue typeValue = new TypeValue("type", "value");
-        final Function<Object, Object> compositeFunction = new FunctionComposite(Lists.newArrayList(
+        final Function<Object, Object> compositeFunction = new FunctionComposite(Arrays.asList(
                 new TypeValueToTuple(),
                 new TupleAdaptedFunctionComposite.Builder()
                         .select(new String[]{"value"})

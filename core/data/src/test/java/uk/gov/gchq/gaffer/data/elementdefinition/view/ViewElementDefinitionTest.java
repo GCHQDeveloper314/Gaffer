@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.data.elementdefinition.view;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestPropertyNames;
@@ -34,6 +33,8 @@ import uk.gov.gchq.koryphe.tuple.binaryoperator.TupleAdaptedBinaryOperator;
 import uk.gov.gchq.koryphe.tuple.function.TupleAdaptedFunction;
 import uk.gov.gchq.koryphe.tuple.predicate.TupleAdaptedPredicate;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,7 +72,7 @@ public class ViewElementDefinitionTest {
         assertTrue(elementDef.containsTransientProperty(TestPropertyNames.PROP_1));
         assertTrue(elementDef.containsTransientProperty(TestPropertyNames.PROP_2));
 
-        assertEquals(Sets.newHashSet(TestPropertyNames.COUNT, TestPropertyNames.DATE), elementDef.getProperties());
+        assertEquals(new HashSet<>(Arrays.asList(TestPropertyNames.COUNT, TestPropertyNames.DATE)), elementDef.getProperties());
         assertNull(elementDef.getExcludeProperties());
         assertSame(preFilter, elementDef.getPreAggregationFilter());
         assertSame(aggregator, elementDef.getAggregator());
@@ -113,7 +114,7 @@ public class ViewElementDefinitionTest {
         final byte[] json = JSONSerialiser.serialise(elementDef, true);
         final ViewElementDefinition deserialisedElementDef = JSONSerialiser.deserialise(json, ViewElementDefinition.class);
 
-        assertEquals(Sets.newHashSet(TestPropertyNames.COUNT, TestPropertyNames.DATE), deserialisedElementDef.getProperties());
+        assertEquals(new HashSet<>(Arrays.asList(TestPropertyNames.COUNT, TestPropertyNames.DATE)), deserialisedElementDef.getProperties());
         assertNull(deserialisedElementDef.getExcludeProperties());
 
         final List<TupleAdaptedPredicate<String, ?>> preFilterComponents = deserialisedElementDef.getPreAggregationFilter().getComponents();

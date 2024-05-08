@@ -16,12 +16,13 @@
 
 package uk.gov.gchq.gaffer.data.graph.entity;
 
-import com.google.common.collect.HashMultimap;
-import com.google.common.collect.SetMultimap;
-
 import uk.gov.gchq.gaffer.data.element.Entity;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class EntityMap {
     /**
      * Backing object used to store the EntityMap representation.
      */
-    private final SetMultimap<Object, Entity> backingMap = HashMultimap.create();
+    private final Map<Object, Set<Entity>> backingMap = new HashMap<>();
 
     /**
      * Add an entity to this EntityMap instance.
@@ -46,7 +47,13 @@ public class EntityMap {
      * {@code false}
      */
     public boolean putEntity(final Object vertex, final Entity entity) {
-        return backingMap.put(vertex, entity);
+        Set<Entity> existingEntitySet = backingMap.get(vertex);
+        if (existingEntitySet != null) {
+            return existingEntitySet.add(entity);
+        } else {
+            backingMap.put(vertex, new HashSet<>(Arrays.asList(entity)));
+            return true;
+        }
     }
 
     /**
@@ -59,7 +66,13 @@ public class EntityMap {
      * {@code false}
      */
     public boolean putEntities(final Object vertex, final Set<Entity> entities) {
-        return backingMap.putAll(vertex, entities);
+        Set<Entity> existingEntitySet = backingMap.get(vertex);
+        if (existingEntitySet != null) {
+            return existingEntitySet.addAll(entities);
+        } else {
+            backingMap.put(vertex, new HashSet<>(entities));
+            return true;
+        }
     }
 
     /**
@@ -99,7 +112,7 @@ public class EntityMap {
 
     @Override
     public String toString() {
-        return backingMap.asMap().entrySet().stream()
+        return backingMap.entrySet().stream()
                 .map(e -> e.getKey() + ": " + e.getValue())
                 .collect(Collectors.joining(", ", "{", "}"));
     }

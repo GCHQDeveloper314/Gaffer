@@ -16,13 +16,12 @@
 
 package uk.gov.gchq.gaffer.data.element.comparison;
 
-import com.google.common.collect.Sets;
-
 import uk.gov.gchq.gaffer.data.element.Edge;
 import uk.gov.gchq.gaffer.data.element.Element;
 import uk.gov.gchq.gaffer.data.element.Entity;
 import uk.gov.gchq.koryphe.tuple.predicate.KoryphePredicate2;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -44,7 +43,7 @@ public class ElementJoinComparator extends KoryphePredicate2<Element, Element> {
     }
 
     public ElementJoinComparator(final String... groupByProperties) {
-        this.groupByProperties = Sets.newHashSet(groupByProperties);
+        this.groupByProperties = new HashSet<>(Arrays.asList(groupByProperties));
     }
 
     public Set<String> getGroupByProperties() {

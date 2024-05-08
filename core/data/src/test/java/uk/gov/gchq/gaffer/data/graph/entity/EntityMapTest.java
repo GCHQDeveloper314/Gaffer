@@ -16,12 +16,13 @@
 
 package uk.gov.gchq.gaffer.data.graph.entity;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
 import uk.gov.gchq.gaffer.data.element.Entity;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -93,7 +94,7 @@ public class EntityMapTest {
         final EntityMap entityMap = new EntityMap();
 
         // When
-        entityMap.putEntities(1, Sets.newHashSet(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3)));
+        entityMap.putEntities(1, new HashSet<>(Arrays.asList(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3))));
 
         // Then
         assertThat(entityMap.containsVertex(1)).isTrue();
@@ -107,8 +108,8 @@ public class EntityMapTest {
         final EntityMap entityMap = new EntityMap();
 
         // When
-        entityMap.putEntities(1, Sets.newHashSet(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3)));
-        entityMap.putEntities(1, Sets.newHashSet(new Entity(TestGroups.ENTITY, 4), new Entity(TestGroups.ENTITY, 5), new Entity(TestGroups.ENTITY, 6)));
+        entityMap.putEntities(1, new HashSet<>(Arrays.asList(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3))));
+        entityMap.putEntities(1, new HashSet<>(Arrays.asList(new Entity(TestGroups.ENTITY, 4), new Entity(TestGroups.ENTITY, 5), new Entity(TestGroups.ENTITY, 6))));
 
         // Then
         assertThat(entityMap.containsVertex(1)).isTrue();
@@ -122,8 +123,8 @@ public class EntityMapTest {
         final EntityMap entityMap = new EntityMap();
 
         // When
-        entityMap.putEntities(1, Sets.newHashSet(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3)));
-        entityMap.putEntities(2, Sets.newHashSet(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3)));
+        entityMap.putEntities(1, new HashSet<>(Arrays.asList(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3))));
+        entityMap.putEntities(2, new HashSet<>(Arrays.asList(new Entity(TestGroups.ENTITY, 1), new Entity(TestGroups.ENTITY, 2), new Entity(TestGroups.ENTITY, 3))));
 
         // Then
         assertThat(entityMap.containsVertex(1)).isTrue();

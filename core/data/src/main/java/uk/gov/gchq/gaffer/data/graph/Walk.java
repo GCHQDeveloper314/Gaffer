@@ -20,9 +20,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -34,6 +33,7 @@ import uk.gov.gchq.gaffer.data.element.id.EntityId;
 
 import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -173,7 +173,7 @@ public class Walk implements Iterable<Set<Edge>> {
      */
     @JsonIgnore
     public boolean isTrail() {
-        return Sets.newHashSet(edges).size() == edges.size();
+        return new HashSet<>(edges).size() == edges.size();
     }
 
     /**
@@ -249,13 +249,13 @@ public class Walk implements Iterable<Set<Edge>> {
 
         public Builder edge(final Edge edge) {
             if (entities.isEmpty()) {
-                entities.add(new AbstractMap.SimpleEntry<>(edge.getMatchedVertexValue(), Sets.newHashSet()));
+                entities.add(new AbstractMap.SimpleEntry<>(edge.getMatchedVertexValue(), new HashSet<>()));
             } else {
                 verifyEdge(entities.getLast().getKey(), edge);
             }
 
-            edges.add(Sets.newHashSet(edge));
-            entities.add(new AbstractMap.SimpleEntry<>(edge.getAdjacentMatchedVertexValue(), Sets.newHashSet()));
+            edges.add(new HashSet<>(Arrays.asList(edge)));
+            entities.add(new AbstractMap.SimpleEntry<>(edge.getAdjacentMatchedVertexValue(), new HashSet<>()));
 
             return this;
         }
@@ -263,7 +263,7 @@ public class Walk implements Iterable<Set<Edge>> {
         public Builder edges(final Edge... edges) {
             if (!distinct(Streams.toStream(edges).map(Edge::getMatchedVertexValue).collect(toList()))
                     && !distinct(Streams.toStream(edges).map(Edge::getAdjacentMatchedVertexValue).collect(toList()))) {
-                edgeSet(Sets.newHashSet(edges));
+                edgeSet(new HashSet<>(Arrays.asList(edges)));
             } else {
                 edgeList(Arrays.asList(edges));
             }
@@ -275,7 +275,7 @@ public class Walk implements Iterable<Set<Edge>> {
 
             if (!distinct(edgeList.stream().map(Edge::getMatchedVertexValue).collect(toList()))
                     && !distinct(edgeList.stream().map(Edge::getAdjacentMatchedVertexValue).collect(toList()))) {
-                edgeSet(Sets.newHashSet(edges));
+                edgeSet(new HashSet<>(IterableUtils.toList(edges)));
             } else {
                 edgeList(edgeList);
             }
@@ -293,7 +293,7 @@ public class Walk implements Iterable<Set<Edge>> {
                     .getAdjacentMatchedVertexValue();
 
             if (entities.isEmpty()) {
-                entities.add(new AbstractMap.SimpleEntry<>(matchedVertexValue, Sets.newHashSet()));
+                entities.add(new AbstractMap.SimpleEntry<>(matchedVertexValue, new HashSet<>()));
             } else {
                 final Object root = entities.getLast().getKey();
 
@@ -303,7 +303,7 @@ public class Walk implements Iterable<Set<Edge>> {
             }
 
             this.edges.add(edges);
-            entities.add(new AbstractMap.SimpleEntry<>(adjacentMatchedVertexValue, Sets.newHashSet()));
+            entities.add(new AbstractMap.SimpleEntry<>(adjacentMatchedVertexValue, new HashSet<>()));
 
             return this;
         }
@@ -330,17 +330,17 @@ public class Walk implements Iterable<Set<Edge>> {
                 currentEntities.add(entity);
                 entry.setValue(currentEntities);
             } else {
-                entities.push(new AbstractMap.SimpleEntry<>(entity.getVertex(), Sets.newHashSet(entity)));
+                entities.push(new AbstractMap.SimpleEntry<>(entity.getVertex(), new HashSet<>(Arrays.asList(entity))));
             }
             return this;
         }
 
         public Builder entities(final Iterable<Entity> entities) {
-            if (Iterables.isEmpty(entities)) {
+            if (IterableUtils.isEmpty(entities)) {
                 return this;
             }
 
-            if (Iterables.size(entities) == 1) {
+            if (IterableUtils.size(entities) == 1) {
                 return entity(entities.iterator().next());
             }
 
@@ -361,10 +361,10 @@ public class Walk implements Iterable<Set<Edge>> {
                 verifyEntity(root, entity);
 
                 final Set<Entity> currentEntities = entry.getValue();
-                currentEntities.addAll(Lists.newArrayList(entities));
+                currentEntities.addAll(new HashSet<>(IterableUtils.toList(entities)));
                 entry.setValue(currentEntities);
             } else {
-                this.entities.push(new AbstractMap.SimpleEntry<>(entity.getVertex(), Sets.newHashSet(entities)));
+                this.entities.push(new AbstractMap.SimpleEntry<>(entity.getVertex(), new HashSet<>(IterableUtils.toList(entities))));
             }
 
             return this;

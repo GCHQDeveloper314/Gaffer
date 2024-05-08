@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -39,6 +38,7 @@ import uk.gov.gchq.gaffer.user.User;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -57,7 +57,7 @@ public class NamedViewDetail implements AccessControlledResource, Serializable {
     private String description;
     private String creatorId;
     private List<String> writeAccessRoles;
-    private Map<String, ViewParameterDetail> parameters = Maps.newHashMap();
+    private Map<String, ViewParameterDetail> parameters = new HashMap<>();
     private String readAccessPredicate;
     private String writeAccessPredicate;
 
@@ -350,7 +350,7 @@ public class NamedViewDetail implements AccessControlledResource, Serializable {
         private String description;
         private String creatorId;
         private List<String> writers;
-        private Map<String, ViewParameterDetail> parameters = Maps.newHashMap();
+        private Map<String, ViewParameterDetail> parameters = new HashMap<>();
         private AccessPredicate readAccessPredicate;
         private AccessPredicate writeAccessPredicate;
 
