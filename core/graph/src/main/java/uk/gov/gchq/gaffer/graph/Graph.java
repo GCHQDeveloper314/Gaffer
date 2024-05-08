@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -63,6 +62,7 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Properties;
@@ -683,7 +683,7 @@ public final class Graph {
         public Builder addParentSchemaIds(final String... parentSchemaIds) {
             if (null != parentSchemaIds) {
                 if (null == this.parentSchemaIds) {
-                    this.parentSchemaIds = Lists.newArrayList(parentSchemaIds);
+                    this.parentSchemaIds = Arrays.asList(parentSchemaIds);
                 } else {
                     Collections.addAll(this.parentSchemaIds, parentSchemaIds);
                 }

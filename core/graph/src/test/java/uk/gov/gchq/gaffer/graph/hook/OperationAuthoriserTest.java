@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.exception.UnauthorisedException;
@@ -35,8 +34,10 @@ import uk.gov.gchq.gaffer.operation.impl.get.GetElements;
 import uk.gov.gchq.gaffer.store.Context;
 import uk.gov.gchq.gaffer.user.User;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -308,9 +309,9 @@ public class OperationAuthoriserTest extends GraphHookTest<OperationAuthoriser> 
         // Given
         final OperationAuthoriser hook = new OperationAuthoriser();
         final Map<Class<?>, Set<String>> auths = new HashMap<>();
-        auths.put(Operation.class, Sets.newHashSet("auth1"));
-        auths.put(GetElements.class, Sets.newHashSet("auth2"));
-        auths.put(GetAllElements.class, Sets.newHashSet("auth3", "auth4"));
+        auths.put(Operation.class, Collections.singleton("auth1"));
+        auths.put(GetElements.class, Collections.singleton("auth2"));
+        auths.put(GetAllElements.class, new HashSet<>(Arrays.asList("auth3", "auth4")));
 
         // When
         hook.setAuths(auths);
@@ -326,9 +327,9 @@ public class OperationAuthoriserTest extends GraphHookTest<OperationAuthoriser> 
         // Given
         final OperationAuthoriser hook = new OperationAuthoriser();
         final Map<String, Set<String>> auths = new HashMap<>();
-        auths.put(Operation.class.getName(), Sets.newHashSet("auth1"));
-        auths.put(GetElements.class.getName(), Sets.newHashSet("auth2"));
-        auths.put(GetAllElements.class.getName(), Sets.newHashSet("auth3", "auth4"));
+        auths.put(Operation.class.getName(), Collections.singleton("auth1"));
+        auths.put(GetElements.class.getName(), Collections.singleton("auth2"));
+        auths.put(GetAllElements.class.getName(), new HashSet<>(Arrays.asList("auth3", "auth4")));
 
         // When
         hook.setAuthsFromStrings(auths);

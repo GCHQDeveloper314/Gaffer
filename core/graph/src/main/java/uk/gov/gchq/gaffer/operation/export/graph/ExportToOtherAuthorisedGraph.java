@@ -18,7 +18,6 @@ package uk.gov.gchq.gaffer.operation.export.graph;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Lists;
 
 import uk.gov.gchq.gaffer.commonutil.Required;
 import uk.gov.gchq.gaffer.data.element.Element;
@@ -28,6 +27,7 @@ import uk.gov.gchq.gaffer.operation.serialisation.TypeReferenceImpl;
 import uk.gov.gchq.koryphe.Since;
 import uk.gov.gchq.koryphe.Summary;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -144,7 +144,7 @@ public class ExportToOtherAuthorisedGraph implements
 
         public Builder parentSchemaIds(final String... parentSchemaIds) {
             if (null == _getOp().getParentSchemaIds()) {
-                _getOp().setParentSchemaIds(Lists.newArrayList(parentSchemaIds));
+                _getOp().setParentSchemaIds(Arrays.asList(parentSchemaIds));
             } else {
                 Collections.addAll(_getOp().getParentSchemaIds(), parentSchemaIds);
             }

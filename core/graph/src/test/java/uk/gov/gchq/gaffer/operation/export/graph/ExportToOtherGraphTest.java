@@ -17,7 +17,6 @@
 package uk.gov.gchq.gaffer.operation.export.graph;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonAssert;
@@ -31,6 +30,7 @@ import uk.gov.gchq.gaffer.store.schema.Schema;
 import uk.gov.gchq.gaffer.store.schema.SchemaEntityDefinition;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -120,7 +120,7 @@ public class ExportToOtherGraphTest extends OperationTest<ExportToOtherGraph> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("graphId");
+        return new HashSet<>(Arrays.asList("graphId"));
     }
 
     @Override

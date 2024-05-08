@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.operation.export.resultcache.handler;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -96,7 +96,7 @@ public class GafferResultCacheExporterTest {
         verify(store).execute(opChain.capture(), Mockito.any(Context.class));
         assertThat(opChain.getValue().getOperations()).hasSize(1);
         final AddElements addElements = (AddElements) opChain.getValue().getOperations().get(0);
-        final List<Element> elements = Lists.newArrayList(addElements.getInput());
+        final List<Element> elements = (List<Element>) IterableUtils.toList(addElements.getInput());
         final Object timestamp = elements.get(0).getProperty("timestamp");
         final List<Element> expectedElements = createCachedEdges(timestamp,
                 elements.get(0).getProperty("result"),

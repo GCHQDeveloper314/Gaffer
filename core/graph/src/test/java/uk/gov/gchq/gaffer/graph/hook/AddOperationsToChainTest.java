@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.Test;
 
@@ -71,9 +70,9 @@ public class AddOperationsToChainTest extends GraphHookTest<AddOperationsToChain
         // Given
         final AddOperationsToChain hook = new AddOperationsToChain();
         final java.util.Map<String, List<Operation>> after = new HashMap<>();
-        after.put(GetElements.class.getName(), Lists.newArrayList(new Limit()));
+        after.put(GetElements.class.getName(), Arrays.asList(new Limit()));
         hook.setAfter(after);
-        hook.setEnd(Lists.newArrayList(new Limit()));
+        hook.setEnd(Arrays.asList(new Limit()));
 
         final GetElements getElements = new GetElements();
         final Limit limit = new Limit();

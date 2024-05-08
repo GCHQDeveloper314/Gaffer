@@ -16,9 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-import com.google.common.io.Files;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.AfterEach;
@@ -167,9 +164,9 @@ public class GraphTest {
         lenient().when(context.shallowClone()).thenReturn(clonedContext);
         lenient().when(clonedContext.getUser()).thenReturn(user);
 
-        lenient().when(opChain.getOperations()).thenReturn(Lists.newArrayList(operation));
+        lenient().when(opChain.getOperations()).thenReturn(Arrays.asList(operation));
         lenient().when(opChain.shallowClone()).thenReturn(clonedOpChain);
-        lenient().when(clonedOpChain.getOperations()).thenReturn(Lists.newArrayList(operation));
+        lenient().when(clonedOpChain.getOperations()).thenReturn(Arrays.asList(operation));
     }
 
     @AfterEach
@@ -852,7 +849,7 @@ public class GraphTest {
             throws OperationException {
         // Given
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
 
         final Schema schema = new Schema();
         final RuntimeException e = new RuntimeException("Store failed to execute operation chain");
@@ -984,7 +981,7 @@ public class GraphTest {
         final GetElements operation = new GetElements();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(store.execute(clonedOpChain, clonedContext)).willReturn(expectedResult);
 
         // When
@@ -1047,7 +1044,7 @@ public class GraphTest {
         final int expectedResult = 5;
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(store.execute(clonedOpChain, clonedContext)).willReturn(expectedResult);
 
         // When
@@ -1243,7 +1240,7 @@ public class GraphTest {
     }
 
     private void writeToFile(final String schemaFile, final File dir) throws IOException {
-        Files.copy(new File(getClass().getResource("/schema/" + schemaFile).getPath()),
+        FileUtils.copyFile(new File(getClass().getResource("/schema/" + schemaFile).getPath()),
                 new File(dir + "/" + schemaFile));
     }
 
@@ -2015,7 +2012,7 @@ public class GraphTest {
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema());
@@ -2059,7 +2056,7 @@ public class GraphTest {
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema());
@@ -2101,16 +2098,16 @@ public class GraphTest {
 
         final UpdateViewHook first = new UpdateViewHook.Builder()
                 .blackListElementGroups(Collections.singleton(TestGroups.EDGE))
-                .withOpAuth(Sets.newHashSet("opAuth1"))
+                .withOpAuth(Collections.singleton("opAuth1"))
                 .build();
 
         final UpdateViewHook second = new UpdateViewHook.Builder()
                 .blackListElementGroups(Collections.singleton(TestGroups.EDGE_2))
-                .withOpAuth(Sets.newHashSet("opAuth2"))
+                .withOpAuth(Collections.singleton("opAuth2"))
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema.Builder()
@@ -2159,7 +2156,7 @@ public class GraphTest {
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema.Builder()
@@ -2202,7 +2199,7 @@ public class GraphTest {
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema.Builder().edge(TestGroups.EDGE_5, new SchemaEdgeDefinition())
@@ -2245,7 +2242,7 @@ public class GraphTest {
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema.Builder()
@@ -2287,12 +2284,12 @@ public class GraphTest {
 
         final UpdateViewHook updateViewHook = new UpdateViewHook.Builder()
                 .addExtraGroups(true)
-                .blackListElementGroups(Sets.newHashSet(TestGroups.EDGE_4,
-                        TestGroups.EDGE))
+                .blackListElementGroups(new HashSet<>(Arrays.asList(TestGroups.EDGE_4,
+                        TestGroups.EDGE)))
                 .build();
 
         given(opChain.shallowClone()).willReturn(clonedOpChain);
-        given(clonedOpChain.getOperations()).willReturn(Lists.newArrayList(operation));
+        given(clonedOpChain.getOperations()).willReturn(Arrays.asList(operation));
         given(clonedOpChain.flatten()).willReturn(Arrays.asList(operation));
 
         given(store.getSchema()).willReturn(new Schema.Builder()
@@ -2403,7 +2400,7 @@ public class GraphTest {
         // When
         final GraphConfig config = new GraphConfig.Builder()
                 .graphId("test")
-                .addHook(new FunctionAuthoriser(Lists.newArrayList(Identity.class)))
+                .addHook(new FunctionAuthoriser(Arrays.asList(Identity.class)))
                 .build();
 
         final Graph graph = new Graph.Builder()

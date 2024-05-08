@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonAssert;
@@ -41,6 +40,7 @@ import uk.gov.gchq.koryphe.serialisation.json.SimpleClassNameCache;
 import uk.gov.gchq.koryphe.tuple.function.TupleAdaptedFunction;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -63,7 +63,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
         FunctionAuthoriser functionAuthoriser = new FunctionAuthoriser();
 
         // When
-        functionAuthoriser.setUnauthorisedFunctions(Lists.newArrayList(Identity.class));
+        functionAuthoriser.setUnauthorisedFunctions(Arrays.asList(Identity.class));
 
         // Then
         assertThatExceptionOfType(UnauthorisedException.class)
@@ -76,7 +76,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
         final OperationChain<Iterable<? extends Element>> viewOperation = new OperationChain.Builder().first(new GetElements.Builder()
                 .view(new View.Builder()
                         .globalElements(new GlobalViewElementDefinition.Builder()
-                                .transformFunctions(Lists.newArrayList(new TupleAdaptedFunction(new String[]{"input"}, new DivideBy(6), new String[]{"output"})))
+                                .transformFunctions(Arrays.asList(new TupleAdaptedFunction(new String[]{"input"}, new DivideBy(6), new String[]{"output"})))
                                 .build())
                         .build())
                 .build())
@@ -85,7 +85,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
         FunctionAuthoriser functionAuthoriser = new FunctionAuthoriser();
 
         // When
-        functionAuthoriser.setUnauthorisedFunctions(Lists.newArrayList(DivideBy.class));
+        functionAuthoriser.setUnauthorisedFunctions(Arrays.asList(DivideBy.class));
 
         // Then
         assertThatExceptionOfType(UnauthorisedException.class)
@@ -101,7 +101,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
         FunctionAuthoriser functionAuthoriser = new FunctionAuthoriser();
 
         // When
-        functionAuthoriser.setUnauthorisedFunctions(Lists.newArrayList(DivideBy.class));
+        functionAuthoriser.setUnauthorisedFunctions(Arrays.asList(DivideBy.class));
 
         // Then
         functionAuthoriser.preExecute(mapOperation, new Context());
@@ -114,7 +114,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
         OperationChain chain = new OperationChain();
 
         // When
-        FunctionAuthoriser authoriser = new FunctionAuthoriser(Lists.newArrayList(Identity.class));
+        FunctionAuthoriser authoriser = new FunctionAuthoriser(Arrays.asList(Identity.class));
 
         // Then no exceptions
         authoriser.preExecute(chain, new Context());
@@ -151,7 +151,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
                 .first(new GetAllElements()).build();
 
         // When
-        FunctionAuthoriser authoriser = new FunctionAuthoriser(Lists.newArrayList(Identity.class));
+        FunctionAuthoriser authoriser = new FunctionAuthoriser(Arrays.asList(Identity.class));
 
         // Then no exceptions
         authoriser.preExecute(chain, new Context());
@@ -165,7 +165,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
 
         // When
         SimpleClassNameCache.setUseFullNameForSerialisation(false);
-        functionAuthoriser.setUnauthorisedFunctions(Lists.newArrayList(Identity.class));
+        functionAuthoriser.setUnauthorisedFunctions(Arrays.asList(Identity.class));
 
         // Then
         assertThatExceptionOfType(UnauthorisedException.class)
@@ -183,7 +183,7 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
                 "]" +
                 "}";
 
-        final FunctionAuthoriser authoriser = new FunctionAuthoriser(Lists.newArrayList(ToString.class));
+        final FunctionAuthoriser authoriser = new FunctionAuthoriser(Arrays.asList(ToString.class));
 
         JsonAssert.assertEquals(json, new String(JSONSerialiser.serialise(authoriser)));
     }
@@ -203,9 +203,9 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
     @Test
     public void shouldMaintainOperationChainIfItFailsToSerialise() {
         // Given
-        FunctionAuthoriser authoriser = new FunctionAuthoriser(Lists.newArrayList(Identity.class));
+        FunctionAuthoriser authoriser = new FunctionAuthoriser(Arrays.asList(Identity.class));
 
-        List fakeInput = Lists.newArrayList(new EntitySeed(1), new EntitySeed(2), new EntitySeed(3));
+        List fakeInput = Arrays.asList(new EntitySeed(1), new EntitySeed(2), new EntitySeed(3));
         GetElements getElements = new GetElements();
         getElements.setInput(fakeInput);
 
@@ -227,9 +227,9 @@ public class FunctionAuthoriserTest extends GraphHookTest<FunctionAuthoriser> {
     @Test
     public void shouldMaintainOperationChainInputIfItSerialises() {
         // Given
-        FunctionAuthoriser authoriser = new FunctionAuthoriser(Lists.newArrayList(Identity.class));
+        FunctionAuthoriser authoriser = new FunctionAuthoriser(Arrays.asList(Identity.class));
 
-        List fakeInput = Lists.newArrayList(new EntitySeed(1), new EntitySeed(2), new EntitySeed(3));
+        List fakeInput = Arrays.asList(new EntitySeed(1), new EntitySeed(2), new EntitySeed(3));
         GetElements getElements = new GetElements();
         getElements.setInput(fakeInput);
 

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.cache.exception.CacheOperationException;
@@ -40,6 +39,7 @@ import uk.gov.gchq.gaffer.store.operation.handler.named.cache.NamedViewCache;
 import uk.gov.gchq.gaffer.user.User;
 import uk.gov.gchq.koryphe.impl.predicate.IsMoreThan;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -197,7 +197,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
 
     @Test
     public void shouldResolveNamedViewWithParameter() throws CacheOperationException {
-        Map<String, Object> paramMap = Maps.newHashMap();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(EDGE_NAME_PARAM_KEY, TestGroups.EDGE_2);
 
         ViewParameterDetail param = new ViewParameterDetail.Builder()
@@ -206,7 +206,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
                 .valueClass(String.class)
                 .build();
 
-        Map<String, ViewParameterDetail> paramDetailMap = Maps.newHashMap();
+        Map<String, ViewParameterDetail> paramDetailMap = new HashMap<>();
         paramDetailMap.put(EDGE_NAME_PARAM_KEY, param);
 
         // Make a real View with a parameter
@@ -260,7 +260,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
 
     @Test
     public void shouldResolveNamedViewWithParametersToMakeCompleteFilter() throws CacheOperationException {
-        Map<String, Object> paramMap = Maps.newHashMap();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(IS_MORE_THAN_X_PARAM_KEY, 7L);
 
         ViewParameterDetail param = new ViewParameterDetail.Builder()
@@ -269,7 +269,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
                 .valueClass(Long.class)
                 .build();
 
-        Map<String, ViewParameterDetail> paramDetailMap = Maps.newHashMap();
+        Map<String, ViewParameterDetail> paramDetailMap = new HashMap<>();
         paramDetailMap.put(IS_MORE_THAN_X_PARAM_KEY, param);
 
         // Make a real View with a parameter
@@ -322,7 +322,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
 
     @Test
     public void shouldResolveNamedViewJsonWithParameters() throws CacheOperationException {
-        Map<String, Object> paramMap = Maps.newHashMap();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put(IS_MORE_THAN_X_PARAM_KEY, 7L);
         paramMap.put(SELECTION_PARAM_KEY, "VERTEX");
 
@@ -338,7 +338,7 @@ public class NamedViewResolverTest extends GraphHookTest<NamedViewResolver> {
                 .required(true)
                 .build();
 
-        Map<String, ViewParameterDetail> paramDetailMap = Maps.newHashMap();
+        Map<String, ViewParameterDetail> paramDetailMap = new HashMap<>();
         paramDetailMap.put(IS_MORE_THAN_X_PARAM_KEY, param);
         paramDetailMap.put(SELECTION_PARAM_KEY, param2);
 

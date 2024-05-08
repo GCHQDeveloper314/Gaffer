@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.integration.graph;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -51,6 +51,7 @@ import uk.gov.gchq.koryphe.impl.predicate.IsTrue;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -180,8 +181,8 @@ public abstract class SchemaHidingIT {
         final Iterable<? extends Element> filteredResults = filteredGraph.execute(operation, USER);
 
         // Then
-        ElementUtil.assertElementEquals(fullExpectedResults, Sets.newHashSet(fullResults));
-        ElementUtil.assertElementEquals(filteredExpectedResults, Sets.newHashSet(filteredResults));
+        ElementUtil.assertElementEquals(fullExpectedResults, new HashSet<>(IterableUtils.toList(fullResults)));
+        ElementUtil.assertElementEquals(filteredExpectedResults, new HashSet<>(IterableUtils.toList(filteredResults)));
     }
 
     protected Schema createFullSchema() {

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +36,8 @@ import uk.gov.gchq.koryphe.impl.predicate.Exists;
 import uk.gov.gchq.koryphe.impl.predicate.IsIn;
 import uk.gov.gchq.koryphe.impl.predicate.IsMoreThan;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map.Entry;
 import java.util.Set;
@@ -55,12 +56,12 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     public static final String B = "B";
     private OperationChain opChain;
     private View viewToMerge;
-    private HashSet<String> userOpAuths = Sets.newHashSet();
-    private HashSet<String> userDataAuths = Sets.newHashSet();
-    private HashSet<String> opAuths = Sets.newHashSet();
-    private HashSet<String> dataAuths = Sets.newHashSet();
-    private HashSet<String> validAuths = Sets.newHashSet();
-    private HashSet<String> userAuths = Sets.newHashSet();
+    private HashSet<String> userOpAuths = new HashSet<>();
+    private HashSet<String> userDataAuths = new HashSet<>();
+    private HashSet<String> opAuths = new HashSet<>();
+    private HashSet<String> dataAuths = new HashSet<>();
+    private HashSet<String> validAuths = new HashSet<>();
+    private HashSet<String> userAuths = new HashSet<>();
     private Builder userBuilder;
     private UpdateViewHook updateViewHook;
 
@@ -191,7 +192,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldNotMergeWithWrongUser() throws Exception {
         updateViewHook.setViewToMerge(viewToMerge);
-        updateViewHook.setWithOpAuth(Sets.newHashSet("opA"));
+        updateViewHook.setWithOpAuth(Collections.singleton("opA"));
 
         opChain = new OperationChain<>(new GetAllElements());
         updateViewHook.preExecute(opChain, new Context(new User()));
@@ -204,7 +205,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldMergeWithUser() throws Exception {
         updateViewHook.setViewToMerge(viewToMerge);
-        updateViewHook.setWithOpAuth(Sets.newHashSet("opA"));
+        updateViewHook.setWithOpAuth(Collections.singleton("opA"));
 
         opChain = new OperationChain(new GetAllElements());
         updateViewHook.preExecute(opChain, new Context(new User.Builder().opAuth("opA").build()));
@@ -217,8 +218,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldMergeAndApplyWhiteList() throws Exception {
         updateViewHook.setViewToMerge(viewToMerge);
-        updateViewHook.setWithOpAuth(Sets.newHashSet("opA"));
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet("white2", "white1", "testGroup"));
+        updateViewHook.setWithOpAuth(Collections.singleton("opA"));
+        updateViewHook.setWhiteListElementGroups(new HashSet<>(Arrays.asList("white2", "white1", "testGroup")));
 
         opChain = new OperationChain.Builder()
                 .first(new GetAllElements.Builder()
@@ -272,8 +273,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
                                 .build())
                         .build())
                 .build();
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet("white2", "white1"));
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet("white1"));
+        updateViewHook.setWhiteListElementGroups(new HashSet<>(Arrays.asList("white2", "white1")));
+        updateViewHook.setBlackListElementGroups(Collections.singleton("white1"));
         updateViewHook.preExecute(opChain, new Context(new User.Builder().opAuth("opA").build()));
 
         Object op = opChain.getOperations().get(0);
@@ -295,7 +296,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
                                 .build())
                         .build())
                 .build();
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet("white2", "white1"));
+        updateViewHook.setWhiteListElementGroups(new HashSet<>(Arrays.asList("white2", "white1")));
         updateViewHook.preExecute(opChain, new Context(new User.Builder().opAuth("opA").build()));
 
         Object op = opChain.getOperations().get(0);
@@ -317,7 +318,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
                                 .build())
                         .build())
                 .build();
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet("white1"));
+        updateViewHook.setBlackListElementGroups(Collections.singleton("white1"));
         updateViewHook.preExecute(opChain, new Context(new User.Builder().opAuth("opA").build()));
 
         Object op = opChain.getOperations().get(0);
@@ -472,8 +473,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     public void shouldSerialiseOpAuth() throws Exception {
 
         UpdateViewHook updateViewHook = new UpdateViewHook.Builder()
-                .withOpAuth(Sets.newHashSet(TEST_WITH_VALUE))
-                .withoutOpAuth(Sets.newHashSet(TEST_WITHOUT_VALUE))
+                .withOpAuth(Collections.singleton(TEST_WITH_VALUE))
+                .withoutOpAuth(Collections.singleton(TEST_WITHOUT_VALUE))
                 .build();
 
         byte[] serialise = getBytes(updateViewHook);
@@ -496,8 +497,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     public void shouldSerialiseDataAuths() throws Exception {
 
         UpdateViewHook updateViewHook = new UpdateViewHook.Builder()
-                .withDataAuth(Sets.newHashSet(TEST_WITH_VALUE))
-                .withoutDataAuth(Sets.newHashSet(TEST_WITHOUT_VALUE))
+                .withDataAuth(Collections.singleton(TEST_WITH_VALUE))
+                .withoutDataAuth(Collections.singleton(TEST_WITHOUT_VALUE))
                 .build();
 
         byte[] serialise = getBytes(updateViewHook);
@@ -511,8 +512,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     public void shouldSerialiseElementGroups() throws Exception {
 
         UpdateViewHook updateViewHook = new UpdateViewHook.Builder()
-                .whiteListElementGroups(Sets.newHashSet(TEST_WITH_VALUE))
-                .blackListElementGroups(Sets.newHashSet(TEST_WITHOUT_VALUE))
+                .whiteListElementGroups(Collections.singleton(TEST_WITH_VALUE))
+                .blackListElementGroups(Collections.singleton(TEST_WITHOUT_VALUE))
                 .build();
 
         byte[] serialise = getBytes(updateViewHook);
@@ -543,7 +544,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldRemoveBlackList() throws Exception {
         UpdateViewHook updateViewHook = new UpdateViewHook();
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet(TEST_KEY));
+        updateViewHook.setBlackListElementGroups(Collections.singleton(TEST_KEY));
 
         assertTrue(updateViewHook.removeElementGroups(getEntry()));
     }
@@ -551,7 +552,7 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldKeepWhiteList() throws Exception {
         UpdateViewHook updateViewHook = new UpdateViewHook();
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet(TEST_KEY));
+        updateViewHook.setWhiteListElementGroups(Collections.singleton(TEST_KEY));
 
         assertFalse(updateViewHook.removeElementGroups(getEntry()));
     }
@@ -560,8 +561,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldRemoveInBothLists() throws Exception {
         UpdateViewHook updateViewHook = new UpdateViewHook();
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet(TEST_KEY));
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet(TEST_KEY));
+        updateViewHook.setBlackListElementGroups(Collections.singleton(TEST_KEY));
+        updateViewHook.setWhiteListElementGroups(Collections.singleton(TEST_KEY));
 
         assertTrue(updateViewHook.removeElementGroups(getEntry()));
     }
@@ -569,8 +570,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldKeepWhiteList2() throws Exception {
         UpdateViewHook updateViewHook = new UpdateViewHook();
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet(TEST_KEY));
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet(OTHER));
+        updateViewHook.setWhiteListElementGroups(Collections.singleton(TEST_KEY));
+        updateViewHook.setBlackListElementGroups(Collections.singleton(OTHER));
 
         assertFalse(updateViewHook.removeElementGroups(getEntry()));
     }
@@ -578,8 +579,8 @@ public class UpdateViewHookTest extends GraphHookTest<UpdateViewHook> {
     @Test
     public void shouldRemoveBlackList2() throws Exception {
         UpdateViewHook updateViewHook = new UpdateViewHook();
-        updateViewHook.setWhiteListElementGroups(Sets.newHashSet(OTHER));
-        updateViewHook.setBlackListElementGroups(Sets.newHashSet(TEST_KEY));
+        updateViewHook.setWhiteListElementGroups(Collections.singleton(OTHER));
+        updateViewHook.setBlackListElementGroups(Collections.singleton(TEST_KEY));
 
         assertTrue(updateViewHook.removeElementGroups(getEntry()));
     }

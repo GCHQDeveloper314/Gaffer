@@ -15,17 +15,16 @@
  */
 package uk.gov.gchq.gaffer.graph.hook;
 
-import com.google.common.collect.ImmutableList;
-
 import uk.gov.gchq.koryphe.impl.function.CreateObject;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
 public final class FunctionAuthoriserUtil {
 
     public static final List<Class<? extends Function>> DEFAULT_UNAUTHORISED_FUNCTIONS =
-            ImmutableList.of(CreateObject.class);
+            Collections.singletonList(CreateObject.class);
 
     private FunctionAuthoriserUtil() {
         // Prevents instantiation
