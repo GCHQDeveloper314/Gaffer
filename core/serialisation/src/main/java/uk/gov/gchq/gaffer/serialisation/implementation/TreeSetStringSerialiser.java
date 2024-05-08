@@ -16,12 +16,12 @@
 
 package uk.gov.gchq.gaffer.serialisation.implementation;
 
-import com.google.common.base.Splitter;
-
 import uk.gov.gchq.gaffer.exception.SerialisationException;
 import uk.gov.gchq.gaffer.serialisation.ToBytesViaStringDeserialiser;
 
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeSet;
 
@@ -60,16 +60,10 @@ public class TreeSetStringSerialiser extends ToBytesViaStringDeserialiser<TreeSe
 
     @Override
     public TreeSet<String> deserialiseString(final String value) throws SerialisationException {
+        final ArrayList<String> items = new ArrayList<>(Arrays.asList(value.substring(1, value.length() - 1).split("\\\\" + COMMA)));
+        items.removeAll(Arrays.asList(""));
 
-        final TreeSet<String> treeSet = new TreeSet<>();
-        final Iterable<String> items = Splitter.on(COMMA)
-                .omitEmptyStrings()
-                .split(value.substring(1, value.length() - 1));
-        for (final String item : items) {
-            treeSet.add(item);
-        }
-
-        return treeSet;
+        return new TreeSet<>(items);
     }
 
     @Override

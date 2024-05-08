@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.serialisation.implementation;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.pair.Pair;
@@ -49,8 +48,8 @@ public class TreeSetStringSerialiserTest extends ToBytesSerialisationTest<TreeSe
         final TreeSet deserialisedSet = serialiser.deserialise(serialisedSet);
 
         // Then
-        assertNotSame(deserialisedSet, set);
-        assertEquals(deserialisedSet, set);
+        assertNotSame(set, deserialisedSet);
+        assertEquals(set, deserialisedSet);
     }
 
     @Test
@@ -70,7 +69,7 @@ public class TreeSetStringSerialiserTest extends ToBytesSerialisationTest<TreeSe
     @Test
     public void shouldBeAbleToHandleATreeSet() {
         // Given
-        final Class testClass = TreeSet.class;
+        final Class<?> testClass = TreeSet.class;
 
         // When
         final boolean canHandle = serialiser.canHandle(testClass);
@@ -82,7 +81,7 @@ public class TreeSetStringSerialiserTest extends ToBytesSerialisationTest<TreeSe
     @Test
     public void shouldNotBeAbleToHandleAHashSet() {
         // Given
-        final Class testClass = HashSet.class;
+        final Class<?> testClass = HashSet.class;
 
         // When
         final boolean canHandle = serialiser.canHandle(testClass);
@@ -110,7 +109,7 @@ public class TreeSetStringSerialiserTest extends ToBytesSerialisationTest<TreeSe
 
     @Override
     public Pair<TreeSet<String>, byte[]>[] getHistoricSerialisationPairs() {
-        final TreeSet<String> set = Sets.newTreeSet();
+        final TreeSet<String> set = new TreeSet<>();
         set.add("this");
         set.add("is");
         set.add("S P A R T A!!!!!");

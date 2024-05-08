@@ -34,8 +34,8 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.fasterxml.jackson.datatype.jsr310.JSR310Module;
-import com.google.common.collect.Sets;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.apache.commons.collections4.SetUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -181,7 +181,7 @@ public class JSONSerialiser {
         }
 
         final String moduleFactories = System.getProperty(JSON_SERIALISER_MODULES, "");
-        final Set<String> factoryClasses = Sets.newHashSet(moduleFactories.split(","));
+        final Set<String> factoryClasses = SetUtils.hashSet(moduleFactories.split(","));
         factoryClasses.remove("");
         for (final String factoryClass : factoryClasses) {
             final JSONSerialiserModules factory;
