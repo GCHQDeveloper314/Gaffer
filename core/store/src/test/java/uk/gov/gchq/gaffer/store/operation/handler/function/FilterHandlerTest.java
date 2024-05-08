@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.function;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -129,7 +129,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 
@@ -239,7 +239,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 
@@ -303,7 +303,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 
@@ -368,7 +368,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 
@@ -443,7 +443,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 
@@ -532,7 +532,7 @@ public class FilterHandlerTest {
         final Iterable<? extends Element> results = handler.doOperation(filter, context, store);
 
         // Then
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         assertEquals(expected, resultsList);
     }
 

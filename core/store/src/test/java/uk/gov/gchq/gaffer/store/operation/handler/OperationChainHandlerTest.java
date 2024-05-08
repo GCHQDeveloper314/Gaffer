@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -141,9 +140,9 @@ public class OperationChainHandlerTest {
         given(opChainValidator.validate(any(), any(), any())).willReturn(new ValidationResult());
 
         given(store.handleOperation(op1, context))
-                .willReturn(Lists.newArrayList(new EntitySeed("A"), new EntitySeed("B")));
+                .willReturn(Arrays.asList(new EntitySeed("A"), new EntitySeed("B")));
         given(store.handleOperation(op2, context))
-                .willReturn(Lists.newArrayList(entityA, entityB));
+                .willReturn(Arrays.asList(entityA, entityB));
         given(store.handleOperation(op3, context)).willReturn(entityA);
 
         // When

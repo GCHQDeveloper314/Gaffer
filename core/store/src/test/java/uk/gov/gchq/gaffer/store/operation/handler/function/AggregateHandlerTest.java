@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.store.operation.handler.function;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -158,7 +158,7 @@ public class AggregateHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(aggregate, context, store);
-        final Set<Element> resultsSet = Sets.newHashSet(results);
+        final Set<Element> resultsSet = new HashSet((List<Element>) IterableUtils.toList(results));
 
         // Then
         assertEquals(expected, resultsSet);
@@ -209,7 +209,7 @@ public class AggregateHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(aggregate, context, store);
-        final Set<Element> resultsSet = Sets.newHashSet(results);
+        final Set<Element> resultsSet = new HashSet((List<Element>) IterableUtils.toList(results));
 
         // Then
         assertEquals(expected, resultsSet);
@@ -311,10 +311,10 @@ public class AggregateHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(aggregate, context, store);
-        final Set<Element> resultsSet = Sets.newHashSet(results);
+        final Set<Element> resultsSet = new HashSet((List<Element>) IterableUtils.toList(results));
 
         final Iterable<? extends Element> results1 = handler.doOperation(aggregate1, context, store1);
-        final Set<Element> resultsSet1 = Sets.newHashSet(results1);
+        final Set<Element> resultsSet1 = new HashSet((List<Element>) IterableUtils.toList(results1));
 
         // Then
         assertEquals(expected, resultsSet);
@@ -399,7 +399,7 @@ public class AggregateHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(aggregate, context, store);
-        final Set<Element> resultsSet = Sets.newHashSet(results);
+        final Set<Element> resultsSet = new HashSet((List<Element>) IterableUtils.toList(results));
 
         // Then
         assertEquals(expected, resultsSet);
@@ -472,7 +472,7 @@ public class AggregateHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(aggregate, context, store);
-        final Set<Element> resultsSet = Sets.newHashSet(results);
+        final Set<Element> resultsSet = new HashSet((List<Element>) IterableUtils.toList(results));
 
         // Then
         assertEquals(expected, resultsSet);

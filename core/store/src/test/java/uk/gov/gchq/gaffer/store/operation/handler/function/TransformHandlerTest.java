@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.function;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +43,7 @@ import uk.gov.gchq.koryphe.impl.function.Identity;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -124,7 +125,7 @@ public class TransformHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(transform, context, store);
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
         // Then
         boolean isSame = false;
         for (int i = 0; i < resultsList.size(); i++) {
@@ -180,7 +181,7 @@ public class TransformHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(transform, context, store);
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
 
         // Then
         boolean isSame = false;
@@ -243,7 +244,7 @@ public class TransformHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(transform, context, store);
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
 
         // Then
         boolean isSame = false;
@@ -314,7 +315,7 @@ public class TransformHandlerTest {
 
         // When
         final Iterable<? extends Element> results = handler.doOperation(transform, context, store);
-        final List<Element> resultsList = Lists.newArrayList(results);
+        final List<Element> resultsList = (List<Element>) IterableUtils.toList(results);
 
         // Then
         boolean isSame = false;

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.output;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,6 +30,7 @@ import uk.gov.gchq.gaffer.store.Context;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -89,9 +90,9 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        final Set<Object> set1 = Sets.newHashSet(results);
-        final Set<Object> set2 = Sets.newHashSet(results);
-        assertEquals(Sets.newHashSet(vertex1, vertex2), set1);
+        final Set<Object> set1 = new HashSet<>(IterableUtils.toList(results));
+        final Set<Object> set2 = new HashSet<>(IterableUtils.toList(results));
+        assertEquals(new HashSet<>(Arrays.asList(vertex1, vertex2)), set1);
         assertEquals(set1, set2);
     }
 
@@ -116,7 +117,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex1, vertex4, vertex6, vertex8);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex1, vertex4, vertex6, vertex8);
     }
 
     @Test
@@ -140,7 +141,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex2, vertex3, vertex5, vertex7);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex2, vertex3, vertex5, vertex7);
     }
 
     @Test
@@ -158,7 +159,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex1, vertex2, vertex3);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex1, vertex2, vertex3);
     }
 
     @Test
@@ -175,7 +176,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex1);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex1);
     }
 
     @Test
@@ -193,7 +194,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         //Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex2);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex2);
     }
 
     @Test
@@ -215,7 +216,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         // Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex1, vertex3, vertex5, vertex7);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex1, vertex3, vertex5, vertex7);
     }
 
     @Test
@@ -237,7 +238,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         // Then
-        assertThat(Sets.newHashSet(results)).containsOnly(vertex2, vertex4, vertex6, vertex8);
+        assertThat(new HashSet<>(IterableUtils.toList(results))).containsOnly(vertex2, vertex4, vertex6, vertex8);
     }
 
     @Test
@@ -259,7 +260,7 @@ public class ToVerticesHandlerTest {
         final Iterable<Object> results = handler.doOperation(operation, new Context(), null);
 
         // Then
-        assertThat(Sets.newHashSet(results)).isEmpty();
+        assertThat(new HashSet<>(IterableUtils.toList(results))).isEmpty();
     }
 
     @Test

@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.util;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.StreamUtil;
@@ -43,6 +41,7 @@ import uk.gov.gchq.koryphe.impl.binaryoperator.Product;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -152,7 +151,7 @@ public class AggregatorUtilTest {
                         .property("count", 200)
                         .build());
 
-        final Set<Element> expected = Sets.newHashSet(
+        final Set<Element> expected = new HashSet<>(Arrays.asList(
                 new Entity.Builder()
                         .group(TestGroups.NON_AGG_ENTITY)
                         .vertex("vertex1")
@@ -178,7 +177,7 @@ public class AggregatorUtilTest {
                         .source("vertex2")
                         .dest("vertex1")
                         .property("count", 300)
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElements = AggregatorUtil.ingestAggregate(elements, schema);
@@ -292,7 +291,7 @@ public class AggregatorUtilTest {
 
         );
 
-        final Set<Element> expected = Sets.newHashSet(
+        final Set<Element> expected = new HashSet<>(Arrays.asList(
                 new Entity.Builder()
                         .group(TestGroups.ENTITY)
                         .vertex("vertex1")
@@ -351,7 +350,7 @@ public class AggregatorUtilTest {
                         .property("count", 3000)
                         .property("property2", "value2")
                         .property("visibility", "vis1")
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElements = AggregatorUtil.ingestAggregate(elements, schema);
@@ -466,7 +465,7 @@ public class AggregatorUtilTest {
                         .property("visibility", "vis2")
                         .build());
 
-        final Set<Element> expected = Sets.newHashSet(
+        final Set<Element> expected = new HashSet<>(Arrays.asList(
                 new Entity.Builder()
                         .group(TestGroups.ENTITY)
                         .vertex("vertex1")
@@ -488,7 +487,7 @@ public class AggregatorUtilTest {
                         .property("count", 3300)
                         .property("property2", "value1")
                         .property("visibility", "vis1")
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElements = AggregatorUtil.queryAggregate(elements, schema, view);
@@ -583,7 +582,7 @@ public class AggregatorUtilTest {
                         .property("visibility", "vis2")
                         .build());
 
-        final Set<Element> expected = Sets.newHashSet(
+        final Set<Element> expected = new HashSet<>(Arrays.asList(
                 new Entity.Builder()
                         .group(TestGroups.ENTITY)
                         .vertex("vertex1")
@@ -605,7 +604,7 @@ public class AggregatorUtilTest {
                         .property("count", 3300)
                         .property("property2", "value1")
                         .property("visibility", "vis1")
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElements = AggregatorUtil.queryAggregate(elements, schema, view);
@@ -702,9 +701,9 @@ public class AggregatorUtilTest {
 
         final Map<Element, List<Element>> results = input.stream().collect(Collectors.groupingBy(fn));
         final Map<Element, List<Element>> expected = new HashMap<>();
-        expected.put(input.get(0), Lists.newArrayList(input.get(0)));
-        expected.put(input.get(1), Lists.newArrayList(input.get(1)));
-        expected.put(input.get(2), Lists.newArrayList(input.get(2)));
+        expected.put(input.get(0), Arrays.asList(input.get(0)));
+        expected.put(input.get(1), Arrays.asList(input.get(1)));
+        expected.put(input.get(2), Arrays.asList(input.get(2)));
         assertThat(results).isEqualTo(expected);
     }
 
@@ -983,7 +982,7 @@ public class AggregatorUtilTest {
 
         final List<Element> elements = createElementsForIncludeMatchedVertexTest();
 
-        final Set<Element> expectedIncludingMatchedVertex = Sets.newHashSet(
+        final Set<Element> expectedIncludingMatchedVertex = new HashSet<>(Arrays.asList(
                 new Edge.Builder()
                         .group(TestGroups.EDGE)
                         .source("1-sourceDir3")
@@ -1003,7 +1002,7 @@ public class AggregatorUtilTest {
                         .property("count", 4300)
                         .property("property2", "value1")
                         .property("visibility", "vis1")
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElementsIncludingMatchedVertex = AggregatorUtil.queryAggregate(elements, schema, view, true);
@@ -1027,7 +1026,7 @@ public class AggregatorUtilTest {
 
         final List<Element> elements = createElementsForIncludeMatchedVertexTest();
 
-        final Set<Element> expectedExcludingMatchedVertex = Sets.newHashSet(
+        final Set<Element> expectedExcludingMatchedVertex = new HashSet<>(Arrays.asList(
                 new Edge.Builder()
                         .group(TestGroups.EDGE)
                         .source("1-sourceDir3")
@@ -1036,7 +1035,7 @@ public class AggregatorUtilTest {
                         .property("count", 4321)
                         .property("property2", "value1")
                         .property("visibility", "vis1")
-                        .build());
+                        .build()));
 
         // when
         final Iterable<Element> aggregatedElementsExcludingMatchedVertex = AggregatorUtil.queryAggregate(elements, schema, view, false);

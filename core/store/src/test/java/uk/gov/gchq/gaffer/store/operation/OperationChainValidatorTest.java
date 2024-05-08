@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -80,7 +79,6 @@ public class OperationChainValidatorTest {
                 new GetAdjacentIds())), true);
     }
 
-    @SuppressWarnings({"unchecked"})
     @Test
     public void shouldInValidateNullElementDef() {
         // Given
@@ -92,7 +90,7 @@ public class OperationChainValidatorTest {
         given(schema.getElement(Mockito.anyString())).willReturn(null);
 
         final Max max = new Max();
-        max.setComparators(Lists.newArrayList(new ElementPropertyComparator.Builder()
+        max.setComparators(Arrays.asList(new ElementPropertyComparator.Builder()
                 .groups(TestGroups.ENTITY)
                 .property("property")
                 .build()));

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Iterables;
+import org.apache.commons.collections4.IterableUtils;
 
 import uk.gov.gchq.gaffer.commonutil.stream.Streams;
 import uk.gov.gchq.gaffer.data.element.Element;
@@ -56,7 +56,7 @@ public abstract class AbstractSampleElementsForSplitPointsHandler<T, S extends S
         final Random random = new Random(System.currentTimeMillis());
 
 
-        final Iterable<? extends Element> cleanElements = Iterables.filter(
+        final Iterable<? extends Element> cleanElements = IterableUtils.filteredIterable(
                 operation.getInput(),
                 e -> null != e && (1 == proportionToSample || random.nextFloat() <= proportionToSample)
         );

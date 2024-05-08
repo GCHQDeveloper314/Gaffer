@@ -16,13 +16,12 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Lists;
-
 import uk.gov.gchq.gaffer.operation.OperationException;
 import uk.gov.gchq.gaffer.operation.impl.GetVariables;
 import uk.gov.gchq.gaffer.store.Context;
 import uk.gov.gchq.gaffer.store.Store;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +30,7 @@ public class GetVariablesHandler implements OperationHandler<GetVariables> {
     @Override
     public Map<String, Object> doOperation(final GetVariables operation, final Context context, final Store store) throws OperationException {
         final Map<String, Object> variableMap = new HashMap<>();
-        List<String> variableNames = operation.getVariableNames() != null ? operation.getVariableNames() : Lists.newArrayList();
+        List<String> variableNames = operation.getVariableNames() != null ? operation.getVariableNames() : new ArrayList<>();
         for (final String key : variableNames) {
             if (null != key) {
                 variableMap.put(key, context.getVariable(key));

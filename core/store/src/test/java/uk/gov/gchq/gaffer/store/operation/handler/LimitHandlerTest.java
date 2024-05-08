@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.impl.Limit;
@@ -34,8 +33,7 @@ public class LimitHandlerTest {
     public void shouldLimitResults() throws Exception {
         // Given
         final List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
-        final List<Integer> expectedResult = Arrays.asList(1, 2, 3);
-        final Integer resultLimit = expectedResult.size();
+        final Integer resultLimit = 3;
         final Limit<Integer> limit = new Limit.Builder<Integer>()
                 .input(input)
                 .resultLimit(resultLimit)
@@ -50,7 +48,7 @@ public class LimitHandlerTest {
         assertThat(result).isInstanceOf(LimitedIterable.class);
         assertThat(((LimitedIterable<Integer>) result).getStart()).isEqualTo(0);
         assertThat(((LimitedIterable<Integer>) result).getEnd()).isEqualTo(resultLimit);
-        assertThat(Lists.newArrayList(result)).isEqualTo(expectedResult);
+        assertThat((Iterable<Integer>) result).containsExactly(1, 2, 3);
     }
 
     @Test

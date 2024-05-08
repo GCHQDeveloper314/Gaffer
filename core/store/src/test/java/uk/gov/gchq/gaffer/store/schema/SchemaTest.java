@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.schema;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonAssert;
@@ -53,6 +52,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -136,7 +136,7 @@ public class SchemaTest {
         assertEquals("prop.date", propertyMap.get(TestPropertyNames.DATE));
         assertEquals("timestamp", propertyMap.get(TestPropertyNames.TIMESTAMP));
 
-        assertEquals(Sets.newLinkedHashSet(Collections.singletonList(TestPropertyNames.DATE)),
+        assertEquals(new LinkedHashSet<>(Collections.singletonList(TestPropertyNames.DATE)),
                 edgeDefinition.getGroupBy());
 
         // Check validator

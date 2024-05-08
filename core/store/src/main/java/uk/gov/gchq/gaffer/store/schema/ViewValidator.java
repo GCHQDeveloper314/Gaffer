@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.schema;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -159,7 +158,7 @@ public class ViewValidator {
             final Set<String> schemaGroupBy = schemaElDef.getGroupBy();
             if (null != schemaGroupBy && schemaGroupBy.containsAll(viewGroupBy)) {
                 if (isStoreOrdered) {
-                    final LinkedHashSet<String> schemaGroupBySubset = Sets.newLinkedHashSet(Iterables.limit(schemaGroupBy, viewGroupBy.size()));
+                    final LinkedHashSet<String> schemaGroupBySubset = new LinkedHashSet<>(IterableUtils.toList(IterableUtils.boundedIterable(schemaGroupBy, viewGroupBy.size())));
                     if (!viewGroupBy.equals(schemaGroupBySubset)) {
                         result.addError("Group by properties for group " + group + " are not in the same order as the group by properties in the schema. View groupBy:" + viewGroupBy + ". Schema groupBy:" + schemaGroupBy);
                     }

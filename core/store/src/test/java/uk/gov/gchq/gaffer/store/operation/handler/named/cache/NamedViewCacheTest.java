@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.named.cache;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,6 +32,7 @@ import uk.gov.gchq.gaffer.data.elementdefinition.view.View;
 import uk.gov.gchq.gaffer.user.User;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -134,7 +135,7 @@ public class NamedViewCacheTest {
         cache.addNamedView(viewDetailA, false);
         cache.addNamedView(viewDetailB, false);
 
-        final Set<NamedViewDetail> allViews = Sets.newHashSet(cache.getAllNamedViews(userA));
+        final Set<NamedViewDetail> allViews = new HashSet<>(IterableUtils.toList(cache.getAllNamedViews(userA)));
 
         assertThat(allViews)
                 .contains(viewDetailA, viewDetailB)

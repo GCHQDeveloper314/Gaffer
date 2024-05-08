@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationException;
@@ -58,7 +57,11 @@ public class GetVariablesHandlerTest {
         Map<String, Object> resultMap = handler.doOperation(op, context, store);
 
         // Then
-        assertEquals(ImmutableMap.of(key1, val1, key2, val2, key3, val3), resultMap);
+        final Map expected = new HashMap<>();
+        expected.put(key1, val1);
+        expected.put(key2, val2);
+        expected.put(key3, val3);
+        assertEquals(expected, resultMap);
     }
 
     @Test

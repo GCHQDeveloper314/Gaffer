@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -33,6 +32,7 @@ import uk.gov.gchq.gaffer.serialisation.Serialiser;
 import uk.gov.gchq.koryphe.serialisation.json.SimpleClassNameIdResolver;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -241,7 +241,7 @@ public class TypeDefinition {
         }
 
         public Builder validateFunctions(final Predicate... validateFunctions) {
-            return validateFunctions(Lists.newArrayList(validateFunctions));
+            return validateFunctions(Arrays.asList(validateFunctions));
         }
 
         public <F extends BinaryOperator<T>, T> Builder aggregateFunction(final F aggregateFunction) {

@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Sets;
-
 import uk.gov.gchq.gaffer.operation.OperationException;
 import uk.gov.gchq.gaffer.store.Context;
 import uk.gov.gchq.gaffer.store.Store;
@@ -28,6 +26,7 @@ import uk.gov.gchq.gaffer.store.schema.SchemaElementDefinition;
 import uk.gov.gchq.koryphe.iterable.ChainedIterable;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.Objects.isNull;
@@ -39,7 +38,7 @@ public class GetTraitsHandler implements OutputOperationHandler<GetTraits, Set<S
     private Set<StoreTrait> currentTraits;
 
     public GetTraitsHandler(final Set<StoreTrait> storeTraits) {
-        this.storeTraits = Collections.unmodifiableSet(Sets.newHashSet(storeTraits));
+        this.storeTraits = Collections.unmodifiableSet(new HashSet<>(storeTraits));
     }
 
     @Override
@@ -53,11 +52,11 @@ public class GetTraitsHandler implements OutputOperationHandler<GetTraits, Set<S
             }
             rtn = currentTraits;
         }
-        return Sets.newHashSet(rtn);
+        return new HashSet<>(rtn);
     }
 
     private Set<StoreTrait> createCurrentTraits(final Store store) {
-        final Set<StoreTrait> traits = Sets.newHashSet(storeTraits);
+        final Set<StoreTrait> traits = new HashSet<>(storeTraits);
         final Schema schema = store.getSchema();
 
         final boolean hasAggregatedGroups = isNotEmpty(schema.getAggregatedGroups());

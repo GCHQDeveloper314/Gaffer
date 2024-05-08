@@ -16,8 +16,8 @@
 package uk.gov.gchq.gaffer.store.operation.handler.compare;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -54,7 +54,7 @@ public class SortHandlerTest {
                                 .property("otherProp", "b").build();
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).property("property", 4).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity4, entity3a, entity3b, entity2);
+                final List<Entity> input = Arrays.asList(entity1, entity4, entity3a, entity3b, entity2);
 
                 final Sort sort = new Sort.Builder().input(input).comparators(new ElementPropertyComparator.Builder()
                                 .groups(TestGroups.ENTITY).property("property").build()).build();
@@ -65,7 +65,7 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                final List<? extends Element> resultList = Lists.newArrayList(result);
+                final List<? extends Element> resultList = IterableUtils.toList(result);
                 assertTrue(Arrays.asList(entity1, entity2, entity3a, entity3b, entity4).equals(resultList)
                                 || Arrays.asList(entity1, entity2, entity3b, entity3a, entity4).equals(resultList),
                                 "Expected: \n" + Arrays.asList(entity1, entity2, entity3a, entity3b, entity4)
@@ -80,7 +80,7 @@ public class SortHandlerTest {
                 final Entity entity3 = new Entity.Builder().group(TestGroups.ENTITY).property("property", 3).build();
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).property("property", 4).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity2, entity3, entity4);
+                final List<Entity> input = Arrays.asList(entity1, entity2, entity3, entity4);
 
                 final Sort sort = new Sort.Builder().input(input)
                                 .comparators(new ElementPropertyComparator.Builder().groups(TestGroups.ENTITY)
@@ -94,7 +94,7 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                assertEquals(Arrays.asList(entity4, entity3, entity2, entity1), Lists.newArrayList(result));
+                assertEquals(Arrays.asList(entity4, entity3, entity2, entity1), IterableUtils.toList(result));
         }
 
         @Test
@@ -109,7 +109,7 @@ public class SortHandlerTest {
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).property("property1", 2)
                                 .property("property2", 1).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity3, entity2, entity4);
+                final List<Entity> input = Arrays.asList(entity1, entity3, entity2, entity4);
 
                 final Sort sort = new Sort.Builder().input(input)
                                 .comparators(new ElementPropertyComparator.Builder().groups(TestGroups.ENTITY)
@@ -124,7 +124,7 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                assertEquals(Arrays.asList(entity1, entity2, entity4, entity3), Lists.newArrayList(result));
+                assertEquals(Arrays.asList(entity1, entity2, entity4, entity3), IterableUtils.toList(result));
         }
 
         @Test
@@ -136,7 +136,7 @@ public class SortHandlerTest {
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).build();
                 final Entity entity5 = new Entity.Builder().group(TestGroups.ENTITY).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity3, entity4, entity2, entity5);
+                final List<Entity> input = Arrays.asList(entity1, entity3, entity4, entity2, entity5);
 
                 final Sort sort = new Sort.Builder().input(input)
                                 .comparators(new ElementPropertyComparator.Builder().property("property")
@@ -150,7 +150,7 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                assertEquals(Arrays.asList(entity1, entity2, entity3, entity4), Lists.newArrayList(result));
+                assertEquals(Arrays.asList(entity1, entity2, entity3, entity4), IterableUtils.toList(result));
         }
 
         @Test
@@ -162,7 +162,7 @@ public class SortHandlerTest {
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).build();
                 final Entity entity5 = new Entity.Builder().group(TestGroups.ENTITY).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity3, entity2, entity4, entity5);
+                final List<Entity> input = Arrays.asList(entity1, entity3, entity2, entity4, entity5);
 
                 final Sort sort = new Sort.Builder().input(input)
                                 .comparators(new ElementPropertyComparator.Builder().property("property")
@@ -176,10 +176,10 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                assertEquals(5, Iterables.size(result));
+                assertEquals(5, IterableUtils.size(result));
 
-                assertNull(Iterables.getLast(result).getProperty("property"));
-                assertNotNull(Iterables.getFirst(result, null).getProperty("property"));
+                assertNull(IterableUtils.get(result, 5).getProperty("property"));
+                assertNotNull(IterableUtils.first(result).getProperty("property"));
         }
 
         @Test
@@ -194,7 +194,7 @@ public class SortHandlerTest {
                 final Entity entity4 = new Entity.Builder().group(TestGroups.ENTITY).property("property1", 4)
                                 .property("property2", 4).build();
 
-                final List<Entity> input = Lists.newArrayList(entity1, entity3, entity2, entity4);
+                final List<Entity> input = Arrays.asList(entity1, entity3, entity2, entity4);
 
                 final Sort sort = new Sort.Builder().input(input).comparators(new ElementComparatorImpl()).build();
 
@@ -216,7 +216,7 @@ public class SortHandlerTest {
         @Test
         public void shouldNotThrowExceptionIfIterableIsEmpty() throws OperationException {
                 // Given
-                final List<Entity> input = Lists.newArrayList();
+                final List<Entity> input = new ArrayList<>();
 
                 final Sort sort = new Sort.Builder().input(input).comparators(new ElementPropertyComparator.Builder()
                                 .groups(TestGroups.ENTITY).property("property").build()).build();
@@ -247,7 +247,7 @@ public class SortHandlerTest {
         @Test
         public void shouldReturnOriginalListIfBothComparatorsAreNull() throws OperationException {
                 // Given
-                final List<Entity> input = Lists.newArrayList();
+                final List<Entity> input = new ArrayList<>();
 
                 final Sort sort = new Sort.Builder().input(input).build();
 
@@ -281,13 +281,13 @@ public class SortHandlerTest {
                 final Iterable<? extends Element> result = handler.doOperation(sort, null, null);
 
                 // Then
-                final ArrayList<? extends Element> elements = Lists.newArrayList(result);
-                final ArrayList<? extends Element> sortedElements = Lists.newArrayList(result);
+                final List<? extends Element> elements = IterableUtils.toList(result);
+                final List<? extends Element> sortedElements = IterableUtils.toList(result);
                 sortedElements.sort(new ElementPropertyComparator.Builder().groups(TestGroups.ENTITY)
                                 .property("property").reverse(false).build());
                 assertEquals(elements, sortedElements);
                 assertNotNull(result);
-                assertEquals(resultLimit, Iterables.size(result));
+                assertEquals(resultLimit, IterableUtils.size(result));
         }
 
         private static class ElementComparatorImpl implements Comparator<Element> {

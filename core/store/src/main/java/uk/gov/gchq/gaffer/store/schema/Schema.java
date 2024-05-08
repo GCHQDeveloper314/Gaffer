@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.Lists;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import uk.gov.gchq.gaffer.commonutil.GroupUtil;
@@ -537,11 +536,11 @@ public class Schema extends ElementDefinitions<SchemaEntityDefinition, SchemaEdg
         }
 
         private void expandElementDefinitions(final Schema schema) {
-            for (final Entry<String, SchemaEdgeDefinition> entry : Lists.newArrayList(schema.getEdges().entrySet())) {
+            for (final Entry<String, SchemaEdgeDefinition> entry : new ArrayList<>(schema.getEdges().entrySet())) {
                 schema.getEdges().put(entry.getKey(), entry.getValue().getExpandedDefinition());
             }
 
-            for (final Entry<String, SchemaEntityDefinition> entry : Lists.newArrayList(schema.getEntities().entrySet())) {
+            for (final Entry<String, SchemaEntityDefinition> entry : new ArrayList<>(schema.getEntities().entrySet())) {
                 schema.getEntities().put(entry.getKey(), entry.getValue().getExpandedDefinition());
             }
         }

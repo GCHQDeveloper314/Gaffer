@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.ImmutableMap;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationException;
@@ -25,9 +24,8 @@ import uk.gov.gchq.gaffer.store.Context;
 import uk.gov.gchq.gaffer.store.Store;
 import uk.gov.gchq.gaffer.user.User;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 
 public class SetVariableHandlerTest {
@@ -47,8 +45,8 @@ public class SetVariableHandlerTest {
         handler.doOperation(op, context, store);
 
         // Then
-        assertTrue(context.getVariable(testVarName).equals(testVarValue));
-        assertTrue(context.getVariables().equals(ImmutableMap.of(testVarName, testVarValue)));
+        assertThat(context.getVariable(testVarName)).isEqualTo(testVarValue);
+        assertThat(context.getVariables()).containsEntry(testVarName, testVarValue);
     }
 
     @Test
@@ -104,7 +102,7 @@ public class SetVariableHandlerTest {
         handler.doOperation(op1, context, store);
 
         // Then
-        assertEquals(2, context.getVariables().size());
-        assertEquals(ImmutableMap.of(varName, varVal, varName1, varVal1), context.getVariables());
+        assertThat(context.getVariables()).hasSize(2);
+        assertThat(context.getVariables()).containsEntry(varName, varVal).containsEntry(varName1, varVal1);
     }
 }

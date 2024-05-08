@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.add;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +23,9 @@ import uk.gov.gchq.gaffer.operation.OperationTest;
 import uk.gov.gchq.gaffer.store.operation.add.AddSchemaToLibrary.Builder;
 import uk.gov.gchq.gaffer.store.schema.Schema;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,14 +34,14 @@ public class AddSchemaToLibraryTest extends OperationTest<AddSchemaToLibrary> {
 
     public static final String TEST_ID = "testId";
     private static Schema schema;
-    private static ArrayList<String> parentSchemaIds;
+    private static List<String> parentSchemaIds;
     private static AddSchemaToLibrary op;
 
     @BeforeAll
     public static void setUp() throws Exception {
         schema = new Schema.Builder()
                 .build();
-        parentSchemaIds = Lists.newArrayList("value1");
+        parentSchemaIds = Arrays.asList("value1");
         op = new Builder()
                 .parentSchemaIds(parentSchemaIds)
                 .schema(schema)
@@ -51,7 +51,7 @@ public class AddSchemaToLibraryTest extends OperationTest<AddSchemaToLibrary> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("schema", "id");
+        return new HashSet<>(Arrays.asList("schema", "id"));
     }
 
     @Override

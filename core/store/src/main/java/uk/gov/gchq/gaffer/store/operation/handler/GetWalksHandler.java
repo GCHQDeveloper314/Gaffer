@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Lists;
-
+import org.apache.commons.collections4.IterableUtils;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import uk.gov.gchq.gaffer.commonutil.iterable.EmptyIterable;
@@ -116,7 +115,7 @@ public class GetWalksHandler implements OutputOperationHandler<GetWalks, Iterabl
 
 
         final LimitedIterable limitedInputItr = new LimitedIterable<>(getWalks.getInput(), 0, resultLimit, false);
-        final List<EntityId> originalInput = Lists.newArrayList(limitedInputItr);
+        final List<EntityId> originalInput = IterableUtils.toList(limitedInputItr);
 
         // Check hops and maxHops (if set)
         if (hops == 0) {

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.named.cache;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +34,7 @@ import uk.gov.gchq.gaffer.user.User;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -224,7 +225,7 @@ public class NamedOperationCacheTest {
 
         cache.addNamedOperation(alt, false, advancedUser);
 
-        final Set<NamedOperationDetail> actual = Sets.newHashSet(cache.getAllNamedOperations(standardUser));
+        final Set<NamedOperationDetail> actual = new HashSet<>(IterableUtils.toList(cache.getAllNamedOperations(standardUser)));
 
         assertThat(actual)
                 .contains(standard)
@@ -246,7 +247,7 @@ public class NamedOperationCacheTest {
                 .build();
         cache.addNamedOperation(noReadAccess, false, advancedUser);
 
-        final Set<NamedOperationDetail> actual = Sets.newHashSet(cache.getAllNamedOperations(standardUser));
+        final Set<NamedOperationDetail> actual = new HashSet<>(IterableUtils.toList(cache.getAllNamedOperations(standardUser)));
 
         assertThat(actual)
                 .contains(standard)
@@ -282,7 +283,7 @@ public class NamedOperationCacheTest {
 
         cache.addNamedOperation(alt, false, advancedUser);
 
-        final Set<NamedOperationDetail> actual = Sets.newHashSet(cache.getAllNamedOperations(standardUser));
+        final Set<NamedOperationDetail> actual = new HashSet<>(IterableUtils.toList(cache.getAllNamedOperations(standardUser)));
         assertThat(actual)
                 .contains(standard)
                 .contains(alt)

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.add;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +23,8 @@ import uk.gov.gchq.gaffer.operation.OperationTest;
 import uk.gov.gchq.gaffer.store.StoreProperties;
 import uk.gov.gchq.gaffer.store.operation.add.AddStorePropertiesToLibrary.Builder;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -49,7 +50,7 @@ public class AddStorePropertiesToLibraryTest extends OperationTest<AddStorePrope
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("storeProperties", "id");
+        return new HashSet<>(Arrays.asList("storeProperties", "id"));
     }
 
     @Override

@@ -16,11 +16,11 @@
 
 package uk.gov.gchq.gaffer.store;
 
-import com.google.common.collect.Sets;
-
 import uk.gov.gchq.koryphe.Summary;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -96,5 +96,5 @@ public enum StoreTrait {
      */
     MATCHED_VERTEX;
 
-    public static final Set<StoreTrait> ALL_TRAITS = Collections.unmodifiableSet(Sets.newHashSet(StoreTrait.values()));
+    public static final Set<StoreTrait> ALL_TRAITS = Collections.unmodifiableSet(new HashSet<>(Arrays.asList(StoreTrait.values())));
 }

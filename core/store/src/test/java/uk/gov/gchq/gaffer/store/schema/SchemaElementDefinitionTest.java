@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.schema;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -35,6 +34,8 @@ import uk.gov.gchq.koryphe.impl.predicate.IsXMoreThanY;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
@@ -485,7 +486,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
         setupSchema(elementDef);
 
         // When
-        final ElementAggregator aggregator = elementDef.getQueryAggregator(Sets.newHashSet("property1"), null);
+        final ElementAggregator aggregator = elementDef.getQueryAggregator(Collections.singleton("property1"), null);
 
         // Then
         assertEquals(4, aggregator.getComponents().size());
@@ -506,9 +507,9 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .isThrownBy(() -> aggregator.getComponents().add(null))
                 .isNotNull();
         // check the aggregator is cached
-        assertSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet("property1"), null));
+        assertSame(aggregator, elementDef.getQueryAggregator(Collections.singleton("property1"), null));
         // check a different aggregator is returned for different groupBys
-        assertNotSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet(), null));
+        assertNotSame(aggregator, elementDef.getQueryAggregator(new HashSet<>(), null));
     }
 
     @Test
@@ -534,7 +535,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
         setupSchema(elementDef);
 
         // When
-        final ElementAggregator aggregator = elementDef.getQueryAggregator(Sets.newHashSet(), null);
+        final ElementAggregator aggregator = elementDef.getQueryAggregator(new HashSet<>(), null);
 
         // Then
         assertEquals(5, aggregator.getComponents().size());
@@ -561,7 +562,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .isThrownBy(() -> aggregator.getComponents().add(null))
                 .isNotNull();
         // check the aggregator is cached
-        assertSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet(), null));
+        assertSame(aggregator, elementDef.getQueryAggregator(new HashSet<>(), null));
     }
 
     @Test
@@ -590,7 +591,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .build();
 
         // When
-        final ElementAggregator aggregator = elementDef.getQueryAggregator(Sets.newHashSet(), viewAggregator);
+        final ElementAggregator aggregator = elementDef.getQueryAggregator(new HashSet<>(), viewAggregator);
 
         // Then
         int i = 0;
@@ -625,7 +626,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .isThrownBy(() -> aggregator.getComponents().add(null))
                 .isNotNull();
         // check the aggregator is not cached
-        assertNotSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet(), viewAggregator));
+        assertNotSame(aggregator, elementDef.getQueryAggregator(new HashSet<>(), viewAggregator));
     }
 
     @Test
@@ -656,7 +657,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .build();
 
         // When
-        final ElementAggregator aggregator = elementDef.getQueryAggregator(Sets.newHashSet(), viewAggregator);
+        final ElementAggregator aggregator = elementDef.getQueryAggregator(new HashSet<>(), viewAggregator);
 
         // Then
         int i = 0;
@@ -691,7 +692,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .isThrownBy(() -> aggregator.getComponents().add(null))
                 .isNotNull();
         // check the aggregator is not cached
-        assertNotSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet(), viewAggregator));
+        assertNotSame(aggregator, elementDef.getQueryAggregator(new HashSet<>(), viewAggregator));
     }
 
     @Test
@@ -717,7 +718,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
         setupSchema(elementDef);
 
         // When
-        final ElementAggregator aggregator = elementDef.getQueryAggregator(Sets.newHashSet(), null);
+        final ElementAggregator aggregator = elementDef.getQueryAggregator(new HashSet<>(), null);
 
         // Then
         // As the groupBy property - property1 is aggregated alongside property2, this is still required in the aggregator function.
@@ -745,7 +746,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
                 .isThrownBy(() -> aggregator.getComponents().add(null))
                 .isNotNull();
         // check the aggregator is cached
-        assertSame(aggregator, elementDef.getQueryAggregator(Sets.newHashSet(), null));
+        assertSame(aggregator, elementDef.getQueryAggregator(new HashSet<>(), null));
     }
 
     @Test
@@ -779,7 +780,7 @@ public abstract class SchemaElementDefinitionTest<T extends SchemaElementDefinit
         assertEquals(2, mergedDef.getProperties().size());
         assertNotNull(mergedDef.getPropertyTypeDef(TestPropertyNames.PROP_1));
         assertNotNull(mergedDef.getPropertyTypeDef(TestPropertyNames.PROP_2));
-        assertEquals(Sets.newLinkedHashSet(Collections.singletonList(TestPropertyNames.PROP_2)),
+        assertEquals(new LinkedHashSet<>(Collections.singletonList(TestPropertyNames.PROP_2)),
                 mergedDef.getGroupBy());
     }
 

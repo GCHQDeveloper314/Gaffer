@@ -15,8 +15,6 @@
  */
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +44,7 @@ import uk.gov.gchq.koryphe.impl.function.ToString;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Function;
@@ -227,7 +226,7 @@ public class MapHandlerTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(Arrays.asList("1", "2"), Lists.newArrayList(result));
+        assertThat(result).containsExactly("1", "2");
     }
 
     @Test
@@ -247,7 +246,7 @@ public class MapHandlerTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(Arrays.asList(1, 2), Lists.newArrayList(result));
+        assertThat(result).containsExactly(1, 2);
     }
 
     @Test
@@ -267,7 +266,7 @@ public class MapHandlerTest {
 
         // Then
         assertNotNull(result);
-        assertEquals(Arrays.asList(1, 2, 3, 4), Lists.newArrayList(result));
+        assertThat(result).containsExactly(1, 2, 3, 4);
     }
 
     @Test
@@ -314,13 +313,9 @@ public class MapHandlerTest {
         // When
         final Iterable<Set<Edge>> results = handler.doOperation(map, context, store);
 
-        final Iterable<Iterable<Edge>> expectedResults = Arrays.asList(
-                Sets.newHashSet(EDGE_AB),
-                Sets.newHashSet(EDGE_CB));
-
         // Then
         assertNotNull(results);
-        assertEquals(expectedResults, Lists.newArrayList(results));
+        assertThat(results).containsExactly(Collections.singleton(EDGE_AB), Collections.singleton(EDGE_CB));
     }
 
     @Test
@@ -356,7 +351,7 @@ public class MapHandlerTest {
 
         given(store.handleOperation(map, context)).willReturn(Arrays.asList(EDGE_AB, EDGE_CB));
         given(store.handleOperation(toVertices, context)).willReturn(Arrays.asList("A", "C"));
-        given(store.handleOperation(toSet, context)).willReturn(Sets.newHashSet("A", "C"));
+        given(store.handleOperation(toSet, context)).willReturn(new HashSet<>(Arrays.asList("A", "C")));
 
         // When
         final Iterable<?> results = opChainHandler.doOperation(opChain, context, store);
@@ -398,7 +393,7 @@ public class MapHandlerTest {
 
         given(store.handleOperation(map, context)).willReturn(Arrays.asList(EDGE_BC, EDGE_BD));
         given(store.handleOperation(toVertices, context)).willReturn(Arrays.asList("B", "B"));
-        given(store.handleOperation(toSet, context)).willReturn(Sets.newHashSet("B", "B"));
+        given(store.handleOperation(toSet, context)).willReturn(new HashSet<>(Arrays.asList("B", "B")));
 
         // When
         final Iterable<?> results = opChainHandler.doOperation(opChain, context, store);

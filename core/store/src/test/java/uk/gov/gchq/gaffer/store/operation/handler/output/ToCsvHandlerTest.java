@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.output;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +59,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToCsv() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),
@@ -86,7 +86,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 "BasicEntity,vertex1,,1,A Constant", "BasicEntity,vertex2,,,A Constant",
                 "BasicEdge,,source1,1,A Constant", "BasicEdge,,source2,,A Constant"
@@ -97,7 +97,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToQuotedCsv() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),
@@ -124,7 +124,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 "\"BasicEntity\",\"vertex1\",,\"1\",\"A Constant\"", "\"BasicEntity\",\"vertex2\",,,\"A Constant\"",
                 "\"BasicEdge\",,\"source1\",\"1\",\"A Constant\"", "\"BasicEdge\",,\"source2\",,\"A Constant\""
@@ -135,7 +135,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToCsvWithCommaReplacement() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1,with comma", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1,with comma", "count", 1),
@@ -163,7 +163,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 "BasicEntity,vertex1-with comma,,1,A Constant", "BasicEntity,vertex2,,,A Constant",
                 "BasicEdge,,source1-with comma,1,A Constant", "BasicEdge,,source2,,A Constant"
@@ -174,7 +174,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToCsvWithHeader() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),
@@ -201,7 +201,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 "Group Label,Vertex Label,Source Label,Count Label,Some constant value",
                 "BasicEntity,vertex1,,1,A Constant",
@@ -215,7 +215,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToNeptuneFormattedCsv() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),
@@ -234,7 +234,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 ":ID,:LABEL,:TYPE,:START_ID,:END_ID,count:Int,DIRECTED:Boolean",
                 "vertex1,BasicEntity,,,,1,",
@@ -248,7 +248,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldConvertToNeo4jFormattedCsv() throws OperationException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),
@@ -267,7 +267,7 @@ public class ToCsvHandlerTest {
         final Iterable<? extends String> results = handler.doOperation(operation, new Context(), storeMock);
 
         // Then
-        final List<String> resultList = Lists.newArrayList(results);
+        final List<String> resultList = (List<String>) IterableUtils.toList(results);
         final List<String> expected = Arrays.asList(
                 "_id,_labels,_type,_start,_end,count:Int,DIRECTED:Boolean",
                 "vertex1,BasicEntity,,,,1,",
@@ -281,7 +281,7 @@ public class ToCsvHandlerTest {
     @Test
     public void shouldErrorIfGeneratorNotSupplied() throws IllegalArgumentException {
         // Given
-        final List<Element> elements = Lists.newArrayList(
+        final List<Element> elements = Arrays.asList(
                 makeEntity("vertex1", "count", 1),
                 makeEntity("vertex2"),
                 makeEdge("source1", "count", 1),

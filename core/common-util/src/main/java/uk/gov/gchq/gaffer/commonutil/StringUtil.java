@@ -167,4 +167,14 @@ public final class StringUtil {
     public static String nullIfEmpty(final String string) {
         return null != string && string.isEmpty() ? null : string;
     }
+
+    /**
+     * Checks if a {@link String} is null or empty.
+     *
+     * @param string input {@link String}
+     * @return true if input {@link String} is null or empty, otherwise false
+     */
+    public static boolean isNullOrEmpty(final String string) {
+        return string == null || string.isEmpty();
+    }
 }

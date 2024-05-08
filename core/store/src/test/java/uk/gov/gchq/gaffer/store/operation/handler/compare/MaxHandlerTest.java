@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.store.operation.handler.compare;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -25,6 +24,8 @@ import uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator;
 import uk.gov.gchq.gaffer.operation.OperationException;
 import uk.gov.gchq.gaffer.operation.impl.compare.Max;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class MaxHandlerTest {
         final Entity entity3 = makeEntity("property", 3);
         final Entity entity4 = makeEntity("property", 1);
 
-        final List<Entity> input = Lists.newArrayList(entity1, entity2, entity3, entity4);
+        final List<Entity> input = Arrays.asList(entity1, entity2, entity3, entity4);
 
         final Max max = new Max.Builder().input(input)
                 .comparators(new ElementPropertyComparator.Builder()
@@ -70,7 +71,7 @@ public class MaxHandlerTest {
         final Entity entity3 = makeEntity(2, 2);
         final Entity entity4 = makeEntity(2, 1);
 
-        final List<Entity> input = Lists.newArrayList(entity1, entity2, entity3, entity4);
+        final List<Entity> input = Arrays.asList(entity1, entity2, entity3, entity4);
 
         final Max max = new Max.Builder().input(input)
                 .comparators(new ElementPropertyComparator.Builder()
@@ -101,7 +102,7 @@ public class MaxHandlerTest {
         final Entity entity4 = makeEntity("property2", 1);
         final Entity entity5 = makeEntity("property2", 2);
 
-        final List<Entity> input = Lists.newArrayList(entity1, entity2, entity3, entity4, entity5);
+        final List<Entity> input = Arrays.asList(entity1, entity2, entity3, entity4, entity5);
 
         final Max max1 = new Max.Builder().input(input)
                 .comparators(new ElementPropertyComparator.Builder()
@@ -138,7 +139,7 @@ public class MaxHandlerTest {
         final Entity entity3 = makeEntity(3, 3);
         final Entity entity4 = makeEntity(4, 4);
 
-        final List<Entity> input = Lists.newArrayList(entity1, entity2, entity3, entity4);
+        final List<Entity> input = Arrays.asList(entity1, entity2, entity3, entity4);
 
         final Max max = new Max.Builder().input(input)
                 .comparators(new SimpleElementComparator())
@@ -171,7 +172,7 @@ public class MaxHandlerTest {
     @Test
     public void shouldReturnNullIfBothComparatorsAreNull() throws OperationException {
         // Given
-        final List<Entity> input = Lists.newArrayList();
+        final List<Entity> input = new ArrayList<>();
         final Max max = new Max.Builder().input(input)
                 .build();
 

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.schema;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -39,7 +38,9 @@ import uk.gov.gchq.koryphe.impl.predicate.IsMoreThan;
 import uk.gov.gchq.koryphe.impl.predicate.Not;
 import uk.gov.gchq.koryphe.impl.predicate.Or;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -48,7 +49,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ViewValidatorTest {
 
-    public static final Set<StoreTrait> ALL_STORE_TRAITS = Sets.newHashSet(StoreTrait.values());
+    public static final Set<StoreTrait> ALL_STORE_TRAITS = new HashSet<>(Arrays.asList(StoreTrait.values()));
     public static final Set<StoreTrait> NO_STORE_TRAITS = Collections.emptySet();
 
     @Test
@@ -944,12 +945,12 @@ public class ViewValidatorTest {
         // Then
         final String errPrefix = "This store does not currently support ";
         assertFalse(result.isValid());
-        assertEquals(Sets.newHashSet(
+        assertEquals(new HashSet<>(Arrays.asList(
                 errPrefix + StoreTrait.PRE_AGGREGATION_FILTERING.name(),
                 errPrefix + StoreTrait.QUERY_AGGREGATION.name(),
                 errPrefix + StoreTrait.POST_AGGREGATION_FILTERING.name(),
                 errPrefix + StoreTrait.TRANSFORMATION.name(),
                 errPrefix + StoreTrait.POST_TRANSFORMATION_FILTERING.name()
-        ), result.getErrors());
+        )), result.getErrors());
     }
 }

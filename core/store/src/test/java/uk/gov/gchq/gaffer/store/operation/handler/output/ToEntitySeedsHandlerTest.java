@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.output;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -28,6 +28,7 @@ import uk.gov.gchq.gaffer.operation.impl.output.ToEntitySeeds;
 import uk.gov.gchq.gaffer.store.Context;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,10 +73,10 @@ public class ToEntitySeedsHandlerTest {
         final Iterable<EntitySeed> results = handler.doOperation(operation, new Context(), null);
 
         // Then
-        final Set<Object> set1 = Sets.newHashSet(results);
-        final Set<Object> set2 = Sets.newHashSet(results);
+        final Set<Object> set1 = new HashSet<>(IterableUtils.toList(results));
+        final Set<Object> set2 = new HashSet<>(IterableUtils.toList(results));
         assertThat(set1)
-                .isEqualTo(Sets.newHashSet(new EntitySeed(vertex1), new EntitySeed(vertex2)))
+                .isEqualTo(new HashSet<>(Arrays.asList(new EntitySeed(vertex1), new EntitySeed(vertex2))))
                 .isEqualTo(set2);
     }
 

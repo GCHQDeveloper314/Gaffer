@@ -381,7 +381,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet("Groups with no properties should not have any aggregators"),
+        assertEquals(Collections.singleton("Groups with no properties should not have any aggregators"),
                 result.getErrors());
     }
 
@@ -413,7 +413,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet("Identifiers cannot be selected for aggregation: " + IdentifierType.VERTEX.name()),
+        assertEquals(Collections.singleton("Identifiers cannot be selected for aggregation: " + IdentifierType.VERTEX.name()),
                 result.getErrors());
     }
 
@@ -447,7 +447,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet(
+        assertEquals(Collections.singleton(
                 "The visibility property must be aggregated by itself. It is currently aggregated in the tuple: [stringProperty, visibility], by aggregate function: " + function1.getClass().getName()
                 ),
                 result.getErrors());
@@ -516,7 +516,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet(
+        assertEquals(Collections.singleton(
                 "groupBy properties and non-groupBy properties (including timestamp) must be not be aggregated using the same BinaryOperator. Selection tuple: [stringProperty, timestamp], is aggregated by: " + function1.getClass().getName()
                 ),
                 result.getErrors());
@@ -552,7 +552,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet(
+        assertEquals(Collections.singleton(
                 "groupBy properties and non-groupBy properties (including timestamp) must be not be aggregated using the same BinaryOperator. Selection tuple: [property1, property2], is aggregated by: " + function1.getClass().getName()
                 ),
                 result.getErrors());
@@ -585,7 +585,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet(
+        assertEquals(Collections.singleton(
                 "ElementAggregator contains a null function."
                 ),
                 result.getErrors());
@@ -619,7 +619,7 @@ public class SchemaElementDefinitionValidatorTest {
 
         // Then
         assertFalse(result.isValid());
-        assertEquals(com.google.common.collect.Sets.newHashSet(
+        assertEquals(Collections.singleton(
                 "Unknown property used in an aggregator: " + TestPropertyNames.PROP_1
                 ),
                 result.getErrors());

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.join.match;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
@@ -35,6 +34,7 @@ import uk.gov.gchq.koryphe.impl.function.ToInteger;
 import uk.gov.gchq.koryphe.impl.function.ToLong;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -83,7 +83,7 @@ public class KeyFunctionMatchTest {
     public void shouldJsonSerialiseAndDeserialiseWithKeyFunctions() throws SerialisationException {
         // given
         KeyFunctionMatch match = new KeyFunctionMatch.Builder()
-                .firstKeyFunction(new FunctionComposite(Lists.newArrayList(new DivideBy(20), new FirstItem())))
+                .firstKeyFunction(new FunctionComposite(Arrays.asList(new DivideBy(20), new FirstItem())))
                 .secondKeyFunction(new ExtractProperty("count"))
                 .build();
 
@@ -201,14 +201,14 @@ public class KeyFunctionMatchTest {
     public void shouldMatchEqualObjectsIfNoKeyFunctionIsSpecified() {
         // given
         Integer testValue = 3;
-        List<Integer> testList = Lists.newArrayList(1, 2, 3, 4, 3);
+        List<Integer> testList = Arrays.asList(1, 2, 3, 4, 3);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch();
         match.init(testList);
 
         // then
-        List<Integer> expected = Lists.newArrayList(3, 3);
+        List<Integer> expected = Arrays.asList(3, 3);
         assertEquals(expected, match.matching(testValue));
     }
 
@@ -216,20 +216,20 @@ public class KeyFunctionMatchTest {
     public void shouldMatchObjectsBasedOnKeyFunctions() {
         // given
         TypeSubTypeValue testValue = new TypeSubTypeValue("myType", "mySubType", "30");
-        List<Long> testList = Lists.newArrayList(100L, 200L, 300L, 400L);
+        List<Long> testList = Arrays.asList(100L, 200L, 300L, 400L);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch.Builder()
                 .firstKeyFunction(
                         new FunctionComposite(
-                                Lists.newArrayList(new CallMethod("getValue"), new ToInteger())))
-                .secondKeyFunction(new FunctionComposite(Lists.newArrayList(new ToInteger(), new DivideBy(10), new FirstItem<>())))
+                                Arrays.asList(new CallMethod("getValue"), new ToInteger())))
+                .secondKeyFunction(new FunctionComposite(Arrays.asList(new ToInteger(), new DivideBy(10), new FirstItem<>())))
                 .build();
 
         match.init(testList);
 
         // then
-        List<Long> expected = Lists.newArrayList(300L);
+        List<Long> expected = Arrays.asList(300L);
         assertEquals(expected, match.matching(testValue));
 
     }
@@ -238,7 +238,7 @@ public class KeyFunctionMatchTest {
     public void shouldOutputEmptyListWhenNoMatchesAreFound() {
         // given
         Integer testValue = 3;
-        List<Integer> testList = Lists.newArrayList(1, 2, 5, 4, 8);
+        List<Integer> testList = Arrays.asList(1, 2, 5, 4, 8);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch();
@@ -246,7 +246,7 @@ public class KeyFunctionMatchTest {
         match.init(testList);
 
         // then
-        List<Integer> expected = Lists.newArrayList();
+        List<Integer> expected = new ArrayList<>();
         assertEquals(expected, match.matching(testValue));
     }
 
@@ -254,14 +254,14 @@ public class KeyFunctionMatchTest {
     public void shouldOutputEmptyListWhenEmptyListIsSupplied() {
         // given
         Integer testValue = 3;
-        List<Integer> testList = Lists.newArrayList();
+        List<Integer> testList = new ArrayList<>();
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch();
         match.init(testList);
 
         // then
-        List<Integer> expected = Lists.newArrayList();
+        List<Integer> expected = new ArrayList<>();
         assertEquals(expected, match.matching(testValue));
     }
 
@@ -269,13 +269,13 @@ public class KeyFunctionMatchTest {
     public void shouldThrowExceptionFromFunctionIfInputIsInvalid() {
         // given
         // Performing a FirstItem on null should throw IllegalArgumentException
-        List<Long> testList = Lists.newArrayList(100L, 200L, 300L, null);
+        List<Long> testList = Arrays.asList(100L, 200L, 300L, null);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch.Builder()
                 .firstKeyFunction(new FunctionComposite(
-                        Lists.newArrayList(new CallMethod("getValue"), new ToInteger())))
-                .secondKeyFunction(new FunctionComposite(Lists.newArrayList(new ToInteger(), new DivideBy(10), new FirstItem<>())))
+                        Arrays.asList(new CallMethod("getValue"), new ToInteger())))
+                .secondKeyFunction(new FunctionComposite(Arrays.asList(new ToInteger(), new DivideBy(10), new FirstItem<>())))
                 .build();
 
 
@@ -291,14 +291,14 @@ public class KeyFunctionMatchTest {
     @Test
     public void shouldAllowNullValuesIfValid() {
         // given
-        List<Integer> testList = Lists.newArrayList(1, null, 5, 4, 8);
+        List<Integer> testList = Arrays.asList(1, null, 5, 4, 8);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch();
         match.init(testList);
 
         // then
-        List<Integer> expected = Lists.newArrayList((Integer) null);
+        List<Integer> expected = Arrays.asList((Integer) null);
         assertEquals(expected, match.matching(null));
     }
 
@@ -306,14 +306,14 @@ public class KeyFunctionMatchTest {
     public void shouldAllowNullValuesInList() {
         // given
         Integer testItem = 4;
-        List<Integer> testList = Lists.newArrayList(1, null, 5, 4, 8);
+        List<Integer> testList = Arrays.asList(1, null, 5, 4, 8);
 
         // when
         KeyFunctionMatch match = new KeyFunctionMatch();
         match.init(testList);
 
         // then
-        List<Integer> expected = Lists.newArrayList(4);
+        List<Integer> expected = Arrays.asList(4);
         assertEquals(expected, match.matching(testItem));
     }
 
@@ -339,7 +339,7 @@ public class KeyFunctionMatchTest {
                 .property(PROP_1, 3L)
                 .build();
 
-        List<Entity> testList = Lists.newArrayList(
+        List<Entity> testList = Arrays.asList(
                 new Entity.Builder()
                         .group(TEST_ENTITY_GROUP)
                         .vertex("test2")
@@ -371,7 +371,7 @@ public class KeyFunctionMatchTest {
         match.init(testList);
 
         // then
-        ArrayList<Entity> expected = Lists.newArrayList(
+        List<Entity> expected = Arrays.asList(
                 new Entity.Builder()
                         .group(TEST_ENTITY_GROUP)
                         .vertex("test3")
@@ -394,7 +394,7 @@ public class KeyFunctionMatchTest {
                 .property(PROP_1, 2L)
                 .build();
 
-        List<Entity> testList = Lists.newArrayList(
+        List<Entity> testList = Arrays.asList(
                 new Entity.Builder()
                         .group(TEST_ENTITY_GROUP_2)
                         .vertex("test2")
@@ -420,13 +420,13 @@ public class KeyFunctionMatchTest {
         // when
         KeyFunctionMatch match = new KeyFunctionMatch.Builder()
                 .firstKeyFunction(new ExtractProperty(PROP_1))
-                .secondKeyFunction(new FunctionComposite(Lists.newArrayList(new ExtractProperty(PROP_2), new ToLong())))
+                .secondKeyFunction(new FunctionComposite(Arrays.asList(new ExtractProperty(PROP_2), new ToLong())))
                 .build();
 
         match.init(testList);
 
         // then
-        ArrayList<Entity> expected = Lists.newArrayList(
+        List<Entity> expected = Arrays.asList(
                 new Entity.Builder()
                         .group(TEST_ENTITY_GROUP_2)
                         .vertex("test2")
@@ -452,7 +452,7 @@ public class KeyFunctionMatchTest {
                 .property(PROP_1, 2L)
                 .build();
 
-        List<Entity> testList = Lists.newArrayList(
+        List<Entity> testList = Arrays.asList(
                 new Entity.Builder()
                         .group(TEST_ENTITY_GROUP_2)
                         .vertex("test2")
@@ -485,7 +485,7 @@ public class KeyFunctionMatchTest {
         match.init(testList);
 
         // then
-        ArrayList<Entity> expected = Lists.newArrayList(new Entity.Builder()
+        List<Entity> expected = Arrays.asList(new Entity.Builder()
                 .group(TEST_ENTITY_GROUP)
                 .vertex("test1")
                 .property(PROP_1, 4L)

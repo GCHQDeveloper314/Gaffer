@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,6 +33,7 @@ import uk.gov.gchq.gaffer.store.schema.SchemaEntityDefinition;
 import uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat;
 import uk.gov.gchq.koryphe.impl.predicate.Exists;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -51,7 +51,7 @@ public class GetTraitsHandlerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        expectedTraits = Sets.newHashSet(StoreTrait.ALL_TRAITS);
+        expectedTraits = new HashSet<>(StoreTrait.ALL_TRAITS);
         expectedTraits.remove(StoreTrait.ORDERED);
 
         store = new TestAddToGraphLibraryImpl() {
@@ -66,7 +66,7 @@ public class GetTraitsHandlerTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        final Set<StoreTrait> temp = Sets.newHashSet(StoreTrait.ALL_TRAITS);
+        final Set<StoreTrait> temp = new HashSet<>(StoreTrait.ALL_TRAITS);
         temp.remove(StoreTrait.ORDERED);
         assertEquals(temp, this.expectedTraits);
         assertNotEquals(StoreTrait.ALL_TRAITS, expectedTraits);
@@ -78,7 +78,7 @@ public class GetTraitsHandlerTest {
         final Set<StoreTrait> actual = getStoreTraits(new Schema());
 
         // Then
-        final Set<StoreTrait> expected = Sets.newHashSet(this.expectedTraits);
+        final Set<StoreTrait> expected = new HashSet<>(this.expectedTraits);
         expected.remove(StoreTrait.QUERY_AGGREGATION);
         expected.remove(StoreTrait.STORE_VALIDATION);
         expected.remove(StoreTrait.VISIBILITY);
@@ -97,7 +97,7 @@ public class GetTraitsHandlerTest {
                 .merge(string)
                 .build());
 
-        final Set<StoreTrait> expected = Sets.newHashSet(this.expectedTraits);
+        final Set<StoreTrait> expected = new HashSet<>(this.expectedTraits);
         expected.remove(StoreTrait.STORE_VALIDATION);
         expected.remove(StoreTrait.VISIBILITY);
         assertEquals(expected, actual);
@@ -120,7 +120,7 @@ public class GetTraitsHandlerTest {
                 .build());
 
         // Then
-        final Set<StoreTrait> expected = Sets.newHashSet(this.expectedTraits);
+        final Set<StoreTrait> expected = new HashSet<>(this.expectedTraits);
         expected.remove(StoreTrait.QUERY_AGGREGATION);
         expected.remove(StoreTrait.VISIBILITY);
         expected.remove(StoreTrait.INGEST_AGGREGATION);
@@ -136,7 +136,7 @@ public class GetTraitsHandlerTest {
                 .build());
 
         // Then
-        final Set<StoreTrait> expected = Sets.newHashSet(this.expectedTraits);
+        final Set<StoreTrait> expected = new HashSet<>(this.expectedTraits);
         expected.remove(StoreTrait.QUERY_AGGREGATION);
         expected.remove(StoreTrait.STORE_VALIDATION);
         expected.remove(StoreTrait.INGEST_AGGREGATION);
@@ -160,7 +160,7 @@ public class GetTraitsHandlerTest {
                 .build());
 
         // Then
-        final Set<StoreTrait> expected = Sets.newHashSet(this.expectedTraits);
+        final Set<StoreTrait> expected = new HashSet<>(this.expectedTraits);
         expected.remove(StoreTrait.STORE_VALIDATION);
         expected.remove(StoreTrait.VISIBILITY);
         assertEquals(expected, actual);
@@ -190,7 +190,7 @@ public class GetTraitsHandlerTest {
                         .build(),
                 new Context(testUser()));
 
-        final Set<StoreTrait> actual = Sets.newHashSet(execute);
+        final Set<StoreTrait> actual = new HashSet<>(execute);
         assertFalse(actual.isEmpty());
         return actual;
     }

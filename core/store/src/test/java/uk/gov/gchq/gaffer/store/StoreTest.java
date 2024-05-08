@@ -18,7 +18,7 @@ package uk.gov.gchq.gaffer.store;
 
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -139,6 +139,7 @@ import uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat;
 import java.lang.reflect.Field;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -519,13 +520,13 @@ public class StoreTest {
         store.initialise("graphId", schema, properties);
 
         // When
-        final List<Class<? extends Operation>> supportedOperations = Lists.newArrayList(store.getSupportedOperations());
+        final List<Class<? extends Operation>> supportedOperations = new ArrayList<>(store.getSupportedOperations());
 
         // Then
         assertThat(supportedOperations).isNotNull();
 
         final List<Class<? extends Operation>> expectedOperations =
-                Lists.newArrayList(AddElements.class,
+                Arrays.asList(AddElements.class,
                         GetElements.class,
                         GetAdjacentIds.class,
                         GetAllElements.class,
@@ -629,14 +630,14 @@ public class StoreTest {
         store.initialise("graphId", schema, properties);
 
         // When
-        final List<Class<? extends Operation>> supportedOperations = Lists.newArrayList(store.getSupportedOperations());
+        final List<Class<? extends Operation>> supportedOperations = new ArrayList<>(store.getSupportedOperations());
 
         // Then
 
         assertThat(supportedOperations).isNotNull();
 
         final List<Class<? extends Operation>> expectedOperations =
-                Lists.newArrayList(AddElements.class,
+                Arrays.asList(AddElements.class,
                         GetElements.class,
                         GetAdjacentIds.class,
                         GetAllElements.class,
@@ -773,7 +774,7 @@ public class StoreTest {
     @Test
     public void shouldExecuteOperationChainJob(@Mock final StoreProperties properties) throws OperationException, InterruptedException, StoreException {
         // Given
-        final Operation operation = new GetVariables.Builder().variableNames(Lists.newArrayList()).build();
+        final Operation operation = new GetVariables.Builder().variableNames(new ArrayList<>()).build();
         final OperationChain<?> opChain = new OperationChain.Builder()
                 .first(operation)
                 .then(new ExportToGafferResultCache())
@@ -804,7 +805,7 @@ public class StoreTest {
     public void shouldExecuteOperationJobAndWrapJobOperationInChain(@Mock final StoreProperties properties)
             throws OperationException, InterruptedException, StoreException, SerialisationException {
         // Given
-        final Operation operation = new GetVariables.Builder().variableNames(Lists.newArrayList()).build();
+        final Operation operation = new GetVariables.Builder().variableNames(new ArrayList<>()).build();
         given(properties.getJobExecutorThreadCount()).willReturn(1);
         given(properties.getJobTrackerEnabled()).willReturn(true);
         final Store store = new StoreImpl();
@@ -833,7 +834,7 @@ public class StoreTest {
     public void shouldExecuteOperationChainJobAndExportResults(@Mock final StoreProperties properties)
             throws OperationException, InterruptedException, StoreException {
         // Given
-        final Operation operation = new GetVariables.Builder().variableNames(Lists.newArrayList()).build();
+        final Operation operation = new GetVariables.Builder().variableNames(new ArrayList<>()).build();
         final OperationChain<?> opChain = new OperationChain<>(operation);
         given(properties.getJobExecutorThreadCount()).willReturn(1);
         given(properties.getJobTrackerEnabled()).willReturn(true);

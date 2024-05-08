@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.resolver.named;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.cache.exception.CacheOperationException;
@@ -79,7 +78,7 @@ public class NamedOperationScoreResolverTest {
         namedOp.setOperationName(opName);
 
         Operation operation = new GetAllElements();
-        Map<String, Object> paramMap = Maps.newHashMap();
+        Map<String, Object> paramMap = new HashMap<>();
         paramMap.put("test param", operation);
         namedOp.setParameters(paramMap);
 

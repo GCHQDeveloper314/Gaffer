@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,6 +34,7 @@ import uk.gov.gchq.gaffer.store.schema.SchemaEntityDefinition;
 import uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat;
 import uk.gov.gchq.koryphe.impl.predicate.Exists;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -56,7 +56,7 @@ public class HasTraitHandlerTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-        expectedTraits = Sets.newHashSet(StoreTrait.ALL_TRAITS);
+        expectedTraits = new HashSet<>(StoreTrait.ALL_TRAITS);
         expectedTraits.remove(StoreTrait.ORDERED);
 
         store = new TestAddToGraphLibraryImpl() {
@@ -71,7 +71,7 @@ public class HasTraitHandlerTest {
 
     @AfterEach
     public void tearDown() throws Exception {
-        final Set<StoreTrait> temp = Sets.newHashSet(StoreTrait.ALL_TRAITS);
+        final Set<StoreTrait> temp = new HashSet<>(StoreTrait.ALL_TRAITS);
         temp.remove(StoreTrait.ORDERED);
         assertEquals(temp, this.expectedTraits);
         assertNotEquals(StoreTrait.ALL_TRAITS, expectedTraits);

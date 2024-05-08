@@ -16,13 +16,13 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.named.cache;
 
-import com.google.common.base.Strings;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.gov.gchq.gaffer.cache.Cache;
 import uk.gov.gchq.gaffer.cache.exception.CacheOperationException;
+import uk.gov.gchq.gaffer.commonutil.StringUtil;
 import uk.gov.gchq.gaffer.core.exception.GafferRuntimeException;
 import uk.gov.gchq.gaffer.named.operation.NamedOperationDetail;
 import uk.gov.gchq.gaffer.user.User;
@@ -43,7 +43,7 @@ public class NamedOperationCache extends Cache<String, NamedOperationDetail> {
 
     public NamedOperationCache(final String suffixNamedOperationCacheName) {
         super(getCacheNameFrom(suffixNamedOperationCacheName), NAMED_OPERATION_CACHE_SERVICE_NAME);
-        if (Strings.isNullOrEmpty(suffixNamedOperationCacheName)) {
+        if (StringUtil.isNullOrEmpty(suffixNamedOperationCacheName)) {
             LOGGER.error(NAMED_OPERATION_CACHE_WAS_MADE_WITH_NULL_OR_EMPTY_SUFFIX);
         }
     }

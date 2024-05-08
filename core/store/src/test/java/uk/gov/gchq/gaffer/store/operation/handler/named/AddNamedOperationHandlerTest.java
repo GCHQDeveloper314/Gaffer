@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.store.operation.handler.named;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -176,7 +175,7 @@ public class AddNamedOperationHandlerTest {
                 .description("Limit param")
                 .valueClass(Long.class)
                 .build();
-        final Map<String, ParameterDetail> paramMap = Maps.newHashMap();
+        final Map<String, ParameterDetail> paramMap = new HashMap<>();
         paramMap.put("param1", param);
         addNamedOperation.setParameters(paramMap);
         handler.doOperation(addNamedOperation, context, store);
@@ -198,7 +197,7 @@ public class AddNamedOperationHandlerTest {
                 .description("key param")
                 .valueClass(String.class)
                 .build();
-        final Map<String, ParameterDetail> paramMap = Maps.newHashMap();
+        final Map<String, ParameterDetail> paramMap = new HashMap<>();
         paramMap.put("param2", param);
         addNamedOperation.setParameters(paramMap);
 

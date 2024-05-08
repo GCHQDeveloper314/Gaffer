@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.google.common.collect.Sets;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -351,7 +350,7 @@ public abstract class SchemaElementDefinition implements ElementDefinition {
             return true;
         }
 
-        final Set<String> typeNames = Sets.newHashSet(identifiers.values());
+        final Set<String> typeNames = new HashSet<>(identifiers.values());
         typeNames.addAll(properties.values());
         for (final String typeName : typeNames) {
             final TypeDefinition typeDef = getTypeDef(typeName);

@@ -21,11 +21,12 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.google.common.base.Strings;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
+import uk.gov.gchq.gaffer.commonutil.StringUtil;
 import uk.gov.gchq.gaffer.named.operation.NamedOperation;
 import uk.gov.gchq.gaffer.operation.Operation;
 import uk.gov.gchq.gaffer.operation.OperationException;
@@ -72,7 +73,7 @@ public class ScoreOperationChainHandler implements OutputOperationHandler<ScoreO
     @JsonCreator
     public ScoreOperationChainHandler(@JsonProperty("suffixNamedOperationCacheName") final String namedOperationCacheNameSuffix) {
         defaultScoreResolvers = addDefaultScoreResolvers(namedOperationCacheNameSuffix);
-        if (Strings.isNullOrEmpty(namedOperationCacheNameSuffix)) {
+        if (StringUtil.isNullOrEmpty(namedOperationCacheNameSuffix)) {
             LOGGER.error(NAMED_OPERATION_CACHE_WAS_MADE_WITH_NULL_OR_EMPTY_SUFFIX);
         }
     }

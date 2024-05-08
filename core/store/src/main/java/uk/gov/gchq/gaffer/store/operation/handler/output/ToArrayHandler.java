@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.store.operation.handler.output;
 
-import com.google.common.collect.Iterables;
+import org.apache.commons.collections4.IterableUtils;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
@@ -53,7 +53,7 @@ public class ToArrayHandler<T> implements OutputOperationHandler<ToArray<T>, T[]
     @SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS")
     @Override
     public T[] doOperation(final ToArray<T> operation, final Context context, final Store store) throws OperationException {
-        if (null == operation.getInput() || Iterables.isEmpty(operation.getInput())) {
+        if (null == operation.getInput() || IterableUtils.isEmpty(operation.getInput())) {
             return null;
         }
 
