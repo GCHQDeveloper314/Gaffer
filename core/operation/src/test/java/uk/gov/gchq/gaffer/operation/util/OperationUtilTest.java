@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.operation.util;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
@@ -26,8 +26,8 @@ import uk.gov.gchq.gaffer.operation.data.EdgeSeed;
 import uk.gov.gchq.gaffer.operation.data.EntitySeed;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,7 +62,7 @@ public class OperationUtilTest {
         final Iterable<? extends ElementId> output = OperationUtil.toElementIds(input);
 
         // Then
-        final ArrayList<ElementId> expected = Lists.newArrayList(
+        final List<ElementId> expected = Arrays.asList(
                 new EntitySeed(1),
                 new EntitySeed("2"),
                 new EntitySeed("3"),
@@ -70,7 +70,7 @@ public class OperationUtilTest {
                 new EdgeSeed("5", 6),
                 new Edge("group", 7L, 8, true),
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class OperationUtilTest {
         final Iterable<? extends ElementId> output = OperationUtil.toElementIds(input);
 
         // Then
-        final ArrayList<ElementId> expected = Lists.newArrayList(
+        final List<ElementId> expected = Arrays.asList(
                 new EntitySeed(1),
                 new EntitySeed("2"),
                 new EntitySeed("3"),
@@ -97,7 +97,7 @@ public class OperationUtilTest {
                 new EdgeSeed("5", 6),
                 new Edge("group", 7L, 8, true),
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 
     @Test
@@ -121,7 +121,7 @@ public class OperationUtilTest {
         final Iterable<?> output = OperationUtil.fromElementIds(input);
 
         // Then
-        final ArrayList<Serializable> expected = Lists.newArrayList(
+        final List<Serializable> expected = Arrays.asList(
                 1,
                 "2",
                 "3",
@@ -129,7 +129,7 @@ public class OperationUtilTest {
                 new EdgeSeed("5", 6),
                 new Edge("group", 7L, 8, true),
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 
     @Test
@@ -159,13 +159,13 @@ public class OperationUtilTest {
         final Iterable<? extends EntityId> output = OperationUtil.toEntityIds(input);
 
         // Then
-        final ArrayList<EntityId> expected = Lists.newArrayList(
+        final List<EntityId> expected = Arrays.asList(
                 new EntitySeed(1),
                 new EntitySeed("2"),
                 new EntitySeed("3"),
                 new Entity("group", "4"),
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 
     @Test
@@ -182,13 +182,13 @@ public class OperationUtilTest {
         final Iterable<? extends ElementId> output = OperationUtil.toEntityIds(input);
 
         // Then
-        final ArrayList<EntityId> expected = Lists.newArrayList(
+        final List<EntityId> expected = Arrays.asList(
                 new EntitySeed(1),
                 new EntitySeed("2"),
                 new EntitySeed("3"),
                 new Entity("group", "4"),
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 
     @Test
@@ -217,12 +217,12 @@ public class OperationUtilTest {
         final Iterable<?> output = OperationUtil.fromElementIds(input);
 
         // Then
-        final ArrayList<? extends Serializable> expected = Lists.newArrayList(
+        final List<? extends Serializable> expected = Arrays.asList(
                 1,
                 "2",
                 "3",
                 "4",
                 null);
-        assertThat(Lists.newArrayList(output)).isEqualTo(expected);
+        assertThat(IterableUtils.toList(output)).isEqualTo(expected);
     }
 }

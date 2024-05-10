@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.exception.CloneFailedException;
@@ -37,6 +36,7 @@ import uk.gov.gchq.koryphe.Summary;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -162,7 +162,7 @@ public class OperationChain<OUT> implements Output<OUT>,
     @JsonSetter("operations")
     void setOperationArray(final Operation... operations) {
         if (null != operations) {
-            this.operations = Lists.newArrayList(operations);
+            this.operations = Arrays.asList(operations);
         } else {
             this.operations = new ArrayList<>();
         }

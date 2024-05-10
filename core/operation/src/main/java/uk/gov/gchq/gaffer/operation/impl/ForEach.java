@@ -19,7 +19,6 @@ package uk.gov.gchq.gaffer.operation.impl;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.exception.CloneFailedException;
 
 import uk.gov.gchq.gaffer.operation.Operation;
@@ -31,6 +30,7 @@ import uk.gov.gchq.gaffer.operation.serialisation.TypeReferenceImpl;
 import uk.gov.gchq.koryphe.Since;
 import uk.gov.gchq.koryphe.Summary;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -113,7 +113,7 @@ public class ForEach<I, O> implements InputOutput<Iterable<? extends I>, Iterabl
 
     @Override
     public void updateOperations(final Collection<Operation> operations) {
-        this.operation = new OperationChain<>(Lists.newArrayList(operations));
+        this.operation = new OperationChain<>(new ArrayList<>(operations));
     }
 
     @Override

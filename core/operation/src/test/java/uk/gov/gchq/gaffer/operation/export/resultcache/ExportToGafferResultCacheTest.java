@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation.export.resultcache;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.exception.SerialisationException;
@@ -24,6 +23,7 @@ import uk.gov.gchq.gaffer.jsonserialisation.JSONSerialiser;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 import uk.gov.gchq.gaffer.operation.impl.export.resultcache.ExportToGafferResultCache;
 
+import java.util.Arrays;
 import java.util.HashSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -34,7 +34,7 @@ public class ExportToGafferResultCacheTest extends OperationTest<ExportToGafferR
     public void shouldJSONSerialiseAndDeserialise() throws SerialisationException {
         // Given
         final String key = "key";
-        final HashSet<String> opAuths = Sets.newHashSet("1", "2");
+        final HashSet<String> opAuths = new HashSet<>(Arrays.asList("1", "2"));
         final ExportToGafferResultCache op = new ExportToGafferResultCache.Builder<>()
                 .opAuths(opAuths)
                 .key(key)
@@ -54,7 +54,7 @@ public class ExportToGafferResultCacheTest extends OperationTest<ExportToGafferR
     public void builderShouldCreatePopulatedOperation() {
         // When
         final String key = "key";
-        final HashSet<String> opAuths = Sets.newHashSet("1", "2");
+        final HashSet<String> opAuths = new HashSet<>(Arrays.asList("1", "2"));
         final ExportToGafferResultCache op = new ExportToGafferResultCache.Builder<>()
                 .opAuths(opAuths)
                 .key(key)
@@ -70,7 +70,7 @@ public class ExportToGafferResultCacheTest extends OperationTest<ExportToGafferR
     public void shouldShallowCloneOperation() {
         // Given
         final String key = "key";
-        final HashSet<String> opAuths = Sets.newHashSet("1", "2");
+        final HashSet<String> opAuths = new HashSet<>(Arrays.asList("1", "2"));
         final String input = "input";
         final ExportToGafferResultCache exportToGafferResultCache = new ExportToGafferResultCache.Builder<>()
                 .key(key)

@@ -17,7 +17,6 @@
 package uk.gov.gchq.gaffer.operation;
 
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -381,7 +380,7 @@ public class OperationChainTest extends OperationsTest<OperationChain<?>> {
     @Override
     public void shouldGetOperations() {
         // Given
-        final List<Operation> ops = Lists.newArrayList(mock(Operation.class),
+        final List<Operation> ops = Arrays.asList(mock(Operation.class),
                 mock(GetAllElements.class),
                 mock(Aggregate.class),
                 mock(Limit.class));

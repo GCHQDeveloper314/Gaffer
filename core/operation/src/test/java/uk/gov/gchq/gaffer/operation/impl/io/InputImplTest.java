@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation.impl.io;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationTest;
@@ -25,6 +24,7 @@ import uk.gov.gchq.koryphe.ValidationResult;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -137,7 +137,7 @@ public class InputImplTest extends OperationTest<InputImpl> {
 
     @Override
     public Set<String> getRequiredFields() {
-        return Sets.newHashSet("requiredField1", "requiredField2");
+        return new HashSet<>(Arrays.asList("requiredField1", "requiredField2"));
     }
 
     @Override

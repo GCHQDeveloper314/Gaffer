@@ -16,11 +16,11 @@
 
 package uk.gov.gchq.gaffer.operation.impl;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,7 +32,7 @@ public class LimitTest extends OperationTest<Limit> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("resultLimit");
+        return Collections.singleton("resultLimit");
     }
 
     @Test

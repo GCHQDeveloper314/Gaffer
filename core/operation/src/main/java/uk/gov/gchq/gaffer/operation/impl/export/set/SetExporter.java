@@ -16,12 +16,11 @@
 
 package uk.gov.gchq.gaffer.operation.impl.export.set;
 
-import com.google.common.collect.Iterables;
-
 import uk.gov.gchq.gaffer.commonutil.ToStringBuilder;
 import uk.gov.gchq.gaffer.operation.export.Exporter;
 import uk.gov.gchq.koryphe.iterable.LimitedIterable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -38,7 +37,8 @@ public class SetExporter implements Exporter {
 
     @Override
     public void add(final String key, final Iterable<?> results) {
-        Iterables.addAll(getExport(key), results);
+        Set<Object> export = getExport(key);
+        results.forEach(i -> export.add(i));
     }
 
     @Override

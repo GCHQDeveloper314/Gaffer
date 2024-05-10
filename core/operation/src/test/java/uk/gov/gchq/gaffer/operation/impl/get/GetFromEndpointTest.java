@@ -16,11 +16,11 @@
 
 package uk.gov.gchq.gaffer.operation.impl.get;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
+import java.util.Collections;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -65,6 +65,6 @@ public class GetFromEndpointTest extends OperationTest<GetFromEndpoint> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("endpoint");
+        return Collections.singleton("endpoint");
     }
 }

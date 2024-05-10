@@ -18,7 +18,6 @@ package uk.gov.gchq.gaffer.operation.impl.export.resultcache;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.google.common.collect.Sets;
 
 import uk.gov.gchq.gaffer.operation.Operation;
 import uk.gov.gchq.gaffer.operation.export.ExportTo;
@@ -26,6 +25,8 @@ import uk.gov.gchq.gaffer.operation.serialisation.TypeReferenceImpl;
 import uk.gov.gchq.koryphe.Since;
 import uk.gov.gchq.koryphe.Summary;
 
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -109,7 +110,7 @@ public class ExportToGafferResultCache<T> implements
         }
 
         public Builder<T> opAuths(final String... opAuths) {
-            _getOp().setOpAuths(Sets.newHashSet(opAuths));
+            _getOp().setOpAuths(new HashSet<>(Arrays.asList(opAuths)));
             return _self();
         }
     }

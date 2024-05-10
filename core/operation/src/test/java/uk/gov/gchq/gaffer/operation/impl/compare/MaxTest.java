@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.operation.impl.compare;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -25,6 +24,7 @@ import uk.gov.gchq.gaffer.data.element.Entity;
 import uk.gov.gchq.gaffer.data.element.comparison.ElementPropertyComparator;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -37,7 +37,7 @@ public class MaxTest extends OperationTest<Max> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("comparators");
+        return Collections.singleton("comparators");
     }
 
     @Test

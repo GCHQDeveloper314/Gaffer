@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.operation.impl;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
@@ -106,7 +106,7 @@ public class JoinTest extends OperationTest<Join> {
 
         @Override
         public void init(final Iterable matchCandidates) {
-            matches = Lists.newArrayList(matchCandidates);
+            matches = IterableUtils.toList(matchCandidates);
         }
 
         @Override

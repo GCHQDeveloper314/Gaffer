@@ -16,19 +16,19 @@
 
 package uk.gov.gchq.gaffer.operation.io;
 
+import org.apache.commons.collections4.IterableUtils;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 
 import uk.gov.gchq.gaffer.commonutil.CloseableUtil;
 import uk.gov.gchq.gaffer.exception.SerialisationException;
 import uk.gov.gchq.gaffer.jsonserialisation.JSONSerialiser;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -167,7 +167,7 @@ public abstract class GenericInput<I> implements Input<I> {
         @JsonGetter("input")
         public Object[] getInputAsArray() {
             if (null == inputArray && null != inputIterable) {
-                inputArray = Iterables.toArray(inputIterable, Object.class);
+                inputArray = IterableUtils.toList(inputIterable).toArray();
             }
             return inputArray;
         }
@@ -175,7 +175,7 @@ public abstract class GenericInput<I> implements Input<I> {
         @JsonIgnore
         public Iterable<?> getInputAsIterable() {
             if (null == inputIterable && null != inputArray) {
-                inputIterable = Lists.newArrayList(inputArray);
+                inputIterable = Arrays.asList(inputArray);
             }
             return inputIterable;
         }

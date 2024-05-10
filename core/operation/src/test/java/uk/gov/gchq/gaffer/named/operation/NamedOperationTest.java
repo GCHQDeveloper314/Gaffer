@@ -15,7 +15,6 @@
  */
 package uk.gov.gchq.gaffer.named.operation;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationTest;
@@ -86,7 +85,7 @@ public class NamedOperationTest extends OperationTest<NamedOperation> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("operationName");
+        return Collections.singleton("operationName");
     }
 
     @Override

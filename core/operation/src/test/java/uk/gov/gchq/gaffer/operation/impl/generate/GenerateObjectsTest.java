@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation.impl.generate;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
@@ -28,6 +27,7 @@ import uk.gov.gchq.gaffer.jsonserialisation.JSONSerialiser;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GenerateObjectsTest extends OperationTest<GenerateObjects> {
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("elementGenerator");
+        return Collections.singleton("elementGenerator");
     }
 
     @Test

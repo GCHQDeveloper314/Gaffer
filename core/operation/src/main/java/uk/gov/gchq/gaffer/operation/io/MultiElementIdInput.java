@@ -16,9 +16,10 @@
 
 package uk.gov.gchq.gaffer.operation.io;
 
+import java.util.Arrays;
+
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.collect.Lists;
 
 import uk.gov.gchq.gaffer.data.element.id.ElementId;
 import uk.gov.gchq.gaffer.operation.util.OperationUtil;
@@ -52,17 +53,16 @@ public interface MultiElementIdInput extends MultiInput<ElementId> {
         if (null == input) {
             setInput(((Iterable) null));
         }
-        setInput(Lists.newArrayList(input));
+        setInput(Arrays.asList(input));
     }
 
     interface Builder<OP extends MultiElementIdInput, B extends Builder<OP, ?>>
             extends Input.Builder<OP, Iterable<? extends ElementId>, B> {
-        @SuppressWarnings("unchecked")
         default B input(final Object... input) {
             if (null != _getOp().getInput()) {
                 throw new IllegalStateException("Input has already been set");
             }
-            return input(Lists.newArrayList(input));
+            return input(Arrays.asList(input));
         }
 
         @Override
@@ -78,7 +78,7 @@ public interface MultiElementIdInput extends MultiInput<ElementId> {
             if (null != _getOp().getInput()) {
                 throw new IllegalStateException("Input has already been set");
             }
-            return inputIds(Lists.newArrayList(input));
+            return inputIds(Arrays.asList(input));
         }
 
         default B inputIds(final Iterable<? extends ElementId> input) {

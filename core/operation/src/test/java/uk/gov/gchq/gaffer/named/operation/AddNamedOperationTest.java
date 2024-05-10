@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.named.operation;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.access.predicate.AccessPredicate;
@@ -273,7 +272,7 @@ public class AddNamedOperationTest extends OperationTest<AddNamedOperation> {
                 operations.stream().map(o -> o.getClass()).collect(Collectors.toList())
         );
         final GetAdjacentIds nestedOp = (GetAdjacentIds) operations.iterator().next();
-        final List<? extends EntityId> input = Lists.newArrayList(nestedOp.getInput());
+        final List<? extends EntityId> input = IterableUtils.toList(nestedOp.getInput());
         assertEquals(Collections.singletonList(new EntitySeed("seed1")), input);
     }
 
@@ -305,7 +304,7 @@ public class AddNamedOperationTest extends OperationTest<AddNamedOperation> {
                 operations.stream().map(o -> o.getClass()).collect(Collectors.toList())
         );
         final GetAdjacentIds nestedOp = (GetAdjacentIds) operations.iterator().next();
-        final List<? extends EntityId> input = Lists.newArrayList(nestedOp.getInput());
+        final List<? extends EntityId> input = IterableUtils.toList(nestedOp.getInput());
         assertEquals(Collections.singletonList(new EntitySeed(null)), input);
     }
 
@@ -316,7 +315,7 @@ public class AddNamedOperationTest extends OperationTest<AddNamedOperation> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("operations");
+        return Collections.singleton("operations");
     }
 
     @Test

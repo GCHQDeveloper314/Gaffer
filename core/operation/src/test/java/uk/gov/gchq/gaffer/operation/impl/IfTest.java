@@ -15,7 +15,7 @@
  */
 package uk.gov.gchq.gaffer.operation.impl;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonAssert;
@@ -100,7 +100,7 @@ public class IfTest extends OperationTest<If> {
                 .otherwise(opChain)
                 .build();
 
-        final Collection<Operation> expectedOps = Lists.newArrayList(new OperationChain<>(), OperationChain.wrap(getElements), opChain);
+        final Collection<Operation> expectedOps = Arrays.asList(new OperationChain<>(), OperationChain.wrap(getElements), opChain);
 
         // When
         final Collection<Operation> result = ifOp.getOperations();
@@ -125,7 +125,7 @@ public class IfTest extends OperationTest<If> {
                 .condition(false)
                 .build();
 
-        final Collection<Operation> opList = Lists.newArrayList(new OperationChain<>(), getElements, opChain);
+        final Collection<Operation> opList = Arrays.asList(new OperationChain<>(), getElements, opChain);
 
         // When
         ifOp.updateOperations(opList);
@@ -163,7 +163,7 @@ public class IfTest extends OperationTest<If> {
                 .condition(false)
                 .build();
 
-        final Collection<Operation> opList = Lists.newArrayList(getElements);
+        final Collection<Operation> opList = Arrays.asList(getElements);
 
         // When / Then
         assertThatIllegalArgumentException()
@@ -185,7 +185,7 @@ public class IfTest extends OperationTest<If> {
         final If<Object, Object> ifOp = new If.Builder<>()
                 .build();
 
-        final Collection<Operation> opList = Lists.newArrayList(getElements, getAllElements, limit, limit);
+        final Collection<Operation> opList = Arrays.asList(getElements, getAllElements, limit, limit);
 
         // When / Then
         assertThatIllegalArgumentException()
@@ -250,7 +250,7 @@ public class IfTest extends OperationTest<If> {
 
         // Then
         assertNotNull(deserialisedObj);
-        assertEquals(Arrays.asList(new EntitySeed("1"), new EntitySeed("2")), Lists.newArrayList((Iterable) deserialisedObj.getInput()));
+        assertEquals(Arrays.asList(new EntitySeed("1"), new EntitySeed("2")), IterableUtils.toList((Iterable) deserialisedObj.getInput()));
     }
 
     @Test

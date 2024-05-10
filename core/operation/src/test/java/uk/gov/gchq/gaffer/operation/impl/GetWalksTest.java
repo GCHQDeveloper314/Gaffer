@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.operation.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -34,6 +33,8 @@ import uk.gov.gchq.gaffer.operation.impl.get.GetElements;
 import uk.gov.gchq.gaffer.operation.io.Output;
 import uk.gov.gchq.koryphe.ValidationResult;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -77,7 +78,7 @@ public class GetWalksTest extends OperationTest<GetWalks> {
 
         // When
         ValidationResult result = operation.validate();
-        Set<String> expectedErrors = Sets.newHashSet("No hops were provided. " + HOP_DEFINITION);
+        Set<String> expectedErrors = Collections.singleton("No hops were provided. " + HOP_DEFINITION);
 
         // Then
         assertEquals(result.getErrors(), expectedErrors);
@@ -242,7 +243,7 @@ public class GetWalksTest extends OperationTest<GetWalks> {
     @Override
     public void shouldShallowCloneOperation() {
         // Given
-        final List<EntitySeed> input = Lists.newArrayList(new EntitySeed("1"), new EntitySeed("2"));
+        final List<EntitySeed> input = Arrays.asList(new EntitySeed("1"), new EntitySeed("2"));
         final GetElements getElements = new GetElements();
         final GetWalks getWalks = new GetWalks.Builder()
                 .input(input)
@@ -254,7 +255,7 @@ public class GetWalksTest extends OperationTest<GetWalks> {
 
         // Then
         assertNotSame(getWalks, clone);
-        assertEquals(input, Lists.newArrayList(clone.getInput()));
+        assertEquals(input, IterableUtils.toList(clone.getInput()));
         for (final Output<Iterable<Element>> operation : clone.getOperations()) {
             assertNotSame(getElements, operation);
             assertEquals(OperationChain.class, operation.getClass());
@@ -268,6 +269,6 @@ public class GetWalksTest extends OperationTest<GetWalks> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("operations");
+        return Collections.singleton("operations");
     }
 }

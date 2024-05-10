@@ -16,8 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation.impl.generate;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.data.generator.ElementGeneratorImpl;
@@ -25,6 +23,8 @@ import uk.gov.gchq.gaffer.exception.SerialisationException;
 import uk.gov.gchq.gaffer.jsonserialisation.JSONSerialiser;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -37,7 +37,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 public class GenerateElementsTest extends OperationTest<GenerateElements> {
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("elementGenerator");
+        return Collections.singleton("elementGenerator");
     }
 
     @Test
@@ -86,7 +86,7 @@ public class GenerateElementsTest extends OperationTest<GenerateElements> {
     @Override
     public void shouldShallowCloneOperation() {
         // Given
-        List<String> input = Lists.newArrayList("test1", "test2");
+        List<String> input = Arrays.asList("test1", "test2");
         ElementGeneratorImpl generator = new ElementGeneratorImpl();
         GenerateElements<?> generateElements = new GenerateElements.Builder<String>()
                 .generator(generator)

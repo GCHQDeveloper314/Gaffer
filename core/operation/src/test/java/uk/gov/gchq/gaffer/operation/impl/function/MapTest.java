@@ -15,13 +15,13 @@
  */
 package uk.gov.gchq.gaffer.operation.impl.function;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.OperationTest;
 import uk.gov.gchq.gaffer.operation.impl.Map;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -71,6 +71,6 @@ public class MapTest extends OperationTest<Map> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("functions");
+        return Collections.singleton("functions");
     }
 }

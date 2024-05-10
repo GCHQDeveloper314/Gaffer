@@ -21,7 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.annotation.JsonTypeInfo.As;
-import com.google.common.collect.Sets;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.exception.CloneFailedException;
 
@@ -199,7 +198,7 @@ public interface Operation extends Closeable {
     default ValidationResult validate() {
         final ValidationResult result = new ValidationResult();
 
-        final HashSet<Field> fields = Sets.<Field>newHashSet();
+        final HashSet<Field> fields = new HashSet<>();
         Class<?> currentClass = this.getClass();
         while (nonNull(currentClass)) {
             fields.addAll(Arrays.asList(currentClass.getDeclaredFields()));

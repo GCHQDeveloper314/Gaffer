@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation;
 
-import com.google.common.collect.Maps;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.JSONSerialisationTest;
@@ -66,7 +65,7 @@ public abstract class OperationTest<T extends Operation> extends JSONSerialisati
     @Test
     public void shouldSetGetOption() throws Exception {
         final Operation testObject = getTestObject();
-        final HashMap<String, String> expected = Maps.newHashMap();
+        final HashMap<String, String> expected = new HashMap<>();
         expected.put("one", "two");
         testObject.setOptions(expected);
         final Map<String, String> actual = testObject.getOptions();

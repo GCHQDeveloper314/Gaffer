@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.named.view;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.access.predicate.AccessPredicate;
@@ -26,7 +25,9 @@ import uk.gov.gchq.gaffer.data.elementdefinition.view.View;
 import uk.gov.gchq.gaffer.data.elementdefinition.view.ViewParameterDetail;
 import uk.gov.gchq.gaffer.operation.OperationTest;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -108,6 +109,6 @@ public class AddNamedViewTest extends OperationTest<AddNamedView> {
 
     @Override
     protected Set<String> getRequiredFields() {
-        return Sets.newHashSet("name", "view");
+        return new HashSet<>(Arrays.asList("name", "view"));
     }
 }

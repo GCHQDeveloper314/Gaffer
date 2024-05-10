@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.operation.impl.io;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -142,9 +141,9 @@ public class GenericInputTest extends JSONSerialisationTest<GenericInput> {
             }
             return objList;
         } else if (obj instanceof Collection) {
-            return Lists.newArrayList((Collection) obj);
+            return new ArrayList<>(((Collection) obj));
         } else {
-            return Lists.newArrayList(obj);
+            return Arrays.asList(obj);
         }
     }
 }

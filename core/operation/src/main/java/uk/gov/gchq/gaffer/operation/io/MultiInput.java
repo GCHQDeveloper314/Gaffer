@@ -16,12 +16,13 @@
 
 package uk.gov.gchq.gaffer.operation.io;
 
+import java.util.Arrays;
+
+import org.apache.commons.collections4.IterableUtils;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
 /**
@@ -35,7 +36,7 @@ public interface MultiInput<I_ITEM> extends Input<Iterable<? extends I_ITEM>> {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
     @JsonGetter("input")
     default Object[] createInputArray() {
-        return null != getInput() ? Iterables.toArray(getInput(), Object.class) : null;
+        return null != getInput() ? IterableUtils.toList(getInput()).toArray() : null;
     }
 
     @JsonIgnore
@@ -45,7 +46,7 @@ public interface MultiInput<I_ITEM> extends Input<Iterable<? extends I_ITEM>> {
     @JsonTypeInfo(use = JsonTypeInfo.Id.CLASS, include = JsonTypeInfo.As.PROPERTY, property = "class")
     @JsonSetter("input")
     default void setInput(final I_ITEM... input) {
-        setInput(Lists.newArrayList(input));
+        setInput(Arrays.asList(input));
     }
 
     @JsonIgnore
@@ -59,7 +60,7 @@ public interface MultiInput<I_ITEM> extends Input<Iterable<? extends I_ITEM>> {
             if (null != _getOp().getInput()) {
                 throw new IllegalStateException("Input has already been set");
             }
-            return input(Lists.newArrayList(input));
+            return input(Arrays.asList(input));
         }
 
         @Override

@@ -22,7 +22,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonPOJOBuilder;
-import com.google.common.collect.Maps;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
@@ -38,6 +37,7 @@ import uk.gov.gchq.gaffer.user.User;
 
 import java.io.Serializable;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -59,7 +59,7 @@ public class NamedOperationDetail implements AccessControlledResource, Serializa
     private String operations;
     private List<String> readAccessRoles;
     private List<String> writeAccessRoles;
-    private Map<String, ParameterDetail> parameters = Maps.newHashMap();
+    private Map<String, ParameterDetail> parameters = new HashMap<>();
     private Integer score;
     private String readAccessPredicateJson;
     private String writeAccessPredicateJson;
@@ -379,7 +379,7 @@ public class NamedOperationDetail implements AccessControlledResource, Serializa
         private String opChain;
         private List<String> readers;
         private List<String> writers;
-        private Map<String, ParameterDetail> parameters = Maps.newHashMap();
+        private Map<String, ParameterDetail> parameters = new HashMap<>();
         private Integer score;
         private AccessPredicate readAccessPredicate;
         private AccessPredicate writeAccessPredicate;

@@ -16,14 +16,14 @@
 
 package uk.gov.gchq.gaffer.export;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.IterableUtils;
+import org.apache.commons.collections4.ListUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.operation.impl.export.set.SetExporter;
-import uk.gov.gchq.koryphe.iterable.ChainedIterable;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -35,8 +35,7 @@ public class SetExporterTest {
         // Given
         final List<String> valuesA = Arrays.asList("1", "2", "3");
         final List<String> valuesB = Arrays.asList("4", "5", "6");
-        final List<String> valuesCombined = Lists
-                .newArrayList(new ChainedIterable<>(Arrays.asList(valuesA, valuesB)));
+        final List<String> valuesCombined = ListUtils.union(valuesA, valuesB);
         final SetExporter exporter = new SetExporter();
 
         // When
@@ -45,7 +44,7 @@ public class SetExporterTest {
 
         // Then
         final Iterable<?> export = exporter.get("key");
-        assertEquals(Sets.newHashSet(valuesCombined), Sets.newHashSet(export));
+        assertEquals(new HashSet<>(valuesCombined), IterableUtils.toList(export));
     }
 
     @Test
@@ -61,10 +60,10 @@ public class SetExporterTest {
 
         // Then
         final Iterable<?> export1 = exporter.get("key1");
-        assertEquals(valuesA, Lists.newArrayList(export1));
+        assertEquals(valuesA, IterableUtils.toList(export1));
 
         final Iterable<?> export2 = exporter.get("key2");
-        assertEquals(valuesB, Lists.newArrayList(export2));
+        assertEquals(valuesB, IterableUtils.toList(export2));
     }
 
     @Test
@@ -80,6 +79,6 @@ public class SetExporterTest {
         final Iterable<?> results = exporter.get("key", start, end);
 
         // Then
-        assertEquals(values1.subList(start, end), Lists.newArrayList(results));
+        assertEquals(values1.subList(start, end), IterableUtils.toList(results));
     }
 }
