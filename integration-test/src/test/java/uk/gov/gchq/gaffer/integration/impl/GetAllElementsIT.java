@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -55,6 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GetAllElementsIT extends AbstractStoreIT {
@@ -115,8 +116,8 @@ public class GetAllElementsIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(2)
+        assertThat(results).hasSize(2)
+                .asInstanceOf(InstanceOfAssertFactories.iterable(Edge.class))
                 .contains(edge1, edge2);
     }
 
@@ -133,9 +134,8 @@ public class GetAllElementsIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(getEntities().size());
-        for (final Element element : resultList) {
+        assertThat(results).hasSize(getEntities().size());
+        for (final Element element : results) {
             assertThat(element.getGroup()).isEqualTo(TestGroups.ENTITY);
         }
     }
@@ -158,9 +158,8 @@ public class GetAllElementsIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(1);
-        assertThat(((Entity) resultList.get(0)).getVertex()).isEqualTo("A1");
+        assertThat(results).hasSize(1);
+        assertThat(results).first(as(InstanceOfAssertFactories.type(Entity.class))).extracting(Entity::getVertex).isEqualTo("A1");
     }
 
     @Test
@@ -188,9 +187,9 @@ public class GetAllElementsIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(1);
-        assertThat(resultList.get(0).getProperties()).containsEntry(TestPropertyNames.TRANSIENT_1, "A1,[3]");
+        assertThat(results).hasSize(1);
+        assertThat(results).first(as(InstanceOfAssertFactories.type(Element.class))).extracting(Element::getProperties).asInstanceOf(InstanceOfAssertFactories.MAP)
+                .containsEntry(TestPropertyNames.TRANSIENT_1, "A1,[3]");
     }
 
     @Test
@@ -274,7 +273,7 @@ public class GetAllElementsIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> expectedElementsCopy = Lists.newArrayList(expectedElements);
+        final List<Element> expectedElementsCopy = new ArrayList<>(expectedElements);
         for (final Element result : results) {
             final ElementId seed = ElementSeed.createSeed(result);
             if (result instanceof Entity) {
@@ -299,7 +298,7 @@ public class GetAllElementsIT extends AbstractStoreIT {
             expectedElementsCopy.remove(result);
         }
 
-        assertThat(Lists.newArrayList(results))
+        assertThat(results)
                 .as(String.format("The number of elements returned was not as expected. Missing elements: %s", expectedElementsCopy))
                 .hasSameSizeAs(expectedElements);
     }

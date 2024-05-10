@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CloseableUtil;
@@ -43,7 +42,6 @@ import uk.gov.gchq.gaffer.user.User;
 import uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -74,9 +72,7 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("A"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, getUser());
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, getUser());
 
         // Check for all entities which should be visible
         assertThat(results)
@@ -94,7 +90,7 @@ public class VisibilityIT extends AbstractStoreIT {
                     .isEmpty();
         }
 
-        CloseableUtil.close(iterable);
+        CloseableUtil.close(results);
     }
 
     @Test
@@ -115,9 +111,7 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("A"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, getUser());
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, getUser());
 
         // Check for all entities which should be visible
         assertThat(results)
@@ -149,9 +143,7 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("A"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, getUser());
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, getUser());
 
         // Check for all entities which should be visible
         assertThat(results)
@@ -187,9 +179,7 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("A"), new EntitySeed("B"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, getUser());
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, getUser());
 
         // Check for all entities which should be visible
         assertThat(results)
@@ -228,11 +218,8 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("A"), new EntitySeed("B"))
                 .build();
 
-        final Iterable<? extends Element> userVis1Iterable = graph.execute(get, USER_VIS_1);
-        final Iterable<? extends Element> userVis2Iterable = graph.execute(get, USER_VIS_2);
-
-        final List<Element> userVis1Results = Lists.newArrayList(userVis1Iterable);
-        final List<Element> userVis2Results = Lists.newArrayList(userVis2Iterable);
+        final Iterable<? extends Element> userVis1Results = graph.execute(get, USER_VIS_1);
+        final Iterable<? extends Element> userVis2Results = graph.execute(get, USER_VIS_2);
 
         assertThat(userVis1Results).hasSize(2);
         assertThat(userVis2Results).isEmpty();
@@ -266,15 +253,13 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("B"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, new User(User.UNKNOWN_USER_ID, Sets.newHashSet("vis1", "vis2")));
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, new User(User.UNKNOWN_USER_ID, SetUtils.hashSet("vis1", "vis2")));
 
         assertThat(results)
                 .withFailMessage("Results do not contain all expected entities.")
                 .hasSize(1);
 
-        for (final Element e : iterable) {
+        for (final Element e : results) {
             assertThat(e.getProperties()).containsKey(TestTypes.VISIBILITY);
         }
     }
@@ -297,9 +282,7 @@ public class VisibilityIT extends AbstractStoreIT {
                 .input(new EntitySeed("B"))
                 .build();
 
-        final Iterable<? extends Element> iterable = graph.execute(get, new User(User.UNKNOWN_USER_ID, Sets.newHashSet("vis1")));
-
-        final List<Element> results = Lists.newArrayList(iterable);
+        final Iterable<? extends Element> results = graph.execute(get, new User(User.UNKNOWN_USER_ID, SetUtils.hashSet("vis1")));
 
         assertThat(results)
                 .withFailMessage("Results do not contain all expected entities.")

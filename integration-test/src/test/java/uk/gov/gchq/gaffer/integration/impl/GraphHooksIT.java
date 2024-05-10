@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,7 +42,6 @@ import uk.gov.gchq.gaffer.operation.impl.get.GetAllElements;
 import uk.gov.gchq.koryphe.impl.predicate.IsIn;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -112,9 +110,8 @@ public class GraphHooksIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(operation, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList)
+        assertThat(results)
                 .hasSize(1)
-                .contains((Element) edge1);
+                .first().isEqualTo(edge1);
     }
 }

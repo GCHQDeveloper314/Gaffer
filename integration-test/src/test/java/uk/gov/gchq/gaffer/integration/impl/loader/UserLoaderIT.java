@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl.loader;
 
-import com.google.common.collect.Sets;
+import org.apache.commons.collections4.SetUtils;
 
 import uk.gov.gchq.gaffer.data.element.Edge;
 import uk.gov.gchq.gaffer.data.element.Entity;
@@ -38,15 +38,15 @@ import java.util.Map;
  * the {@link AbstractLoaderIT#addElements(Iterable)}} method.
  */
 public abstract class UserLoaderIT extends AbstractLoaderIT {
-    private static final User DEFAULT_USER = new User("privileged", Sets.newHashSet("public", "private"));
+    private static final User DEFAULT_USER = new User("privileged", SetUtils.hashSet("public", "private"));
 
     protected Schema schema;
     protected SchemaLoader loader;
 
     public UserLoaderIT() {
         final Map<String, User> userMap = new HashMap<>();
-        userMap.put("basic", new User("basic", Sets.newHashSet("public")));
-        userMap.put("privileged", new User("privileged", Sets.newHashSet("public", "private")));
+        userMap.put("basic", new User("basic", SetUtils.hashSet("public")));
+        userMap.put("privileged", new User("privileged", SetUtils.hashSet("public", "private")));
         this.user = DEFAULT_USER;
         this.userMap.putAll(userMap);
     }

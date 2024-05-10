@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -72,9 +71,9 @@ public class JoinIT extends AbstractStoreIT {
     public void shouldRightSideInnerJoinUsingKeyFunctionMatch() throws OperationException {
 
         // Given
-        final Map map = new Map.Builder<>().input(Lists.newArrayList(4L)).first(new Identity()).build();
+        final Map map = new Map.Builder<>().input(Arrays.asList(4L)).first(new Identity()).build();
 
-        final ArrayList<Entity> input = Lists.newArrayList(
+        final List<Entity> input = Arrays.asList(
                 getJoinEntity(TestGroups.ENTITY, 4),
                 getJoinEntity(TestGroups.ENTITY_2, 4),
                 getJoinEntity(TestGroups.ENTITY_3, 4)
@@ -109,9 +108,9 @@ public class JoinIT extends AbstractStoreIT {
     public void shouldLeftSideOuterJoinUsingKeyFunctionMatch() throws OperationException {
 
         // Given
-        final Map map = new Map.Builder<>().input(Lists.newArrayList(4L, 1L, 2L)).first(new Identity()).build();
+        final Map map = new Map.Builder<>().input(Arrays.asList(4L, 1L, 2L)).first(new Identity()).build();
 
-        final ArrayList<Entity> input = Lists.newArrayList(
+        final List<Entity> input = Arrays.asList(
                 getJoinEntity(TestGroups.ENTITY, 4),
                 getJoinEntity(TestGroups.ENTITY_2, 4),
                 getJoinEntity(TestGroups.ENTITY_3, 2),
@@ -150,9 +149,9 @@ public class JoinIT extends AbstractStoreIT {
     public void shouldRightSideFullJoinUsingKeyFunctionMatch() throws OperationException {
 
         // Given
-        final Map map = new Map.Builder<>().input(Lists.newArrayList(2L, 1L, 2L, 3L)).first(new Identity()).build();
+        final Map map = new Map.Builder<>().input(Arrays.asList(2L, 1L, 2L, 3L)).first(new Identity()).build();
 
-        final ArrayList<Entity> input = Lists.newArrayList(
+        final List<Entity> input = Arrays.asList(
                 getJoinEntity(TestGroups.ENTITY, 1),
                 getJoinEntity(TestGroups.ENTITY_2, 2),
                 getJoinEntity(TestGroups.ENTITY_2, 2),
@@ -176,16 +175,16 @@ public class JoinIT extends AbstractStoreIT {
 
         assertThat(loadedResults).hasSize(4);
 
-        assertThat(loadedResults.get(0)).containsEntry(MatchKey.LEFT.name(), Lists.newArrayList(getJoinEntity(TestGroups.ENTITY_2, 2), getJoinEntity(TestGroups.ENTITY_2, 2)))
+        assertThat(loadedResults.get(0)).containsEntry(MatchKey.LEFT.name(), Arrays.asList(getJoinEntity(TestGroups.ENTITY_2, 2), getJoinEntity(TestGroups.ENTITY_2, 2)))
                 .containsEntry(MatchKey.RIGHT.name(), 2L);
 
-        assertThat(loadedResults.get(1)).containsEntry(MatchKey.LEFT.name(), Lists.newArrayList(getJoinEntity(TestGroups.ENTITY, 1)))
+        assertThat(loadedResults.get(1)).containsEntry(MatchKey.LEFT.name(), Arrays.asList(getJoinEntity(TestGroups.ENTITY, 1)))
                 .containsEntry(MatchKey.RIGHT.name(), 1L);
 
-        assertThat(loadedResults.get(2)).containsEntry(MatchKey.LEFT.name(), Lists.newArrayList(getJoinEntity(TestGroups.ENTITY_2, 2), getJoinEntity(TestGroups.ENTITY_2, 2)))
+        assertThat(loadedResults.get(2)).containsEntry(MatchKey.LEFT.name(), Arrays.asList(getJoinEntity(TestGroups.ENTITY_2, 2), getJoinEntity(TestGroups.ENTITY_2, 2)))
                 .containsEntry(MatchKey.RIGHT.name(), 2L);
 
-        assertThat(loadedResults.get(3)).containsEntry(MatchKey.LEFT.name(), Lists.newArrayList())
+        assertThat(loadedResults.get(3)).containsEntry(MatchKey.LEFT.name(), new ArrayList<>())
                 .containsEntry(MatchKey.RIGHT.name(), 3L);
     }
 

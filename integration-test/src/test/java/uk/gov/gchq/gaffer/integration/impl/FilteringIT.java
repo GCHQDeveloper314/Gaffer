@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -70,10 +70,10 @@ public class FilteringIT extends AbstractStoreIT {
                 .build();
 
         // When - without filtering
-        final List<Element> resultsWithoutFiltering = Lists.newArrayList(graph.execute(getElementsWithoutFiltering, getUser()));
+        final List<Element> resultsWithoutFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithoutFiltering, getUser()));
 
         // When - with filtering
-        final List<Element> resultsWithFiltering = Lists.newArrayList(graph.execute(getElementsWithFiltering, getUser()));
+        final List<Element> resultsWithFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithFiltering, getUser()));
 
         // Then - without filtering
         assertThat(resultsWithoutFiltering)
@@ -124,10 +124,10 @@ public class FilteringIT extends AbstractStoreIT {
                 .build();
 
         // When - without filtering
-        final List<Element> resultsWithoutFiltering = Lists.newArrayList(graph.execute(getElementsWithoutFiltering, getUser()));
+        final List<Element> resultsWithoutFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithoutFiltering, getUser()));
 
         // When - with filtering
-        final List<Element> resultsWithFiltering = Lists.newArrayList(graph.execute(getElementsWithFiltering, getUser()));
+        final List<Element> resultsWithFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithFiltering, getUser()));
 
         // Then - without filtering
         assertThat(resultsWithoutFiltering)
@@ -185,11 +185,11 @@ public class FilteringIT extends AbstractStoreIT {
                 .build();
 
         // When - without filtering
-        final List<Element> resultsWithoutFiltering = Lists.newArrayList(
+        final List<Element> resultsWithoutFiltering = (List<Element>) IterableUtils.toList(
                 graph.execute(getElementsWithoutFiltering, getUser()));
 
         // When - with filtering
-        final List<Element> resultsWithFiltering = Lists.newArrayList(
+        final List<Element> resultsWithFiltering = (List<Element>) IterableUtils.toList(
                 graph.execute(getElementsWithFiltering, getUser()));
 
         // Then - without filtering
@@ -252,10 +252,10 @@ public class FilteringIT extends AbstractStoreIT {
                 .build();
 
         // When - without filtering
-        final List<Element> resultsWithoutFiltering = Lists.newArrayList(graph.execute(getElementsWithoutFiltering, getUser()));
+        final List<Element> resultsWithoutFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithoutFiltering, getUser()));
 
         // When - with filtering
-        final List<Element> resultsWithFiltering = Lists.newArrayList(graph.execute(getElementsWithFiltering, getUser()));
+        final List<Element> resultsWithFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithFiltering, getUser()));
 
         // Then - without filtering
         assertThat(resultsWithoutFiltering)
@@ -313,10 +313,10 @@ public class FilteringIT extends AbstractStoreIT {
                 .build();
 
         // When - without filtering
-        final List<Element> resultsWithoutFiltering = Lists.newArrayList(graph.execute(getElementsWithoutFiltering, getUser()));
+        final List<Element> resultsWithoutFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithoutFiltering, getUser()));
 
         // When - with filtering
-        final List<Element> resultsWithFiltering = Lists.newArrayList(graph.execute(getElementsWithFiltering, getUser()));
+        final List<Element> resultsWithFiltering = (List<Element>) IterableUtils.toList(graph.execute(getElementsWithFiltering, getUser()));
 
         // Then - without filtering
         List<Element> expectedResults = Arrays.asList(

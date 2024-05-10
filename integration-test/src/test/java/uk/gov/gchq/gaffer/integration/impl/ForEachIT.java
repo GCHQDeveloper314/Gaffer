@@ -16,8 +16,9 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
+import org.assertj.core.api.InstanceOfAssertFactories;
+import org.assertj.core.api.InstanceOfAssertFactory;
+import org.assertj.core.api.LongAssert;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.data.element.Element;
@@ -45,6 +46,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ForEachIT extends AbstractStoreIT {
@@ -66,7 +68,7 @@ public class ForEachIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        ElementUtil.assertElementEquals(Sets.newHashSet((ElementId) null), results);
+        ElementUtil.assertElementEquals(Collections.singleton((ElementId) null), results);
     }
 
     @Test
@@ -82,7 +84,7 @@ public class ForEachIT extends AbstractStoreIT {
         final Iterable<? extends Long> output = graph.execute(op, getUser());
 
         // Then
-        assertThat(Lists.newArrayList(output)).isEqualTo(Arrays.asList(3, 2, 0));
+        assertThat(output, LongAssert.class).containsExactly(3L, 2L, 0L);
     }
 
     @Test
@@ -107,11 +109,12 @@ public class ForEachIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Iterable<String>> results = Lists.newArrayList(graph.execute(op, getUser()));
+        final Iterable<? extends Iterable<String>> results = graph.execute(op, getUser());
 
         // Then
         assertThat(results).hasSize(1);
-        assertThat(Sets.newHashSet(results.get(0))).isEqualTo(Sets.newHashSet(SOURCE_DIR_1 + ",", "," + DEST_DIR_1));
+        assertThat(results).first(as(InstanceOfAssertFactories.iterable(String.class)))
+                .containsExactly(SOURCE_DIR_1 + ",", "," + DEST_DIR_1);
     }
 
     @Test
@@ -134,10 +137,10 @@ public class ForEachIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Iterable<String>> results = Lists.newArrayList(graph.execute(op, getUser()));
+        final Iterable<? extends Iterable<String>> results = graph.execute(op, getUser());
 
         // Then
         assertThat(results).hasSize(1);
-        assertThat(Lists.newArrayList(results.get(0))).isEqualTo(Collections.emptyList());
+        assertThat(results).first(as(InstanceOfAssertFactories.ITERABLE)).isEmpty();
     }
 }

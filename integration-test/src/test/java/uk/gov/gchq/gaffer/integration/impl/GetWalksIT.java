@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -68,12 +67,14 @@ import uk.gov.gchq.koryphe.impl.predicate.IsLessThan;
 import uk.gov.gchq.koryphe.impl.predicate.IsMoreThan;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -235,7 +236,7 @@ public class GetWalksIT extends AbstractStoreIT {
         final Iterable<Walk> results = graph.execute(op, getUser());
 
         // Then
-        assertThat(Lists.newArrayList(results)).isEmpty();
+        assertThat(results).isEmpty();
     }
 
     @Test
@@ -263,11 +264,11 @@ public class GetWalksIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Walk> results = Lists.newArrayList(graph.execute(op, getUser()));
+        final Iterable<Walk> results = graph.execute(op, getUser());
 
         // Then
         assertThat(getPaths(results)).containsExactlyInAnyOrder(AED, ABC);
-        results.stream()
+        StreamSupport.stream(results.spliterator(), false)
                .flatMap(r -> r.getEntities().stream())
                .forEach(l -> assertThat(l).isNotEmpty());
     }
@@ -298,7 +299,7 @@ public class GetWalksIT extends AbstractStoreIT {
 
         // When / Then
         try {
-            Lists.newArrayList(graph.execute(op, getUser()));
+            graph.execute(op, getUser());
         } catch (final Exception e) {
             assertThat(e.getMessage()).as(e.getMessage()).contains("must contain a single hop");
         }
@@ -619,7 +620,7 @@ public class GetWalksIT extends AbstractStoreIT {
     public void shouldGetPathsWithSimpleGraphHook_1() throws Exception {
         // Given
         final AddOperationsToChain graphHook = new AddOperationsToChain();
-        graphHook.setEnd(Lists.newArrayList(new Limit.Builder<>().resultLimit(1).build()));
+        graphHook.setEnd(Collections.singletonList(new Limit.Builder<>().resultLimit(1).build()));
 
         final GraphConfig config = new GraphConfig.Builder().addHook(graphHook).graphId("integrationTest").build();
         createGraph(config);
@@ -644,7 +645,7 @@ public class GetWalksIT extends AbstractStoreIT {
         final Iterable<Walk> results = graph.execute(op, getUser());
 
         // Then
-        assertThat(Lists.newArrayList(results)).hasSize(1);
+        assertThat(results).hasSize(1);
     }
 
     @Test
@@ -652,7 +653,7 @@ public class GetWalksIT extends AbstractStoreIT {
         // Given
         final AddOperationsToChain graphHook = new AddOperationsToChain();
         final java.util.Map<String, List<Operation>> graphHookConfig = new HashMap<>();
-        graphHookConfig.put(GetElements.class.getName(), Lists.newArrayList(new Limit.Builder<>().resultLimit(1).build()));
+        graphHookConfig.put(GetElements.class.getName(), Collections.singletonList(new Limit.Builder<>().resultLimit(1).build()));
         graphHook.setAfter(graphHookConfig);
 
         final GraphConfig config = new GraphConfig.Builder().addHook(graphHook).graphId("integrationTest").build();
@@ -1032,7 +1033,7 @@ public class GetWalksIT extends AbstractStoreIT {
                                 .build(),
                         new GetElements.Builder()
                                 .view(new View.Builder()
-                                        .entities(Lists.newArrayList(TestGroups.ENTITY))
+                                        .entities(Collections.singletonList(TestGroups.ENTITY))
                                         .build())
                                 .inOutType(SeededGraphFilters.IncludeIncomingOutgoingType.OUTGOING)
                                 .build())

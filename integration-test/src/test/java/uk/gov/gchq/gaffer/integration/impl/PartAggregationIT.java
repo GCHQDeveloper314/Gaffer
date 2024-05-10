@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -45,6 +44,8 @@ import uk.gov.gchq.koryphe.impl.binaryoperator.StringConcat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class PartAggregationIT extends AbstractStoreIT {
 
@@ -61,7 +62,7 @@ public class PartAggregationIT extends AbstractStoreIT {
         final Iterable<? extends Element> elements = graph.execute(new GetAllElements(), getUser());
 
         // Then
-        final List<Element> resultElements = Lists.newArrayList(elements);
+        final List<Element> resultElements = (List<Element>) IterableUtils.toList(elements);
         final List<Element> expectedElements = new ArrayList<>();
         getEntities().values().forEach(e -> {
             final Entity clone = e.emptyClone();
@@ -153,7 +154,7 @@ public class PartAggregationIT extends AbstractStoreIT {
                 getUser());
 
         // Then
-        final List<Element> resultElements = Lists.newArrayList(elements);
+        final List<Element> resultElements = (List<Element>) IterableUtils.toList(elements);
         final List<Element> expectedElements = new ArrayList<>();
         getEntities().values().forEach(e -> {
             final Entity clone = e.emptyClone();
@@ -298,10 +299,7 @@ public class PartAggregationIT extends AbstractStoreIT {
             edge.copyProperties(e.getProperties());
             return edge;
         };
-
-        return Lists.transform(
-                Lists.newArrayList(getEdges().values()),
-                edgeTransform);
+        return getEdges().values().stream().map(edgeTransform).collect(Collectors.toList());
     }
 
     private List<Entity> getNonAggregatedEntities() {
@@ -314,9 +312,7 @@ public class PartAggregationIT extends AbstractStoreIT {
             entity.copyProperties(e.getProperties());
             return entity;
         };
-        return Lists.transform(
-                Lists.newArrayList(getEntities().values()),
-                entityTransform);
+        return getEntities().values().stream().map(entityTransform).collect(Collectors.toList());
     }
 
     private List<Edge> getEdgesWithGroupBy() {
@@ -332,10 +328,7 @@ public class PartAggregationIT extends AbstractStoreIT {
             edge.copyProperties(e.getProperties());
             return edge;
         };
-
-        return Lists.transform(
-                Lists.newArrayList(getEdges().values()),
-                edgeTransform);
+        return getEdges().values().stream().map(edgeTransform).collect(Collectors.toList());
     }
 
     private List<Entity> getEntitiesWithGroupBy() {
@@ -349,9 +342,7 @@ public class PartAggregationIT extends AbstractStoreIT {
             entity.copyProperties(e.getProperties());
             return entity;
         };
-        entities.addAll(Lists.transform(
-                Lists.newArrayList(getEntities().values()),
-                entityTransform));
+        entities.addAll(getEntities().values().stream().map(entityTransform).collect(Collectors.toList()));
 
         final Function<Entity, Entity> entityTransform2 = e -> {
             final Entity entity = new Entity.Builder()
@@ -362,9 +353,7 @@ public class PartAggregationIT extends AbstractStoreIT {
             entity.putProperty(TestPropertyNames.SET, CollectionUtil.treeSet("a different string"));
             return entity;
         };
-        entities.addAll(Lists.transform(
-                Lists.newArrayList(getEntities().values()),
-                entityTransform2));
+        entities.addAll(getEntities().values().stream().map(entityTransform2).collect(Collectors.toList()));
 
         return entities;
     }

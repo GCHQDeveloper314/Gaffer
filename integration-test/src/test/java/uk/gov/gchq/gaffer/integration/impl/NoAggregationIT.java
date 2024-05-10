@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -37,8 +36,8 @@ import uk.gov.gchq.gaffer.store.schema.SchemaEdgeDefinition;
 import uk.gov.gchq.gaffer.store.schema.SchemaEntityDefinition;
 import uk.gov.gchq.gaffer.store.schema.TypeDefinition;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class NoAggregationIT extends AbstractStoreIT {
 
@@ -50,7 +49,7 @@ public class NoAggregationIT extends AbstractStoreIT {
     @Test
     public void shouldReturnDuplicateEntitiesWhenNoAggregationIsUsed() throws OperationException {
         // Given
-        final ArrayList<Entity> expected = Lists.newArrayList(getEntity(), getEntity());
+        final List<Entity> expected = Arrays.asList(getEntity(), getEntity());
 
         // When
         final Iterable<? extends Element> result = graph.execute(
@@ -69,7 +68,7 @@ public class NoAggregationIT extends AbstractStoreIT {
     @Test
     public void shouldReturnDuplicateEdgesWhenNoAggregationIsUsed() throws OperationException {
         // Given
-        final ArrayList<Edge> expected = Lists.newArrayList(getEdge(), getEdge());
+        final List<Edge> expected = Arrays.asList(getEdge(), getEdge());
 
         // When
         final Iterable<? extends Element> result = graph.execute(

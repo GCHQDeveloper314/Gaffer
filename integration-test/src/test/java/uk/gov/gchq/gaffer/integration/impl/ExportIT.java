@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Sets;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -78,7 +77,7 @@ public class ExportIT extends AbstractStoreIT {
         final Iterable<?> export = graph.execute(exportOpChain, getUser());
 
         // Then
-        assertThat(Sets.newHashSet(export)).hasSize(2);
+        assertThat(export).hasSize(2);
     }
 
     @Test
@@ -110,7 +109,7 @@ public class ExportIT extends AbstractStoreIT {
         final Iterable<?> export = graph.execute(exportOpChain, getUser());
 
         // Then
-        assertThat(Sets.newHashSet(export)).hasSize(2);
+        assertThat(export).hasSize(2);
     }
 
     /**

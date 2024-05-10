@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -34,8 +34,8 @@ import uk.gov.gchq.gaffer.store.StoreTrait;
 import uk.gov.gchq.gaffer.user.User;
 
 import java.util.Collections;
-import java.util.List;
 
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StoreValidationIT extends AbstractStoreIT {
@@ -65,9 +65,9 @@ public class StoreValidationIT extends AbstractStoreIT {
                 .build(), user);
 
         // Then 1
-        final List<Element> results1List = Lists.newArrayList(results1);
-        assertThat(results1List).hasSize(1);
-        assertThat(((Entity) results1List.get(0)).getVertex()).isEqualTo(VERTEX);
+        assertThat(results1).hasSize(1);
+        assertThat(results1).first(as(InstanceOfAssertFactories.type(Entity.class))).extracting(Entity::getVertex)
+                .isEqualTo(VERTEX);
 
         // Wait until after the age off time
         while (System.currentTimeMillis() - now < AGE_OFF_TIME) {
@@ -83,8 +83,7 @@ public class StoreValidationIT extends AbstractStoreIT {
                 .build(), user);
 
         // Then 2
-        final List<Element> results2List = Lists.newArrayList(results2);
-        assertThat(results2List).isEmpty();
+        assertThat(results2).isEmpty();
     }
 
     @Test
@@ -110,7 +109,6 @@ public class StoreValidationIT extends AbstractStoreIT {
                 .build(), user);
 
         // Then
-        final List<Element> results1List = Lists.newArrayList(results1);
-        assertThat(results1List).isEmpty();
+        assertThat(results1).isEmpty();
     }
 }

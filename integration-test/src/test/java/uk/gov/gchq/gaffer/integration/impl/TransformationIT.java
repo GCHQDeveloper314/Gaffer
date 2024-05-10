@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.TestGroups;
@@ -42,7 +42,6 @@ import uk.gov.gchq.gaffer.store.StoreTrait;
 import uk.gov.gchq.koryphe.impl.function.Concat;
 import uk.gov.gchq.koryphe.impl.function.ToString;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
@@ -75,7 +74,7 @@ public class TransformationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEntities, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEntities, getUser()));
 
 
         assertThat(results)
@@ -101,7 +100,7 @@ public class TransformationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEdges, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEdges, getUser()));
 
         // Then
         assertThat(results)
@@ -131,7 +130,7 @@ public class TransformationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEntities, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEntities, getUser()));
 
 
         assertThat(results)
@@ -160,7 +159,7 @@ public class TransformationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEdges, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEdges, getUser()));
 
         assertThat(results).isNotNull();
         for (final Element result : results) {
@@ -186,7 +185,7 @@ public class TransformationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEntities, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEntities, getUser()));
 
 
         assertThat(results)
@@ -234,8 +233,8 @@ public class TransformationIT extends AbstractStoreIT {
                 .build(), getUser());
 
         //Resolve the lazy iterator, by adding the contents to a list, No exception should have been thrown here.
-        final ArrayList<Element> edges = Lists.newArrayList(result);
-        final ArrayList<Element> entities = Lists.newArrayList(edges);
+        final List<Element> edges = (List<Element>) IterableUtils.toList(result);
+        final List<Element> entities = IterableUtils.toList(edges);
 
         edges.removeIf(e -> e instanceof Entity);
         assertThat(edges).hasSize(111);
@@ -262,8 +261,8 @@ public class TransformationIT extends AbstractStoreIT {
                 .build(), getUser());
 
         //Resolve the lazy iterator, by adding the contents to a list, No exception should have been thrown here.
-        final ArrayList<Element> edges = Lists.newArrayList(result);
-        final ArrayList<Element> entities = Lists.newArrayList(edges);
+        final List<Element> edges = (List<Element>) IterableUtils.toList(result);
+        final List<Element> entities = (List<Element>) IterableUtils.toList(edges);
 
         edges.removeIf(e -> e instanceof Entity);
         assertThat(edges).hasSize(111);

@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.Test;
 
@@ -49,10 +48,10 @@ public class GetAdjacentIdsIT extends AbstractStoreIT {
 
     @Test
     public void shouldGetEntityIds() throws Exception {
-        final List<DirectedType> directedTypes = Lists.newArrayList(DirectedType.values());
+        final List<DirectedType> directedTypes = Arrays.asList(DirectedType.values());
         directedTypes.add(null);
 
-        final List<IncludeIncomingOutgoingType> inOutTypes = Lists.newArrayList(IncludeIncomingOutgoingType.values());
+        final List<IncludeIncomingOutgoingType> inOutTypes = Arrays.asList(IncludeIncomingOutgoingType.values());
         inOutTypes.add(null);
         for (final IncludeIncomingOutgoingType inOutType : inOutTypes) {
             for (final DirectedType directedType : directedTypes) {

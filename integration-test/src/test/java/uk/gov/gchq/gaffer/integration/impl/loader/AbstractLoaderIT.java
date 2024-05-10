@@ -16,8 +16,8 @@
 
 package uk.gov.gchq.gaffer.integration.impl.loader;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.JsonUtil;
@@ -54,6 +54,7 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.as;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.gov.gchq.gaffer.data.util.ElementUtil.assertElementEquals;
 
@@ -210,7 +211,7 @@ public abstract class AbstractLoaderIT extends AbstractStoreIT {
                 .stream()
                 .filter(Edge::isDirected)
                 .filter(edge -> {
-                    final List<String> vertices = Lists.newArrayList(SOURCE_DIR_1, SOURCE_DIR_2, SOURCE_DIR_3);
+                    final List<String> vertices = Arrays.asList(SOURCE_DIR_1, SOURCE_DIR_2, SOURCE_DIR_3);
                     return vertices.contains(edge.getMatchedVertexValue());
                 })
                 .collect(toList()), results);
@@ -240,10 +241,9 @@ public abstract class AbstractLoaderIT extends AbstractStoreIT {
                 .build();
 
         final Iterable<? extends Element> results = graph.execute(op, getUser());
-
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(getEntities().size());
-        for (final Element element : resultList) {
+        
+        assertThat(results).hasSize(getEntities().size());
+        for (final Element element : results) {
             assertThat(element.getGroup()).isEqualTo(TestGroups.ENTITY);
         }
     }
@@ -265,9 +265,8 @@ public abstract class AbstractLoaderIT extends AbstractStoreIT {
 
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
-        final List<Element> resultList = Lists.newArrayList(results);
-        assertThat(resultList).hasSize(1);
-        assertThat(((Entity) resultList.get(0)).getVertex()).isEqualTo("A1");
+        assertThat(results).hasSize(1);
+        assertThat(results).first(as(InstanceOfAssertFactories.type(Entity.class))).extracting(Entity::getVertex).isEqualTo("A1");
     }
 
     @TraitRequirement({StoreTrait.MATCHED_VERTEX, StoreTrait.QUERY_AGGREGATION})
@@ -296,18 +295,18 @@ public abstract class AbstractLoaderIT extends AbstractStoreIT {
                 .stream()
                 .filter(Edge::isDirected)
                 .filter(edge -> {
-                    final List<String> vertices = Lists.newArrayList(SOURCE_DIR_1, DEST_DIR_2, SOURCE_DIR_3);
+                    final List<String> vertices = Arrays.asList(SOURCE_DIR_1, DEST_DIR_2, SOURCE_DIR_3);
                     return vertices.contains(edge.getMatchedVertexValue());
                 })
                 .filter(edge -> {
-                    final List<String> vertices = Lists.newArrayList(DEST_DIR_1, DEST_DIR_2, DEST_DIR_3);
+                    final List<String> vertices = Arrays.asList(DEST_DIR_1, DEST_DIR_2, DEST_DIR_3);
                     return vertices.contains(edge.getAdjacentMatchedVertexValue());
                 })
                 .collect(toList()), results);
     }
 
     protected Iterable<? extends Element> getInputElements() {
-        return Iterables.concat(getDuplicateEdges(), getDuplicateEntities());
+        return IterableUtils.chainedIterable(getDuplicateEdges(), getDuplicateEntities());
     }
 
     private void getAllElements() throws Exception {

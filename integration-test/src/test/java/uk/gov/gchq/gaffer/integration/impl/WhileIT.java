@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -30,8 +29,6 @@ import uk.gov.gchq.gaffer.operation.OperationException;
 import uk.gov.gchq.gaffer.operation.impl.While;
 import uk.gov.gchq.gaffer.operation.impl.add.AddElements;
 import uk.gov.gchq.gaffer.operation.impl.get.GetElements;
-
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,14 +54,14 @@ public class WhileIT extends AbstractStoreIT {
         // When
         graph.execute(operation, getUser());
 
-        final List<? extends Element> results = Lists.newArrayList(graph.execute(new GetElements.Builder()
+        final Iterable<? extends Element> results = graph.execute(new GetElements.Builder()
                 .input("1")
                 .view(new View.Builder()
                         .entity(TestGroups.ENTITY)
                         .build())
-                .build(), getUser()));
+                .build(), getUser());
 
         assertThat(results).hasSize(1);
-        assertThat(results.get(0).getProperty(TestPropertyNames.COUNT)).isEqualTo(10L);
+        assertThat(results).first().extracting(e -> e.getProperty(TestPropertyNames.COUNT)).isEqualTo(10L);
     }
 }

@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -43,7 +43,6 @@ import uk.gov.gchq.gaffer.operation.impl.generate.GenerateObjects;
 import uk.gov.gchq.gaffer.operation.impl.get.GetElements;
 
 import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -70,7 +69,7 @@ public class GeneratorsIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<DomainObject> results = Lists.newArrayList(graph.execute(opChain, getUser()));
+        final Iterable<? extends DomainObject> results = graph.execute(opChain, getUser());
 
         final EntityDomainObject entityDomainObject = new EntityDomainObject(SOURCE_1, "3", null);
         final EdgeDomainObject edgeDomainObject = new EdgeDomainObject(SOURCE_1, DEST_1, false, 1, 1L);
@@ -78,7 +77,7 @@ public class GeneratorsIT extends AbstractStoreIT {
         // Then
         assertThat(results)
                 .hasSize(2)
-                .contains(entityDomainObject, edgeDomainObject);
+                .asInstanceOf(InstanceOfAssertFactories.iterable(DomainObject.class)).contains(entityDomainObject, edgeDomainObject);
     }
 
     @Test
@@ -97,9 +96,9 @@ public class GeneratorsIT extends AbstractStoreIT {
         graph.execute(opChain, getUser());
 
         // Then - check they were added correctly
-        final List<Element> results = Lists.newArrayList(graph.execute(new GetElements.Builder()
+        final Iterable<? extends Element> results = graph.execute(new GetElements.Builder()
                 .input(new EntitySeed(NEW_VERTEX), new EdgeSeed(NEW_SOURCE, NEW_DEST, true))
-                .build(), getUser()));
+                .build(), getUser());
 
         final Edge expectedEdge = new Edge.Builder()
                 .group(TestGroups.EDGE)

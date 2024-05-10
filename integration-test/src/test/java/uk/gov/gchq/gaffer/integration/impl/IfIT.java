@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.integration.AbstractStoreIT;
@@ -30,6 +29,7 @@ import uk.gov.gchq.koryphe.impl.function.ToLowerCase;
 import uk.gov.gchq.koryphe.impl.function.ToUpperCase;
 import uk.gov.gchq.koryphe.impl.predicate.IsA;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -44,14 +44,14 @@ public class IfIT extends AbstractStoreIT {
         final If<Object, Object> ifOperation = new If<>();
         ifOperation.setInput(INPUT_CAMEL_CASE);
         ifOperation.setConditional(new Conditional(new IsA("java.lang.String")));
-        ifOperation.setThen(new Map<>(Lists.newArrayList(new ToUpperCase(), new ToList())));
-        ifOperation.setOtherwise(new Map<>(Lists.newArrayList(new ToLowerCase(), new ToList())));
+        ifOperation.setThen(new Map<>(Arrays.asList(new ToUpperCase(), new ToList())));
+        ifOperation.setOtherwise(new Map<>(Arrays.asList(new ToLowerCase(), new ToList())));
 
         // When
         final Object output = graph.execute(ifOperation, getUser());
 
         // Then
-        assertThat(output).isEqualTo(Lists.newArrayList(INPUT_CAMEL_CASE.toUpperCase()))
+        assertThat(output).isEqualTo(Arrays.asList(INPUT_CAMEL_CASE.toUpperCase()))
                 .isInstanceOf(List.class);
     }
 
@@ -61,14 +61,14 @@ public class IfIT extends AbstractStoreIT {
         final If<Object, Object> ifOperation = new If<>();
         ifOperation.setInput(INPUT_CAMEL_CASE);
         ifOperation.setConditional(new Conditional(new IsA("java.lang.Integer")));
-        ifOperation.setThen(new Map<>(Lists.newArrayList(new ToUpperCase(), new ToList())));
-        ifOperation.setOtherwise(new Map<>(Lists.newArrayList(new ToLowerCase(), new ToList())));
+        ifOperation.setThen(new Map<>(Arrays.asList(new ToUpperCase(), new ToList())));
+        ifOperation.setOtherwise(new Map<>(Arrays.asList(new ToLowerCase(), new ToList())));
 
         // When
         final Object output = graph.execute(ifOperation, getUser());
 
         // Then
-        assertThat(output).isEqualTo(Lists.newArrayList(INPUT_CAMEL_CASE.toLowerCase()))
+        assertThat(output).isEqualTo(Arrays.asList(INPUT_CAMEL_CASE.toLowerCase()))
                 .isInstanceOf(List.class);
     }
 
@@ -78,7 +78,7 @@ public class IfIT extends AbstractStoreIT {
         final If<Object, Object> ifOperation = new If<>();
         ifOperation.setInput(INPUT_CAMEL_CASE);
         ifOperation.setConditional(new Conditional(new IsA("java.lang.Integer")));
-        ifOperation.setThen(new Map<>(Lists.newArrayList(new ToLong(), new ToList())));
+        ifOperation.setThen(new Map<>(Arrays.asList(new ToLong(), new ToList())));
 
         // When
         final Object output = graph.execute(ifOperation, getUser());
@@ -94,13 +94,13 @@ public class IfIT extends AbstractStoreIT {
         final If<Object, Object> ifOperation = new If<>();
         ifOperation.setInput(INPUT_CAMEL_CASE);
         ifOperation.setConditional(new Conditional(new IsA("java.lang.Integer")));
-        ifOperation.setOtherwise(new Map<>(Lists.newArrayList(new ToLowerCase(), new ToList())));
+        ifOperation.setOtherwise(new Map<>(Arrays.asList(new ToLowerCase(), new ToList())));
 
         // When
         final Object output = graph.execute(ifOperation, getUser());
 
         // Then
-        assertThat(output).isEqualTo(Lists.newArrayList(INPUT_CAMEL_CASE.toLowerCase()))
+        assertThat(output).isEqualTo(Arrays.asList(INPUT_CAMEL_CASE.toLowerCase()))
                 .isInstanceOf(List.class);
     }
 
@@ -110,7 +110,7 @@ public class IfIT extends AbstractStoreIT {
         final If<Object, Object> ifOperation = new If<>();
         ifOperation.setInput(INPUT_CAMEL_CASE);
         ifOperation.setConditional(new Conditional(new IsA("java.lang.String")));
-        ifOperation.setOtherwise(new Map<>(Lists.newArrayList(new ToLong(), new ToList())));
+        ifOperation.setOtherwise(new Map<>(Arrays.asList(new ToLong(), new ToList())));
 
         // When
         final Object output = graph.execute(ifOperation, getUser());

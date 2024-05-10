@@ -16,8 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration;
 
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -356,14 +355,14 @@ public abstract class AbstractStoreIT {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<Entity> getIngestSummarisedEntities() {
         final Schema schema = null != graph ? graph.getSchema() : getStoreSchema();
-        return (List) Lists.newArrayList((Iterable) AggregatorUtil.ingestAggregate(jsonClone(duplicateEntities), schema));
+        return (List) IterableUtils.toList(AggregatorUtil.ingestAggregate(jsonClone(duplicateEntities), schema));
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<Entity> getQuerySummarisedEntities(final View view) {
         final Schema schema = null != graph ? graph.getSchema() : getStoreSchema();
         final List<Entity> ingestSummarisedEntities = getIngestSummarisedEntities();
-        return (List) Lists.newArrayList((Iterable) AggregatorUtil.queryAggregate(ingestSummarisedEntities, schema, view));
+        return (List) IterableUtils.toList(AggregatorUtil.queryAggregate(ingestSummarisedEntities, schema, view));
     }
 
     public Map<EdgeId, Edge> getEdges() {
@@ -373,14 +372,14 @@ public abstract class AbstractStoreIT {
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<Edge> getIngestSummarisedEdges() {
         final Schema schema = null != graph ? graph.getSchema() : getStoreSchema();
-        return (List) Lists.newArrayList((Iterable) AggregatorUtil.ingestAggregate(jsonClone(duplicateEdges), schema));
+        return (List) IterableUtils.toList(AggregatorUtil.ingestAggregate(jsonClone(duplicateEdges), schema));
     }
 
     @SuppressWarnings({"unchecked", "rawtypes"})
     public List<Edge> getQuerySummarisedEdges(final View view) {
         final Schema schema = null != graph ? graph.getSchema() : getStoreSchema();
         final List<Edge> ingestSummarisedEdges = getIngestSummarisedEdges();
-        return (List) Lists.newArrayList((Iterable) AggregatorUtil.queryAggregate(ingestSummarisedEdges, schema, view));
+        return (List) IterableUtils.toList(AggregatorUtil.queryAggregate(ingestSummarisedEdges, schema, view));
     }
 
     public Entity getEntity(final Object vertex) {
@@ -459,7 +458,7 @@ public abstract class AbstractStoreIT {
     private <T> List<T> duplicate(final Iterable<T> items) {
         final List<T> duplicates = new ArrayList<>();
         for (int i = 0; i < DUPLICATES; i++) {
-            Iterables.addAll(duplicates, items);
+            items.forEach(j -> duplicates.add(j));
         }
         return duplicates;
     }

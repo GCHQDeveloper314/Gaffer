@@ -16,7 +16,7 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 
 import uk.gov.gchq.gaffer.commonutil.CollectionUtil;
@@ -72,7 +72,7 @@ public class AggregationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getElements, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getElements, getUser()));
 
         // Then
         assertThat(results)
@@ -142,7 +142,7 @@ public class AggregationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getElements, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getElements, getUser()));
 
         // Then
         assertThat(results)
@@ -172,7 +172,7 @@ public class AggregationIT extends AbstractStoreIT {
                 .build();
 
         // When
-        final List<Element> results = Lists.newArrayList(graph.execute(getEdges, getUser()));
+        final List<Element> results = (List<Element>) IterableUtils.toList(graph.execute(getEdges, getUser()));
 
         // Then
         assertThat(results)
@@ -223,7 +223,7 @@ public class AggregationIT extends AbstractStoreIT {
         final Iterable<? extends Element> results = graph.execute(op, getUser());
 
         // Then
-        final List<Element> resultList = Lists.newArrayList(results);
+        final List<Element> resultList = (List<Element>) IterableUtils.toList(results);
 
         assertThat(resultList).hasSize(1);
         // aggregation is has been replaced with Product

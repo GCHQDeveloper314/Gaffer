@@ -16,7 +16,6 @@
 
 package uk.gov.gchq.gaffer.integration.impl;
 
-import com.google.common.collect.Lists;
 import org.apache.commons.lang3.BooleanUtils;
 import org.junit.jupiter.api.Test;
 
@@ -118,10 +117,10 @@ public class GetElementsIT extends AbstractStoreIT {
 
     @Test
     public void shouldGetElements() {
-        final List<DirectedType> directedTypes = Lists.newArrayList(DirectedType.values());
+        final List<DirectedType> directedTypes = Arrays.asList(DirectedType.values());
         directedTypes.add(null);
 
-        final List<IncludeIncomingOutgoingType> inOutTypes = Lists.newArrayList(IncludeIncomingOutgoingType.values());
+        final List<IncludeIncomingOutgoingType> inOutTypes = Arrays.asList(IncludeIncomingOutgoingType.values());
         inOutTypes.add(null);
 
         for (final boolean includeEntities : Arrays.asList(true, false)) {
