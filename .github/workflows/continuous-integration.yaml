@@ -48,6 +48,7 @@ jobs:
       - name: Run linkspector
         uses: umbrelladocs/action-linkspector@v1
         with:
+          filter_mode: nofilter
           fail_on_error: true
 
   build-javadoc:
