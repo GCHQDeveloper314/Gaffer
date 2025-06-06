@@ -2,6 +2,14 @@
 
 # Gaffer
 
+## This project has been archived
+
+**This project has been archived and is no longer under active maintenance. Should you have any questions or require further information, please do not hesitate to reach out to us at the following email address.**
+
+**oss@gchq.gov.uk**
+
+---
+
 ![ci](https://github.com/gchq/Gaffer/actions/workflows/continuous-integration.yaml/badge.svg?branch=develop)
 [![codecov](https://codecov.io/gh/gchq/Gaffer/branch/develop/graph/badge.svg?token=D7FRqMeurU)](https://codecov.io/gh/gchq/Gaffer)
 [<img src="https://img.shields.io/badge/docs-passing-success.svg?logo=readthedocs">](https://gchq.github.io/gaffer-doc/latest/)
